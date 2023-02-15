@@ -128,13 +128,15 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
             }
         }
 
-        //totalSupply();
-
-        // (bool sent, ) = account.call{value: pricePerToken * amount}("");
-        // require(sent, "Failed to send Ether");
+        (bool sent, ) = account.call{value: refoundable(amount)}("");
+        require(sent, "Failed to send Ether");
 
         _burn(account, amount);
         return true;
+    }
+
+    function refoundable(uint256 amount) public view returns(uint256){
+        return (address(this).balance.mul(100).div(totalSupply().mul(100))).mul(amount).div(100);
     }
 
     /**

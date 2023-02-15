@@ -24,6 +24,8 @@ contract("SECURITY TOKEN", async accounts => {
   const walletDeployer = accounts[0];
   const walletFirstFounder = accounts[1];
   const walletNewOwner = accounts[2];
+  const walletSecondFounder = accounts[3];
+  const walletThirdFounder = accounts[4];
   const agent = accounts[8];
 
   it("SUCCESS : Should deploy smart contract security token", async () => {
@@ -85,7 +87,7 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should mint with deployer account", async () => {
       date = Math.floor(Date.now() / 10000);
       await this.SecurityTokenContract.mint(walletFirstFounder, amount, {
-        from: walletDeployer,
+        from: walletFirstFounder,
         value: pricePerToken * amount,
       });
     });
@@ -119,24 +121,102 @@ contract("SECURITY TOKEN", async accounts => {
       }
     });
 
+    it("SUCCESS : Should randomly mint and burn some token with two other account", async () => {
+      let random = randomIntFromInterval(1, 10);
+      await this.SecurityTokenContract.mint(walletSecondFounder, amount * random, {
+        from: walletSecondFounder,
+        value: pricePerToken * amount * random,
+      });
+
+      await this.SecurityTokenContract.burn(
+        walletSecondFounder,
+        amount * random - randomIntFromInterval(1, 10),
+        {
+          from: walletSecondFounder,
+        },
+      );
+
+      random = randomIntFromInterval(1, 10);
+      await this.SecurityTokenContract.mint(walletThirdFounder, amount * random, {
+        from: walletThirdFounder,
+        value: pricePerToken * amount * random,
+      });
+
+      await this.SecurityTokenContract.burn(
+        walletThirdFounder,
+        amount * random - randomIntFromInterval(1, 10),
+        {
+          from: walletThirdFounder,
+        },
+      );
+    });
+
     it("SUCCESS : Should burn with deployer account", async () => {
-      await this.SecurityTokenContract.burn(walletFirstFounder, amount);
+      const totalSupply = await this.SecurityTokenContract.totalSupply();
+      const tokenBalanceWalletBeforeBurn = await this.SecurityTokenContract.balanceOf(
+        walletFirstFounder,
+      );
+      const contractBalance = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      const ethBalanceWalletBeforeBurn = await web3.eth.getBalance(walletFirstFounder);
+
+      console.log("tokenBalanceWalletBeforeBurn", +tokenBalanceWalletBeforeBurn);
+      console.log("ethBalanceWalletBeforeBurn", ethBalanceWalletBeforeBurn + "");
+      console.log("totalSupply", +totalSupply);
+      console.log("contractBalance", +contractBalance);
+      console.log("amount", +amount);
+
+      const currentValueOneToken = (+contractBalance * 100) / (+totalSupply * 100);
+
+      console.log("current value", +currentValueOneToken);
+
+      const refoundableOffChain = Math.floor((currentValueOneToken * amount) / 100);
+
+      console.log("refoundableOffChain", +refoundableOffChain);
+
+      const refoundableOnChain = await this.SecurityTokenContract.refoundable(amount, {
+        from: walletDeployer,
+      });
+
+      assert.equal(+refoundableOnChain, +refoundableOffChain);
+
+      console.log("refoundableOnChain", +refoundableOnChain);
+
+      await this.SecurityTokenContract.burn(walletFirstFounder, amount, {
+        from: walletDeployer,
+      });
+
+      const tokenBalanceWalletAfterBurn = await this.SecurityTokenContract.balanceOf(
+        walletFirstFounder,
+      );
+
+      const ethBalanceWalletAfterBurn = await web3.eth.getBalance(walletFirstFounder);
+
+      console.log("tokenBalanceWalletAfterBurn", +tokenBalanceWalletAfterBurn);
+      console.log("ethBalanceWalletAfterBurn", ethBalanceWalletAfterBurn + "");
+
+      assert.equal(
+        +ethBalanceWalletAfterBurn - refoundableOnChain,
+        +ethBalanceWalletBeforeBurn,
+      );
+
       date = Math.floor(Date.now() / 10000);
     });
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
       const transfers = await this.SecurityTokenContract.transfers();
-      assert.equal(transfers.length, 2);
+      assert.equal(transfers.length, 6);
 
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[1].transferType, "burn");
-      assert.equal(transfers[1].from, walletFirstFounder);
-      assert.equal(transfers[1].to, ADDRESS_ZERO);
-      assert.equal(transfers[1].amount, amount);
+      assert.equal(transfers[5].transferType, "burn");
+      assert.equal(transfers[5].from, walletFirstFounder);
+      assert.equal(transfers[5].to, ADDRESS_ZERO);
+      assert.equal(transfers[5].amount, amount);
       // assert.equal(Math.floor(transfers[1].date / 10), date);
     });
 
@@ -153,7 +233,6 @@ contract("SECURITY TOKEN", async accounts => {
       const ownerAfterTransferOwnership = await this.SecurityTokenContract.owner();
       assert.equal(ownerAfterTransferOwnership, walletNewOwner);
     });
-
 
     it("ERROR : Should not transfer with walletDeployer no balance", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
@@ -270,32 +349,32 @@ contract("SECURITY TOKEN", async accounts => {
       const transfers = await this.SecurityTokenContract.transfers({
         from: walletNewOwner,
       });
-      assert.equal(transfers.length, 5);
+      assert.equal(transfers.length, 9);
 
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[1].transferType, "burn");
-      assert.equal(transfers[1].from, walletFirstFounder);
-      assert.equal(transfers[1].to, ADDRESS_ZERO);
-      assert.equal(transfers[1].amount, amount);
+      assert.equal(transfers[5].transferType, "burn");
+      assert.equal(transfers[5].from, walletFirstFounder);
+      assert.equal(transfers[5].to, ADDRESS_ZERO);
+      assert.equal(transfers[5].amount, amount);
 
-      assert.equal(transfers[2].transferType, "mint");
-      assert.equal(transfers[2].from, ADDRESS_ZERO);
-      assert.equal(transfers[2].to, walletNewOwner);
-      assert.equal(transfers[2].amount, amount);
+      assert.equal(transfers[6].transferType, "mint");
+      assert.equal(transfers[6].from, ADDRESS_ZERO);
+      assert.equal(transfers[6].to, walletNewOwner);
+      assert.equal(transfers[6].amount, amount);
 
-      assert.equal(transfers[3].transferType, "transfer");
-      assert.equal(transfers[3].from, walletNewOwner);
-      assert.equal(transfers[3].to, walletDeployer);
-      assert.equal(transfers[3].amount, amount);
+      assert.equal(transfers[7].transferType, "transfer");
+      assert.equal(transfers[7].from, walletNewOwner);
+      assert.equal(transfers[7].to, walletDeployer);
+      assert.equal(transfers[7].amount, amount);
 
-      assert.equal(transfers[4].transferType, "transfer");
-      assert.equal(transfers[4].from, walletDeployer);
-      assert.equal(transfers[4].to, walletFirstFounder);
-      assert.equal(transfers[4].amount, amount);
+      assert.equal(transfers[8].transferType, "transfer");
+      assert.equal(transfers[8].from, walletDeployer);
+      assert.equal(transfers[8].to, walletFirstFounder);
+      assert.equal(transfers[8].amount, amount);
     });
   });
 
