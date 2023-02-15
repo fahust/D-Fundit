@@ -24,6 +24,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
     ) ERC20(_name, _code) StorageToken(_pricePerToken) {
         OWNER = _msgSender();
         rules = _rules;
+        lastWithdraw = _now();
     }
 
     /// @dev Modifier to make a function callable only when the contract is not paused.
@@ -128,10 +129,12 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
             }
         }
 
-        (bool sent, ) = account.call{value: refoundable(amount)}("");
-        require(sent, "Failed to send Ether");
+        uint256 _refoundable = refoundable(amount);
 
         _burn(account, amount);
+
+        (bool sent, ) = account.call{value: _refoundable}("");
+        require(sent, "Failed to send Ether");
         return true;
     }
 
@@ -150,35 +153,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
      */
     function transfer(address to, uint256 amount) public virtual override returns (bool) {
         _transfer(_msgSender(), to, amount);
-        return true;
-    }
-
-    /**
-     *  @dev Transfers and send `amount` tokens from `_msgSender()` to `toList`
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     * @param toList {address[]} wallets to transfer the tokens
-     * @param amounts {uint256[]} amounts to transfer
-     */
-    function batchTransfer(address[] calldata toList, uint256[] calldata amounts) external {
-        for (uint256 i = 0; i < toList.length; i++) {
-            transfer(toList[i], amounts[i]);
-        }
-    }
-
-    /**
-     * @dev See {IERC20-transferFrom}.
-     */
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) public virtual override returns (bool) {
-        address spender = _msgSender();
-        _spendAllowance(from, spender, amount);
-        _transfer(from, to, amount);
         return true;
     }
 
@@ -449,8 +423,20 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
     }
 
     function withdraw(uint256 amount, address receiver) external onlyOwner {
+        withdrawable(amount);
+        if(dayToWithdraw != 0) lastWithdraw += oneDay.mul(dayToWithdraw).mul(amount);
         (bool success, ) = payable(receiver).call{ value: amount}("");
         require(success, "Withdraw not successful");
+    }
+
+    function withdrawable(uint256 amount) public view returns(uint256 weiWithdrawable){
+        if(dayToWithdraw != 0) weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(dayToWithdraw)));
+        require(weiWithdrawable >= amount || dayToWithdraw == 0, "Not enough funds to withdraw");
+        require(lastWithdraw + oneDay.mul(dayToWithdraw).mul(amount) <= _now() || dayToWithdraw == 0, "Time incorrect");
+    }
+
+    function injectCapital() external payable onlyOwner returns(bool) {
+        return true;
     }
 
     /**
