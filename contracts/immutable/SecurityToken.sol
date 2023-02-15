@@ -198,20 +198,21 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
         _afterTokenTransfer("transfer", from, to, amount);
     }
 
-    function canTransfer(address operator, address from, address to, uint256 value) public view returns (bytes1) {
-        if (balanceOf(from) < value) return(hex"52"); // 0x52 insufficient balance
-        // } else if(allowance(from, operator) <= value) {
-        //     return(hex"53"); // 0x53 insufficient allowance
-        if(_now() < paused) return(hex"54"); // 0x54 transfers halted (contract paused)
-        if(balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value)
-            return(hex"55"); // 0x55 funds locked (lockup period)
-        if(from == address(0)) return(hex"56"); // 0x56 invalid sender
-        if(to == address(0)) return(hex"57"); // 0x57 invalid receiver
-        if(!isAgent(operator) && owner() != operator && from != operator )
-            return(hex"58"); // 0x58 invalid operator
-        if(frozen[from]) return(hex"5a"); // 0x5a frozen sender
-        if(frozen[to]) return(hex"5b"); // 0x5b frozen receiver
-        return (hex"51"); // 0x51 success
+    function canTransfer(
+        address operator,
+        address from,
+        address to,
+        uint256 value
+    ) public view returns (bytes1) {
+        if (balanceOf(from) < value) return(hex"52");
+        if(_now() < paused) return(hex"54");
+        if(balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) return(hex"55");
+        if(from == address(0)) return(hex"56");
+        if(to == address(0)) return(hex"57");
+        if(!isAgent(operator) && owner() != operator && from != operator ) return(hex"58");
+        if(frozen[from]) return(hex"5a");
+        if(frozen[to]) return(hex"5b");
+        return (hex"51");
     }
 
     /**
@@ -225,8 +226,8 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
         address to,
         uint256 amount
     ) public onlyAgent returns (bool) {
-        uint256 freeBalance = eligibleBalanceOf(from);
         require(rules.forcableTransfer == true, "forceTransfer is not authorized on this contract");
+        uint256 freeBalance = eligibleBalanceOf(from);
 
         if (amount > freeBalance) {
             uint256 tokensToUnfreeze = amount - (balanceOf(from) - frozenTokens[from]);
@@ -244,22 +245,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
 
         _transfer(from, to, amount);
         return true;
-    }
-
-    /**
-     *  @notice Force an array of transfer by agent
-     *  @param fromList {address[]} from wallet to transfer
-     *  @param toList {address[]} to wallet to transfer
-     *  @param amounts {uint256[]} amounts of tokens to be transfered
-     */
-    function batchForceTransfer(
-        address[] calldata fromList,
-        address[] calldata toList,
-        uint256[] calldata amounts
-    ) external {
-        for (uint256 i = 0; i < fromList.length; i++) {
-            forceTransfer(fromList[i], toList[i], amounts[i]);
-        }
     }
 
     /**
