@@ -4,8 +4,7 @@ pragma solidity ^0.8.0;
 
 
 import "./StorageToken.sol";
-import "../libraries/TokenLibrary.sol";
-import "../registry/interfaces/IIdentityRegistry.sol";
+import "../library/TokenLibrary.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
 import "../roles/WriterRole.sol";
@@ -20,12 +19,8 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      * @param tokenInput {TokenLibrary.TokenInput} the input token containing the name, code, assetType
      */
     constructor(
-        TokenLibrary.TokenInput memory tokenInput,
-        address _identityRegistry,
-        address _onchainID
+        TokenLibrary.TokenInput memory tokenInput
     ) ERC20(tokenInput.name, tokenInput.code) {
-        tokenOnchainID = _onchainID;
-        tokenIdentityRegistry = IIdentityRegistry(_identityRegistry);
         _token.name = tokenInput.name;
         _token.code = tokenInput.code;
         _token.assetType = tokenInput.assetType;
@@ -303,12 +298,8 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
             }
         }
 
-        if (tokenIdentityRegistry.isVerified(to)) {
-            //tokenCompliance.transferred(from, to, amount);
-            _transfer(from, to, amount);
-            return true;
-        }
-        revert("Transfer not possible");
+        _transfer(from, to, amount);
+        return true;
     }
 
     /**
@@ -492,15 +483,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
         for (uint256 i = 0; i < userAddresses.length; i++) {
             unfreezePartialTokens(userAddresses[i], amounts[i]);
         }
-    }
-
-    /**
-     *  @notice Set smart contract instance IdentityRegistry
-     *  @param _identityRegistry {Address} of the smart contract instance
-     */
-    function setIdentityRegistry(address _identityRegistry) external onlyOwner {
-        tokenIdentityRegistry = IIdentityRegistry(_identityRegistry);
-        emit IdentityRegistryAdded(_identityRegistry);
     }
 
     /**
