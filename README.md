@@ -32,7 +32,6 @@
         <li><a href="#balance">Balance</a></li>
         <li><a href="#erc1066">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer">Force Transfer</a></li>
-        <li><a href="#recover">Recover Old Movements</a></li>
       </ul>
     </li>
   </ol>
@@ -66,7 +65,6 @@
         <li><a href="#balance-FR">Solde</a></li>
         <li><a href="#erc1066-FR">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer-FR">Transfert de force</a></li>
-        <li><a href="#recover-FR">Récupération de l'antériorité des tokens</a></li>
       </ul>
     </li>
   </ol>
@@ -76,19 +74,21 @@
 
 ## Project Description
 
-D-Fundit is a decentralised online crowdfunding platform that allows entrepreneurs, artists and creators to present their projects to a wider audience and raise funds for them. Projects can include films, video games, gadgets, technology products, artworks, books and more.
+D-Fundit is a **decentralised online crowdfunding platform** that allows entrepreneurs, artists and creators to **present their projects** to a wider audience and **raise funds** for them. Projects can include films, video games, gadgets, technology products, artworks, books and more.
 
-The funding is exclusively in cryptocurrency, which offers many advantages:
+The funding is **exclusively in cryptocurrency**, which offers many advantages:
 
-  - Firstly, cryptocurrency transactions can be conducted in a decentralised manner, meaning that there is no need for intermediaries such as banks or payment processors to facilitate the transaction. This can lead to lower transaction fees and faster transaction processing.
+  - Firstly, cryptocurrency transactions can be conducted in a **decentralised** manner, meaning that there is no need for intermediaries such as banks or payment processors to facilitate the transaction. This can lead to **lower transaction fees** and **faster** transaction processing.
 
-  - In addition, cryptocurrency funding can offer a higher level of security and anonymity than traditional forms of funding. Cryptocurrency transactions are encrypted and stored in a blockchain, making them very difficult to tamper with or alter. In addition, cryptocurrency transactions can be conducted without disclosing the contributor's personal information, thus providing a higher level of privacy.
+  - In addition, cryptocurrency funding can offer a **higher level of security** and **anonymity** than traditional forms of funding. Cryptocurrency transactions are encrypted and stored in a blockchain, making them very difficult to tamper with or alter. In addition, cryptocurrency transactions can be conducted **without disclosing the contributor's personal information**, thus providing a **higher level of privacy**.
 
   - Finally, cryptocurrency funding can offer investors access to innovative projects that are not available via traditional forms of funding. Many blockchain and cryptocurrency projects are funded through ICOs (Initial Coin Offerings), which allow investors to back projects that have the potential to become leaders in their field.
 
-D-Fundit allows creators to set a funding goal and campaign duration, and contributors can support the project by making a donation. If the project reaches its funding goal before the end of the campaign, the contributors are debited and the creator can use the money to complete the project. If the project does not reach its funding target, the contributors are not debited and the project will not be funded.
+D-Fundit allows creators to **set a funding goal** and **campaign duration**, and contributors can **support** the project by making a donation. If the project reaches its funding goal before the end of the campaign, the contributors are debited and the creator can use the money to complete the project. If the project does not reach its funding target, the contributors are not debited and the project will not be funded.
 
-In short, D-Fundit allows creators to present their projects to a wider audience and raise funds for their realisation, while at the same time allowing contributors to support projects that interest them and contribute to their realisation.
+Each contributor holds a **share of the project** relative to his or her investment, and can **reclaim his or her stake at any time**, as long as there are funds remaining on the project's smart contract.
+
+In short, D-Fundit allows creators to present their projects to a wider audience and raise funds for their realisation, while at the same time allowing contributors to **support** projects that interest them and **contribute to their realisation**.
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
@@ -485,19 +485,21 @@ function forcedTransfer(
 
 ## Description du projet
 
-D-Fundit est une plateforme de financement participatif décentralisé en ligne qui permet aux entrepreneurs, artistes et créateurs de présenter leurs projets à un public plus large et de collecter des fonds pour les réaliser. Les projets peuvent inclure des films, des jeux vidéo, des gadgets, des produits technologiques, des œuvres d'art, des livres et bien plus encore.
+D-Fundit est une **plateforme de financement participatif décentralisé** en ligne qui permet aux entrepreneurs, artistes et créateurs de **présenter leurs projets** à un public plus large et de **collecter des fonds pour les réaliser**. Les projets peuvent inclure des films, des jeux vidéo, des gadgets, des produits technologiques, des œuvres d'art, des livres et bien plus encore.
 
-Le financement ce fait exclusivement en cryptomonnaie, ce qui offres de nombreux avantages :
+Le financement ce fait **exclusivement en cryptomonnaie**, ce qui offres de nombreux avantages :
 
-  - Tout d'abord, les transactions en cryptomonnaie peuvent être effectuées de manière décentralisée, ce qui signifie qu'il n'y a pas besoin d'intermédiaires tels que les banques ou les processeurs de paiement pour faciliter la transaction. Cela peut entraîner des frais de transaction plus bas et une plus grande rapidité de traitement des transactions.
+  - Tout d'abord, les transactions en cryptomonnaie peuvent être effectuées de manière **décentralisée**, ce qui signifie qu'il n'y a pas besoin d'intermédiaires tels que les banques ou les processeurs de paiement pour faciliter la transaction. Cela peut entraîner des **frais de transaction plus bas** et une plus **grande rapidité de traitement** des transactions.
 
-  - En outre, le financement en cryptomonnaie peut offrir un niveau de sécurité et d'anonymat plus élevé que les formes de financement traditionnelles. Les transactions en cryptomonnaie sont cryptées et enregistrées dans une blockchain, ce qui les rend très difficiles à falsifier ou à altérer. De plus, les transactions en cryptomonnaie peuvent être effectuées sans divulguer les informations personnelles du contributeur, offrant ainsi un niveau de confidentialité supérieur.
+  - En outre, le financement en cryptomonnaie peut offrir un niveau de **sécurité** et d'**anonymat** plus élevé que les formes de financement traditionnelles. Les transactions en cryptomonnaie sont **cryptées** et enregistrées dans une blockchain, ce qui les rend très difficiles à falsifier ou à altérer. De plus, les transactions en cryptomonnaie peuvent être effectuées **sans divulguer les informations personnelles du contributeur**, offrant ainsi un niveau de **confidentialité** supérieur.
 
-  - Enfin, le financement en cryptomonnaie peut offrir aux investisseurs un accès à des projets innovants qui ne sont pas disponibles via les formes de financement traditionnelles. De nombreux projets de blockchain et de cryptomonnaie sont financés par des ICO (Initial Coin Offerings), qui permettent aux investisseurs de soutenir des projets qui ont le potentiel de devenir des leaders dans leur domaine.
+  - Enfin, le financement en cryptomonnaie peut offrir aux investisseurs un accès à des projets innovants qui ne sont pas disponibles via les formes de financement traditionnelles. De nombreux projets de blockchain et de cryptomonnaie sont financés par des ICO (Initial Coin Offerings), qui permettent aux investisseurs de **soutenir** des projets qui ont le potentiel de devenir des leaders dans leur domaine.
 
-D-Fundit permet aux créateurs de définir un objectif de financement et une durée de campagne, et les contributeurs peuvent soutenir le projet en faisant un don. Si le projet atteint son objectif de financement avant la fin de la campagne, les contributeurs sont débités et le créateur peut utiliser l'argent pour réaliser le projet. Si le projet n'atteint pas son objectif de financement, les contributeurs ne sont pas débités et le projet ne sera pas financé.
+D-Fundit permet aux créateurs de **définir un objectif de financement** et une **durée de campagne**, et les contributeurs peuvent **soutenir** le projet en faisant un don. Si le projet atteint son objectif de financement avant la fin de la campagne, les contributeurs sont débités et le créateur peut utiliser l'argent pour réaliser le projet. Si le projet n'atteint pas son objectif de financement, les contributeurs ne sont pas débités et le projet ne sera pas financé.
 
-En résumé, D-Fundit permet aux créateurs de présenter leurs projets à un public plus large et de collecter des fonds pour les réaliser, tout en permettant aux contributeurs de soutenir des projets qui les intéressent et de contribuer à leur réalisation.
+Chaque contributeurs détient une **part du projet** relative à son investissement, et peut **récupérer sa mise à tout moment**, du moment qu'il reste des fonds de financement sur le smart contract du projet.
+
+En résumé, D-Fundit permet aux créateurs de présenter leurs projets à un public plus large et de collecter des fonds pour les réaliser, tout en permettant aux contributeurs de **soutenir** des projets qui les intéressent et de **contribuer à leur réalisation**.
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
