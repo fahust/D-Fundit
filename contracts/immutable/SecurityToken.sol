@@ -16,15 +16,12 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     using SafeMath for uint;
 
     /**
-     * @param tokenInput {TokenLibrary.TokenInput} the input token containing the name, code, assetType
      */
     constructor(
-        TokenLibrary.TokenInput memory tokenInput
-    ) ERC20(tokenInput.name, tokenInput.code) {
-        _token.name = tokenInput.name;
-        _token.code = tokenInput.code;
-        _token.assetType = tokenInput.assetType;
-        _token.owner = _msgSender();
+        string memory _name,
+        string memory _code
+    ) ERC20(_name, _code) {
+        OWNER = _msgSender();
     }
 
     /// @dev Modifier to make a function callable only when the contract is not paused.
@@ -40,15 +37,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     }
 
     /**
-     * @notice Returns the symbol of the token, usually a shorter version of the
-     * name.
-     * @return code {string} code of the token
-     */
-    function code() external view returns (string memory) {
-        return _token.code;
-    }
-
-    /**
      * @notice Returns the version of the token contract
      * @return TOKEN_VERSION {string} version of the smart contract
      */
@@ -57,19 +45,11 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     }
 
     /**
-     * @notice Returns the type of the token.
-     * @return assetType {string} type of the asset
-     */
-    function assetType() public view returns (string memory) {
-        return _token.assetType;
-    }
-
-    /**
      * @notice Returns the address wallet of the smart contract owner.
      * @return owner {address} wallet addres from owner
      */
     function owner() public view override(Ownable) returns (address) {
-        return _token.owner;
+        return OWNER;
     }
 
     /**
@@ -89,8 +69,8 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      * @param account {address} address of the new owner
      */
     function transferOwnership(address account) public virtual override(Ownable) onlyOwner {
-        emit TransferOwnership(_token.owner, account);
-        _token.owner = account;
+        emit TransferOwnership(OWNER, account);
+        OWNER = account;
     }
 
     /**
@@ -477,7 +457,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
 
     /**
      * @notice Get unlockable tokens freezed in period for msg.sender
-     * @return unlockable {uint256} of unlockable tokens freezed in period 
+     * @return unlockable {uint256} of unlockable tokens freezed in period
      */
     function unlockableTokensPeriod() public view returns (uint256) {
         TokenLibrary.FreezePeriod memory freezedPeriodTemp = freezedPeriod[_msgSender()];

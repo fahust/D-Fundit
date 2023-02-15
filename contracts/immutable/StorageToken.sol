@@ -9,7 +9,7 @@ contract StorageToken {
     uint256 internal paused;
     uint256 internal _totalSupply;
 
-    TokenLibrary.Token internal _token;
+    address internal OWNER;
 
 
     mapping(uint256 => TokenLibrary.Transfer) internal _transfers;
