@@ -927,4 +927,152 @@ contract("SECURITY TOKEN", async accounts => {
       console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
     });
   });
+
+  describe("WITHDRAW OWNER", async () => {
+    it("ERROR : Should not withdraw because not enough eth", async () => {
+      await truffleAssert.reverts(
+        this.SecurityTokenContract.withdraw(amount, walletNewOwner, {
+          from: walletNewOwner,
+        }),
+      );
+    });
+
+    it("ERROR : Should not withdraw because not owner of contract", async () => {
+      await truffleAssert.reverts(
+        this.SecurityTokenContract.withdraw(amount, walletDeployer, {
+          from: walletDeployer,
+        }),
+      );
+    });
+
+    it("SUCCESS : Should randomly mint and burn some token with two other account", async () => {
+      for (let index = 3; index < 7; index++) {
+        let random = randomIntFromInterval(1, 10);
+        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+          from: accounts[index],
+          value: pricePerToken * amount * random,
+        });
+
+        await this.SecurityTokenContract.burn(
+          accounts[index],
+          amount * random - randomIntFromInterval(1, 10),
+          {
+            from: accounts[index],
+          },
+        );
+      }
+    });
+
+    it("SUCCESS : Should withdraw because not owner of contract", async () => {
+      const contractBalanceBeforeWithdraw = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      const walletFirstFounderBeforeWithdraw = await web3.eth.getBalance(
+        walletFirstFounder,
+      );
+      await this.SecurityTokenContract.withdraw(
+        +contractBalanceBeforeWithdraw,
+        walletFirstFounder,
+        {
+          from: walletNewOwner,
+        },
+      );
+
+      const contractBalanceAfterWithdraw = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      const walletFirstFounderAfterWithdraw = await web3.eth.getBalance(
+        walletFirstFounder,
+      );
+
+      assert.equal(
+        +walletFirstFounderAfterWithdraw,
+        +walletFirstFounderBeforeWithdraw + +contractBalanceBeforeWithdraw,
+      );
+
+      assert.equal(contractBalanceAfterWithdraw, 0);
+    });
+
+    it("SUCCESS : Should burn all remaining balances with deployer account", async () => {
+      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
+      console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
+      for (let index = 0; index < accounts.length; index++) {
+        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        if (+balance > 0)
+          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+            from: accounts[index],
+          });
+      }
+      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceAfterAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
+      console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
+    });
+
+    it("SUCCESS : Should randomly mint and burn some token with two other account, then withdraw only 50 % of balance contract", async () => {
+      for (let index = 3; index < 7; index++) {
+        let random = randomIntFromInterval(1, 10);
+        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+          from: accounts[index],
+          value: pricePerToken * amount * random,
+        });
+
+        await this.SecurityTokenContract.burn(
+          accounts[index],
+          amount * random - randomIntFromInterval(1, 10),
+          {
+            from: accounts[index],
+          },
+        );
+      }
+
+      const contractBalanceBeforeWithdraw = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      await this.SecurityTokenContract.withdraw(
+        Math.floor(+contractBalanceBeforeWithdraw / 2),
+        walletFirstFounder,
+        {
+          from: walletNewOwner,
+        },
+      );
+    });
+
+    it("SUCCESS : Should burn all remaining balances with deployer account", async () => {
+      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
+      console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
+      for (let index = 0; index < accounts.length; index++) {
+        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        if (+balance > 0) {
+          const refoundableOnChain = await this.SecurityTokenContract.refoundable(
+            balance,
+            {
+              from: walletDeployer,
+            },
+          );
+          console.log("refoundable account [" + index + "]", +refoundableOnChain);
+          console.log("balance account [" + index + "]", +balance);
+          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+            from: accounts[index],
+          });
+        }
+      }
+      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceAfterAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
+      console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
+    });
+  });
 });
