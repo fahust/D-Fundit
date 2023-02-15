@@ -24,5 +24,9 @@ library TokenLibrary {
         bool freezablePartialTime;
         bool pausable;
         bool forcableTransfer;
+        uint256 dayToWithdraw;
+        uint256 startFundraising;
+        uint256 endFundraising;
+        uint256 maxSupply;
     }
 }

@@ -10,7 +10,6 @@ contract StorageToken {
     uint256 immutable pricePerToken;
     uint256 internal paused;
     uint256 internal lastWithdraw;
-    uint256 internal dayToWithdraw;
 
     address internal OWNER;
 

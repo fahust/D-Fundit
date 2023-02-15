@@ -39,6 +39,13 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
         _;
     }
 
+    modifier fundraisable(uint256 amount) {
+        require(_now() >= rules.startFundraising, "Fundraising not started");
+        require(_now() <= rules.endFundraising || rules.endFundraising == 0, "Fundraising ended");
+        require(totalSupply() + amount <= rules.maxSupply || rules.maxSupply == 0, "Max supply reached");
+        _;
+    }
+
     /**
      * @notice Returns the version of the token contract
      * @return TOKEN_VERSION {string} version of the smart contract
@@ -85,6 +92,16 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
         return balanceOf(account) - frozenTokens[account] - (freezedPeriod[account].amountFreezed);
     }
 
+    function setFundraising(
+        uint256 startFundraising,
+        uint256 endFundraising,
+        uint256 maxSupply
+    ) external onlyOwner {
+        rules.startFundraising = startFundraising;
+        rules.endFundraising = endFundraising;
+        rules.maxSupply = maxSupply;
+    }
+
     /**
      * @notice Mint and send `amount` tokens to `to`
      *
@@ -95,7 +112,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
      * @param amount {uint256} amount to mint
      * @return result {boolean} success or failure
      */
-    function mint(address to, uint256 amount) external payable returns (bool) {
+    function mint(address to, uint256 amount) external payable fundraisable(amount) returns (bool) {
         require(msg.value >= pricePerToken * amount, "Not enough eth");
         _mint(to, amount);
         return true;
@@ -424,15 +441,17 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
 
     function withdraw(uint256 amount, address receiver) external onlyOwner {
         withdrawable(amount);
-        if(dayToWithdraw != 0) lastWithdraw += oneDay.mul(dayToWithdraw).mul(amount);
+        if(rules.dayToWithdraw != 0)
+            lastWithdraw += oneDay.mul(rules.dayToWithdraw).mul(amount);
         (bool success, ) = payable(receiver).call{ value: amount}("");
         require(success, "Withdraw not successful");
     }
 
     function withdrawable(uint256 amount) public view returns(uint256 weiWithdrawable){
-        if(dayToWithdraw != 0) weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(dayToWithdraw)));
-        require(weiWithdrawable >= amount || dayToWithdraw == 0, "Not enough funds to withdraw");
-        require(lastWithdraw + oneDay.mul(dayToWithdraw).mul(amount) <= _now() || dayToWithdraw == 0, "Time incorrect");
+        if(rules.dayToWithdraw != 0)
+            weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(rules.dayToWithdraw)));
+        require(weiWithdrawable >= amount || rules.dayToWithdraw == 0, "Not enough funds to withdraw");
+        require(lastWithdraw + oneDay.mul(rules.dayToWithdraw).mul(amount) <= _now() || rules.dayToWithdraw == 0, "Time incorrect");
     }
 
     function injectCapital() external payable onlyOwner returns(bool) {
