@@ -11,6 +11,7 @@ contract StorageToken {
 
     address internal OWNER;
 
+    TokenLibrary.Rules internal rules;
 
     mapping(uint256 => TokenLibrary.Transfer) internal _transfers;
     mapping(address => TokenLibrary.FreezePeriod) internal freezedPeriod;

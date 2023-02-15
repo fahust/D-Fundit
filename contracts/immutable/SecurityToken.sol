@@ -19,20 +19,22 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      */
     constructor(
         string memory _name,
-        string memory _code
+        string memory _code,
+        TokenLibrary.Rules memory _rules
     ) ERC20(_name, _code) {
         OWNER = _msgSender();
+        rules = _rules;
     }
 
     /// @dev Modifier to make a function callable only when the contract is not paused.
     modifier whenNotPaused() {
-        require(_now() > paused, "Pausable: paused");
+        require(_now() > paused || rules.pausable == false, "Pausable: paused");
         _;
     }
 
     /// @dev Modifier to make a function callable only when the contract is paused.
     modifier whenPaused() {
-        require(_now() <= paused, "Pausable: not paused");
+        require(_now() <= paused && rules.pausable == true, "Pausable: not paused");
         _;
     }
 
@@ -81,7 +83,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     function eligibleBalanceOf(address account) public view returns(uint256) {
         return balanceOf(account) - frozenTokens[account] - (freezedPeriod[account].amountFreezed);
     }
-
 
     /**
      * @notice Mint and send `amount` tokens to `to`

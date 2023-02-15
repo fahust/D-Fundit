@@ -17,4 +17,11 @@ library TokenLibrary {
         uint256 endTime;
         uint256 amountFreezed;
     }
+
+    struct Rules {
+        bool freezableAddress;
+        bool freezablePartial;
+        bool pausable;
+        bool forcableTransfer;
+    }
 }
