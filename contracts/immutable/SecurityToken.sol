@@ -136,7 +136,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
     }
 
     function refoundable(uint256 amount) public view returns(uint256){
-        return (address(this).balance.mul(100).div(totalSupply().mul(100))).mul(amount).div(100);
+        return (address(this).balance.mul(100).div(totalSupply().mul(100))).mul(amount);
     }
 
     /**
