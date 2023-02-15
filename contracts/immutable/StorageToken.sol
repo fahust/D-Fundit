@@ -6,8 +6,16 @@ import "../library/TokenLibrary.sol";
 
 contract StorageToken {
 
+    uint256 immutable pricePerToken;
+
+
+    constructor(
+        uint256 _pricePerToken
+    ) {
+        pricePerToken = _pricePerToken;
+    }
+
     uint256 internal paused;
-    uint256 internal _totalSupply;
 
     address internal OWNER;
 

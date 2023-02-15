@@ -7,12 +7,11 @@ import "./StorageToken.sol";
 import "../library/TokenLibrary.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
-import "../roles/WriterRole.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken {
+contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
     using SafeMath for uint;
 
     /**
@@ -20,8 +19,9 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     constructor(
         string memory _name,
         string memory _code,
+        uint256 _pricePerToken,
         TokenLibrary.Rules memory _rules
-    ) ERC20(_name, _code) {
+    ) ERC20(_name, _code) StorageToken(_pricePerToken) {
         OWNER = _msgSender();
         rules = _rules;
     }
@@ -94,25 +94,9 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      * @param amount {uint256} amount to mint
      * @return result {boolean} success or failure
      */
-    function mint(address to, uint256 amount) public onlyWriter returns (bool) {
+    function mint(address to, uint256 amount) external payable returns (bool) {
+        require(msg.value >= pricePerToken * amount, "Not enough eth");
         _mint(to, amount);
-        return true;
-    }
-
-    /**
-     * @notice Mint and send `amounts` tokens to `toList`
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event by {to}.
-     * @param toList {address[]} wallets to send the tokens
-     * @param amounts {uint256[]} amount to mint
-     * @return result {boolean} success or failure
-     */
-    function batchMint(address[] calldata toList, uint256[] calldata amounts) external returns (bool) {
-        for (uint256 i = 0; i < toList.length; i++) {
-            mint(toList[i], amounts[i]);
-        }
         return true;
     }
 
@@ -127,7 +111,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      */
     function burn(address account, uint256 amount)
         public
-        onlyWriter
         returns (bool)
     {
         uint256 freeBalance = eligibleBalanceOf(account);
@@ -144,23 +127,14 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
                 emit TokensUnfrozenPeriod(account, tokensToUnfreeze);
             }
         }
+
+        //totalSupply();
+
+        // (bool sent, ) = account.call{value: pricePerToken * amount}("");
+        // require(sent, "Failed to send Ether");
+
         _burn(account, amount);
         return true;
-    }
-
-    /**
-     * @notice Remove `amounts` tokens from `accounts`
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     * @param accounts {address[]} wallets to burn the tokens
-     * @param amounts {uint256[]} amounts to burn
-     */
-    function batchBurn(address[] calldata accounts, uint256[] calldata amounts) external {
-        for (uint256 i = 0; i < accounts.length; i++) {
-            burn(accounts[i], amounts[i]);
-        }
     }
 
     /**
