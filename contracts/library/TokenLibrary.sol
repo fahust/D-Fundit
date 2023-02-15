@@ -21,6 +21,7 @@ library TokenLibrary {
     struct Rules {
         bool freezableAddress;
         bool freezablePartial;
+        bool freezablePartialTime;
         bool pausable;
         bool forcableTransfer;
     }
