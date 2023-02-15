@@ -94,7 +94,7 @@ In short, D-Fundit allows creators to present their projects to a wider audience
 
 ## Smart Contract Description
 
-Our smart contracts represent a crowdfunding project, which is represented by [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) compatible **security token**.
+Our smart contracts **"security tokens"** represent a crowdfunding project, which is represented by [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) compatible **security token**.
 
 Each investment is made with a purchase of tokens, each token represents a share of the project, and can be redeemed at any time by the investor.
 
@@ -114,6 +114,14 @@ The <a href="#contracts">Security Token</a> standard is a set of rules that you 
 Each **movement of its tokens** (token transfer) is recorded in a **security movement record** which stores the wallet address of the **issuer** and the **receiver** as well as the **date** and **type** of that movement.
 
 The creation of **tokens** is possible through the interaction of any user who wishes to invest in this project through the smart contract.
+
+There is a second type of smart contract, the **"factory token "** which lists all the **"security tokens "** deployed on the blockchain
+
+## Blockchain Network
+
+Our smart contracts can be deployed immediately on a *mainnet* such as **ethereum** and **polygon**, but also on *testnet* such as **goeli** and **mumbai**.
+
+As our application is 100% decentralised (no back-end at all for complete decentralisation), it is not possible to save drafts of your projects, which is why a deployment on testnet can be a good training before a production deployment on mainnet.
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
@@ -505,7 +513,7 @@ En résumé, D-Fundit permet aux créateurs de présenter leurs projets à un pu
 
 ## Description Des Smart Contracts
 
-Nos smart contract représente un projet en crowdfunding, ce dernier est représenté par des **security token** compatible [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/).
+Nos smart contract **"security tokens"** représente un projet en crowdfunding, ce dernier est représenté par des **security token** compatible [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/).
 
 Chaque investissement ce réalise avec un achat de tokens, chaque token représente une part du projet, et peut être remboursser a tout moment par l'investisseur.
 
@@ -523,6 +531,14 @@ Le standard <a href="#contracts-FR">Security Token</a> est un ensemble de règle
 Chaque **mouvement de ses tokens** (transfer de tokens) est enregistré dans un **registre de mouvement de de titre** qui mémorise l'addresse wallet de l'**émetteurs** et du **récepteur** ainsi que la **date** et le **type** de ce mouvement.
 
 La création de **tokens** est possible par l'interaction de n'importe quel utilisateur qui souhaite investir dans ce projet par le biais du smart contract.
+
+Il existe un deuxième type de smart contract, le **"factory token"** qui répertorie l'ensemble des **"security tokens"** déployer sur la blockchain
+
+## Réseau Blockchain
+
+Nos smart contract peuvent être déployer immédiatement sur un *mainnet* tel que **ethereum** et **polygon**, mais aussi sur les *testnet* tel que **goeli** et **mumbai**.
+
+Notre application étant 100 % décentralisé (absence total de back-end pour une décentralisation complète), il n'est pas possible d'enregistrer de brouillons de vos projets, voila pourquoi un déploiement sur testnet peut être un bon entrainement avant un déploiement en production sur mainnet.
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
