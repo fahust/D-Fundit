@@ -76,21 +76,29 @@
 
 ## Project Description
 
+D-Fundit is a decentralised online crowdfunding platform that allows entrepreneurs, artists and creators to present their projects to a wider audience and raise funds for them. Projects can include films, video games, gadgets, technology products, artworks, books and more.
+
+The funding is exclusively in cryptocurrency, which offers many advantages:
+
+  - Firstly, cryptocurrency transactions can be conducted in a decentralised manner, meaning that there is no need for intermediaries such as banks or payment processors to facilitate the transaction. This can lead to lower transaction fees and faster transaction processing.
+
+  - In addition, cryptocurrency funding can offer a higher level of security and anonymity than traditional forms of funding. Cryptocurrency transactions are encrypted and stored in a blockchain, making them very difficult to tamper with or alter. In addition, cryptocurrency transactions can be conducted without disclosing the contributor's personal information, thus providing a higher level of privacy.
+
+  - Finally, cryptocurrency funding can offer investors access to innovative projects that are not available via traditional forms of funding. Many blockchain and cryptocurrency projects are funded through ICOs (Initial Coin Offerings), which allow investors to back projects that have the potential to become leaders in their field.
+
+D-Fundit allows creators to set a funding goal and campaign duration, and contributors can support the project by making a donation. If the project reaches its funding goal before the end of the campaign, the contributors are debited and the creator can use the money to complete the project. If the project does not reach its funding target, the contributors are not debited and the project will not be funded.
+
+In short, D-Fundit allows creators to present their projects to a wider audience and raise funds for their realisation, while at the same time allowing contributors to support projects that interest them and contribute to their realisation.
+
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
 ## Smart Contract Description
 
-Our smart contract represents an **asset**, it is a set of **securities** of the same type, among
-the following types:
+Our smart contracts represent a crowdfunding project, which is represented by [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) compatible **security token**.
 
-- **Shares / Stocks**
-- **Complex Bonds**
-- **Subscription Coupons**
-- **Stand-alone obligations**
+Each investment is made with a purchase of tokens, each token represents a share of the project, and can be redeemed at any time by the investor.
 
-These **securities** are represented on the blockchain by
-[ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) compatible **security
-tokens** .
+The funds invested are registered on the smart contract and the owner of the contract can retrieve funds under certain conditions within a timeframe that he or she will have established beforehand.
 
 The [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) standard gives the
 following possibilities:
@@ -103,15 +111,9 @@ following possibilities:
 The <a href="#contracts">Security Token</a> standard is a set of rules that you can find
 <a href="#contracts">here</a>
 
-Each **movement of its securities** (transfer of tokens) is recorded in a **securities movement
-register** that memorizes the wallet address of the **issuer** and the **receiver** as well as the
-**date** and **type** of this movement.
+Each **movement of its tokens** (token transfer) is recorded in a **security movement record** which stores the wallet address of the **issuer** and the **receiver** as well as the **date** and **type** of that movement.
 
-The identity is hidden on the blockchain and it is only possible to retrieve the public wallet
-address of the issuer and receiver.
-
-The creation of securities (**tokens**) is only possible through the interaction of the owner of the
-smart contract (**deployer**) or a trusted person (**agent**).
+The creation of **tokens** is possible through the interaction of any user who wishes to invest in this project through the smart contract.
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
@@ -310,7 +312,6 @@ Different roles were created for the use of our smart contract.
   privileges.
 - **Agent** : This role is one of the most important, it allows you to add identities, force a
   transfer, freeze an address or pause the contract.
-- **Writer** : This role allows you to mint tokens and burn them
 - **Reader** : This role only allows to call the `transfers()` function which gives the possibility
   to retrieve the securities movement register
 
@@ -484,40 +485,42 @@ function forcedTransfer(
 
 ## Description du projet
 
+D-Fundit est une plateforme de financement participatif décentralisé en ligne qui permet aux entrepreneurs, artistes et créateurs de présenter leurs projets à un public plus large et de collecter des fonds pour les réaliser. Les projets peuvent inclure des films, des jeux vidéo, des gadgets, des produits technologiques, des œuvres d'art, des livres et bien plus encore.
+
+Le financement ce fait exclusivement en cryptomonnaie, ce qui offres de nombreux avantages :
+
+  - Tout d'abord, les transactions en cryptomonnaie peuvent être effectuées de manière décentralisée, ce qui signifie qu'il n'y a pas besoin d'intermédiaires tels que les banques ou les processeurs de paiement pour faciliter la transaction. Cela peut entraîner des frais de transaction plus bas et une plus grande rapidité de traitement des transactions.
+
+  - En outre, le financement en cryptomonnaie peut offrir un niveau de sécurité et d'anonymat plus élevé que les formes de financement traditionnelles. Les transactions en cryptomonnaie sont cryptées et enregistrées dans une blockchain, ce qui les rend très difficiles à falsifier ou à altérer. De plus, les transactions en cryptomonnaie peuvent être effectuées sans divulguer les informations personnelles du contributeur, offrant ainsi un niveau de confidentialité supérieur.
+
+  - Enfin, le financement en cryptomonnaie peut offrir aux investisseurs un accès à des projets innovants qui ne sont pas disponibles via les formes de financement traditionnelles. De nombreux projets de blockchain et de cryptomonnaie sont financés par des ICO (Initial Coin Offerings), qui permettent aux investisseurs de soutenir des projets qui ont le potentiel de devenir des leaders dans leur domaine.
+
+D-Fundit permet aux créateurs de définir un objectif de financement et une durée de campagne, et les contributeurs peuvent soutenir le projet en faisant un don. Si le projet atteint son objectif de financement avant la fin de la campagne, les contributeurs sont débités et le créateur peut utiliser l'argent pour réaliser le projet. Si le projet n'atteint pas son objectif de financement, les contributeurs ne sont pas débités et le projet ne sera pas financé.
+
+En résumé, D-Fundit permet aux créateurs de présenter leurs projets à un public plus large et de collecter des fonds pour les réaliser, tout en permettant aux contributeurs de soutenir des projets qui les intéressent et de contribuer à leur réalisation.
+
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
 ## Description Des Smart Contracts
 
-Nos smart contract représente une asset, c'est un ensemble de **titre** d'un même type, parmis les possibiltié de types suivant :
+Nos smart contract représente un projet en crowdfunding, ce dernier est représenté par des **security token** compatible [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/).
 
-- **Actions**
-- **Bons de Souscription**
-- **Obligations complexes**
-- **Obligations autonomes**
+Chaque investissement ce réalise avec un achat de tokens, chaque token représente une part du projet, et peut être remboursser a tout moment par l'investisseur.
 
-Ces **titres** sont représenté sur la blockchain par des **security tokens** compatible
-[ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/).
+Les fonds investit sont enregistrer sur le smart contract et le possesseur du contrat peut récupérer des fonds sous certaines conditions dans le temps qu'il aura lui même établit au préalable.
 
-Le standard [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) donne les
-possibilités suivantes :
+Le standard [ERC-20](https://ethereum.org/fr/developers/docs/standards/tokens/erc-20/) donne les possibilités suivantes :
 
 - Possibilité d’émettre un token (**mint**)
 - Possibilité de céder un token (**transfert**)
 - Possibilité de faire de supprimer un token (**burn**)
 - Accès au solde de token détenu par un actionnaire (**balance**)
 
-Le standard <a href="#contracts-FR">Security Token</a> est un ensemble de règles établies que vous
-pourrez trouver <a href="#contracts-FR">ici</a>
+Le standard <a href="#contracts-FR">Security Token</a> est un ensemble de règles établies que vous pourrez trouver <a href="#contracts-FR">ici</a>
 
-Chaque **mouvement de ses titres** (transfer de tokens) est enregistré dans un **registre de
-mouvement de de titre** qui mémorise l'addresse wallet de l'**émetteurs** et du **récepteur** ainsi
-que la **date** et le **type** de ce mouvement.
+Chaque **mouvement de ses tokens** (transfer de tokens) est enregistré dans un **registre de mouvement de de titre** qui mémorise l'addresse wallet de l'**émetteurs** et du **récepteur** ainsi que la **date** et le **type** de ce mouvement.
 
-Les identités sont dissimulé sur la blockchain et il n'est possible que de récuperer l'addresse
-wallet public des émetteurs et récepteur.
-
-La création de titres (**tokens**) elle n'est possible que par l'interaction du possesseur du smart
-contract (**deployer**) ou d'une personne de confiance (**agent**).
+La création de **tokens** est possible par l'interaction de n'importe quel utilisateur qui souhaite investir dans ce projet par le biais du smart contract.
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
@@ -725,7 +728,6 @@ Différents rôles ont été créés pour l'utilisation de notre contrat intelli
   ses privilèges.
 - **Agent** : Ce rôle est l'un des plus importants, il permet d'ajouter des identités, de forcer un
   transfert, de geler une adresse ou de mettre en pause le contrat.
-- **Writer** : Ce rôle vous permet de frapper des jetons et de les brûler.
 - **Reader** : Ce rôle permet uniquement d'appeler la fonction `transfers()` qui donne la
   possibilité de de récupérer le registre des mouvements de titres
 
