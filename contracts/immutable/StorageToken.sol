@@ -7,7 +7,6 @@ import "../library/TokenLibrary.sol";
 contract StorageToken {
 
     uint256 internal paused;
-    uint256 internal recovery;
     uint256 internal _totalSupply;
 
     TokenLibrary.Token internal _token;
@@ -33,7 +32,6 @@ contract StorageToken {
     error MintDoesNotWork(address account, uint256 previousBalance, uint256 currentBalance, uint256 amount);
     error BurnFromZeroAddress(address account);
     error BurnAmountExceedsBalance(address account, uint256 accountBalance, uint256 amount);
-    error NotInRecovery(address sender);
 
     event TransferOwnership(address indexed oldAccount, address indexed newAccount);
     event Transfer(string eventType, address indexed from, address indexed to, uint256 value);
@@ -49,9 +47,6 @@ contract StorageToken {
     );
     event TokensUnfrozen(address indexed userAddress, uint256 indexed amount);
     event TokensUnfrozenPeriod(address indexed userAddress, uint256 indexed amount);
-    event IdentityRegistryAdded(address indexed _identityRegistry);
-    event RecoveryOldTransfers(TokenLibrary.Transfer[] oldTransfers, address owner);
-    event RecoveryOldBalances(address[] addresses, uint256[] balances, address owner);
     
     function _now() public view returns (uint256) {
         return block.timestamp;

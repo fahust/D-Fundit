@@ -25,7 +25,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
         _token.code = tokenInput.code;
         _token.assetType = tokenInput.assetType;
         _token.owner = _msgSender();
-        recovery = _now() + (1 days);
     }
 
     /// @dev Modifier to make a function callable only when the contract is not paused.
@@ -37,12 +36,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     /// @dev Modifier to make a function callable only when the contract is paused.
     modifier whenPaused() {
         require(_now() <= paused, "Pausable: not paused");
-        _;
-    }
-
-    modifier onlyRecovery() {
-        if (_now() >= recovery)
-            revert NotInRecovery({ sender: _msgSender() });
         _;
     }
 
@@ -338,49 +331,6 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     function _burn(address account, uint256 amount) internal virtual override {
         super._burn(account, amount);
         _afterTokenTransfer("burn", account, address(0), amount);
-    }
-
-    /**
-     * @notice Recovers all transfers from a previous asset that were not issued on the blockchain
-     * @param oldTransfers {TokenLibrary.Transfer[]} Stuct of the old transfers we recovery
-     */
-    function recoveryOldTransfers(
-        TokenLibrary.Transfer[] calldata oldTransfers
-    ) external onlyRecovery onlyOwner {
-        uint256 transfersCount = _transfersCount;
-        for (uint256 index = 0; index < oldTransfers.length; index++) {
-            _transfers[transfersCount+index] = oldTransfers[index];
-            emit Transfer(
-                oldTransfers[index].transferType,
-                oldTransfers[index].from,
-                oldTransfers[index].to,
-                oldTransfers[index].amount
-            );
-        }
-        _transfersCount += uint32(oldTransfers.length);
-        emit RecoveryOldTransfers(oldTransfers, _msgSender());
-    }
-
-    /**
-     * @notice Recovers all balances from a previous asset that were not issued on the blockchain
-     * @param addresses {address[]} of the owners of the securities
-     * @param balances {uint256[]} amout of tokens
-     */
-    function recoveryOldBalances(
-        address[] calldata addresses,
-        uint256[] calldata balances
-    ) external onlyRecovery onlyOwner {
-        for (uint256 index = 0; index < addresses.length; index++) {
-            _mint(addresses[index], balances[index]);
-        }
-        emit RecoveryOldBalances(addresses, balances, _msgSender());
-    }
-
-    /**
-     * @notice Definitely stop the recovery of old transfers
-     */
-    function stopRecovery() external onlyOwner {
-        recovery = 0;
     }
 
     /**
