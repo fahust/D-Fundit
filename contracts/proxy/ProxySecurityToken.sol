@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 
 import "../immutable/StorageToken.sol";
 import "../library/TokenLibrary.sol";
-import "../immutable/SecurityTokenImmutable.sol";
+import "../interfaces/ISecurityTokenImmutable.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
     using SafeMath for uint;
 
-    SecurityTokenImmutable public TokenContract;
+    ISecurityTokenImmutable public TokenContract;
 
     /**
      */
@@ -24,8 +24,12 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         lastWithdraw = _now();
     }
 
-    function setSecurityTokenImmutableAddress(address _securityTokenImmutableAddress) external onlyOwner {
-        TokenContract = SecurityTokenImmutable(_securityTokenImmutableAddress);
+    /**
+     * @notice set the contract address of security token immutable
+     * @param _securityTokenImmutableAddress {address} address of security token immutable contract
+     */
+    function setSecurityTokenImmutable(address _securityTokenImmutableAddress) external onlyOwner {
+        TokenContract = ISecurityTokenImmutable(_securityTokenImmutableAddress);
     }
 
     /// @dev Modifier to check if fundraising is open and max supply not reached.
@@ -37,6 +41,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         _;
     }
 
+    /// @dev Check if contract immutable is valid
     modifier contractValid() {
         require(address(TokenContract) != address(0), "Token contract is not valid");
         _;
@@ -89,6 +94,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
     function mint(address to, uint256 amount) external payable fundraisable(amount) contractValid returns (bool) {
         require(msg.value >= pricePerToken * amount, "Not enough eth");
         TokenContract.mint(to, amount);
+        TokenContract.handlePayment{value: msg.value}(_msgSender());
         return true;
     }
 
@@ -123,7 +129,8 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
 
         uint256 _refoundable = refoundable(amount);
 
-        TokenContract.burn(account, amount, _refoundable);
+        bool success = TokenContract.burn(account, amount, _refoundable);
+        require(success, "Failed to send Ether");
 
         return true;
     }
@@ -134,7 +141,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
      * @return wei {uint256} amount of wei refoundable
      */
     function refoundable(uint256 amount) public view contractValid returns(uint256){
-        return (address(this).balance.mul(100).div(TokenContract.totalSupply().mul(100))).mul(amount);
+        return (address(TokenContract).balance.mul(100).div(TokenContract.totalSupply().mul(100))).mul(amount);
     }
 
     /**
@@ -146,9 +153,25 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
      * @param to {address} wallet to transfer the token
      * @param amount {uint256[]} amount to transfer
      */
-    function transfer(address to, uint256 amount) public virtual contractValid returns (bool) {
+    function transfer(address to, uint256 amount) external contractValid returns (bool) {
         require(canTransfer(_msgSender(), _msgSender(), to, amount) == (hex"51"));
         TokenContract.transferFrom(_msgSender(), to, amount);
+        return true;
+    }
+
+    /**
+     * @dev Transfer and send `amount` tokens from `from` to `to`
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     * @param from {address} wallet from transfer the token
+     * @param to {address} wallet to transfer the token
+     * @param amount {uint256[]} amount to transfer
+     */
+    function transferFrom(address from, address to, uint256 amount) external contractValid returns (bool) {
+        require(canTransfer(_msgSender(), from, to, amount) == (hex"51"));
+        TokenContract.transferFrom(from, to, amount);
         return true;
     }
 
@@ -167,7 +190,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         uint256 value
     ) public view contractValid returns (bytes1) {
         if (TokenContract.balanceOf(from) < value) return(hex"52");
-        if(_now() < paused) return(hex"54");
+        if(_now() < TokenContract.isPaused()) return(hex"54");
         if(TokenContract.balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) return(hex"55");
         if(from == address(0)) return(hex"56");
         if(to == address(0)) return(hex"57");
@@ -379,8 +402,8 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         TokenLibrary.Rules memory _rules = TokenContract.getRules();
         if(_rules.dayToWithdraw != 0)
             lastWithdraw += oneDay.mul(_rules.dayToWithdraw).mul(amount);
-        (bool success, ) = payable(receiver).call{ value: amount}("");
-        require(success, "Withdraw not successful");
+        bool success = TokenContract.withdraw(amount, receiver);
+        require(success,"Withdraw failed");
     }
 
     /**
@@ -394,13 +417,5 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
             weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(_rules.dayToWithdraw)));
         require(weiWithdrawable >= amount || _rules.dayToWithdraw == 0, "Not enough funds to withdraw");
         require(lastWithdraw + oneDay.mul(_rules.dayToWithdraw).mul(amount) <= _now() || _rules.dayToWithdraw == 0, "Time incorrect");
-    }
-
-    /**
-     * @notice Inject wei into smart contract
-     */
-    function injectCapital() external payable onlyOwner returns(bool) {
-        ///maybe todo reduce lastWithdraw ??
-        return true;
     }
 }

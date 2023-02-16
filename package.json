@@ -8,7 +8,7 @@
     "ganache": "dotenv -- cross-var ganache-cli --host %GANACHE_HOST% --port %GANACHE_PORT%",
     "migrate": "truffle migrate --network development",
     "test": "truffle test",
-    "test:proxy": "truffle test ./test/security.proxy.spec",
+    "test:proxy": "truffle test ./test/security.proxy.spec.js",
     "test:ci": "scripts/test.sh",
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "lint:js": "eslint ./test/**/*.js",

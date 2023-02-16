@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 
 import "../library/TokenLibrary.sol";
-import "../proxy/ProxySecurityToken.sol";
+import "../interfaces/IProxySecurityToken.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -59,7 +59,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
     }
 
     function setAddressProxy(address _addressProxy) external {
-        require(ProxySecurityToken(_addressProxy).owner() == owner(),"Invalid contract & Owner");
+        require(IProxySecurityToken(_addressProxy).owner() == owner(),"Invalid contract & Owner");
         addressProxy = _addressProxy;
     }
 
@@ -236,16 +236,32 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
         emit Paused(_msgSender(), paused);
     }
 
+    function isPaused() external view returns(uint256){
+        return paused;
+    }
+
     /**
      * @notice Withdraw tokens amount of contract balance
      * @param amount {uint256} the number of tokens transferred
      * @param receiver {address} the recipient of the token transfer
      */
-    function withdraw(uint256 amount, address receiver) external onlyProxy {
+    function withdraw(uint256 amount, address receiver) external onlyProxy returns(bool) {
         (bool success, ) = payable(receiver).call{ value: amount}("");
         require(success, "Withdraw not successful");
+        return success;
     }
 
+    function handlePayment(address senderAddress) payable public returns(bool) {
+        return true;
+    }
+
+    /**
+     * @notice Inject wei into smart contract
+     */
+    function injectCapital() external payable onlyOwner returns(bool) {
+        ///maybe todo reduce lastWithdraw ??
+        return true;
+    }
 
     /**
      * @notice Hook that is called after any transfer of tokens. This includes
