@@ -33,6 +33,10 @@ contract("SECURITY TOKEN", async accounts => {
       freezablePartialTime: true,
       pausable: true,
       forcableTransfer: true,
+      dayToWithdraw : 0,
+      startFundraising : Math.floor(Date.now()/1000),
+      endFundraising : Math.floor(Date.now()/1000)+1000000000,
+      maxSupply : 10000,
     }); // we deploy contract
   });
 
@@ -733,8 +737,8 @@ contract("SECURITY TOKEN", async accounts => {
 
       const blockTimeStampAfterIncreaseTime = await this.SecurityTokenContract._now();
       assert.equal(
-        Math.floor(+blockTimeStampAfterIncreaseTime / 10),
-        Math.floor(+someDaysLater / 10000),
+        Math.floor(+blockTimeStampAfterIncreaseTime / 100),
+        Math.floor(+someDaysLater / 100000),
       );
     });
 
@@ -1075,4 +1079,7 @@ contract("SECURITY TOKEN", async accounts => {
       console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
     });
   });
+  //TODO withdraw in period
+  //TODO inject capital
+  //TODO set fundraising
 });
