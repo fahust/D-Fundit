@@ -10,6 +10,7 @@ const code = "code";
 const assetType = "asset type";
 const amount = 10;
 const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
+const pricePerToken = 10;
 
 function randomIntFromInterval(min, max) {
   // min and max included
@@ -26,7 +27,7 @@ contract("SECURITY TOKEN", async accounts => {
   const agent = accounts[8];
 
   it("SUCCESS : Should deploy smart contract security token", async () => {
-    this.SecurityTokenContract = await SecurityToken.new(name, code, {
+    this.SecurityTokenContract = await SecurityToken.new(name, code, pricePerToken, {
       freezableAddress: true,
       freezablePartial: true,
       freezablePartialTime: true,
@@ -68,10 +69,11 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(transfers.length, 0);
     });
 
-    it("ERROR : Should not mint with walletFirstFounder", async () => {
+    it("ERROR : Should not mint with not enough value eth", async () => {
       try {
         await this.SecurityTokenContract.mint(walletDeployer, amount, {
           from: walletFirstFounder,
+          value: pricePerToken,
         });
       } catch (error) {
         // const decodedError = await decodeError(error);
@@ -82,7 +84,10 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should mint with deployer account", async () => {
       date = Math.floor(Date.now() / 10000);
-      await this.SecurityTokenContract.mint(walletFirstFounder, amount);
+      await this.SecurityTokenContract.mint(walletFirstFounder, amount, {
+        from: walletDeployer,
+        value: pricePerToken * amount,
+      });
     });
 
     it("SUCCESS : Should get balance from first founder after mint", async () => {
@@ -102,9 +107,9 @@ contract("SECURITY TOKEN", async accounts => {
       // assert.equal(Math.floor(transfers[0].date / 10), date);
     });
 
-    it("ERROR : Should not burn with first founder account", async () => {
+    it("ERROR : Should not burn with first founder account more of balance", async () => {
       try {
-        await this.SecurityTokenContract.burn(walletFirstFounder, amount, {
+        await this.SecurityTokenContract.burn(walletFirstFounder, amount + 1, {
           from: walletFirstFounder,
         });
       } catch (error) {
@@ -149,17 +154,6 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(ownerAfterTransferOwnership, walletNewOwner);
     });
 
-    it("ERROR : Should not mint with walletDeployer", async () => {
-      try {
-        await this.SecurityTokenContract.mint(walletDeployer, amount, {
-          from: walletDeployer,
-        });
-      } catch (error) {
-        // const decodedError = await decodeError(error);
-        // assert.equal(decodedError.errorFunction, "NotWriter(address)");
-        // assert.equal(decodedError.decoded.sender, walletDeployer);
-      }
-    });
 
     it("ERROR : Should not transfer with walletDeployer no balance", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
@@ -179,6 +173,7 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should mint with new owner account to new owner", async () => {
       await this.SecurityTokenContract.mint(walletNewOwner, amount, {
         from: walletNewOwner,
+        value: pricePerToken * amount,
       });
       const balance = await this.SecurityTokenContract.balanceOf(walletNewOwner);
       assert.equal(`${+balance}`, amount);
@@ -231,6 +226,7 @@ contract("SECURITY TOKEN", async accounts => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.mint(walletFirstFounder, amount, {
           from: walletNewOwner,
+          value: pricePerToken * amount,
         }),
       );
     });
