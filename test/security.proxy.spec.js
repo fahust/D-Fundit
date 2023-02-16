@@ -3,7 +3,8 @@ const decodeError = require("../utils/decodeError");
 
 const { increaseTimeTo } = require("../utils/increaseTime");
 
-const SecurityToken = artifacts.require("SecurityToken");
+const SecurityTokenImmutable = artifacts.require("SecurityTokenImmutable");
+const ProxySecurityToken = artifacts.require("ProxySecurityToken");
 
 const name = "name";
 const code = "code";
@@ -27,55 +28,70 @@ contract("SECURITY TOKEN", async accounts => {
   const agent = accounts[8];
 
   it("SUCCESS : Should deploy smart contract security token", async () => {
-    this.SecurityTokenContract = await SecurityToken.new(name, code, pricePerToken, {
+    this.SecurityTokenImmutableContract = await SecurityTokenImmutable.new(name, code, {
       freezableAddress: true,
       freezablePartial: true,
       freezablePartialTime: true,
       pausable: true,
       forcableTransfer: true,
-      dayToWithdraw : 0,
-      startFundraising : Math.floor(Date.now()/1000),
-      endFundraising : Math.floor(Date.now()/1000)+1000000000,
-      maxSupply : 10000,
+      dayToWithdraw: 0,
+      startFundraising: Math.floor(Date.now() / 1000),
+      endFundraising: Math.floor(Date.now() / 1000) + 1000000000,
+      maxSupply: 10000,
     }); // we deploy contract
+
+    this.ProxySecurityTokenContract = await ProxySecurityToken.new(pricePerToken); // we deploy contract
   });
 
   describe("ERC-20 MODULE", async () => {
     // it("SUCCESS : Should get name of security token", async () => {
-    //   const callName = await this.SecurityTokenContract.name();
+    //   const callName = await this.ProxySecurityTokenContract.name();
     //   assert.equal(callName, name);
     // });
 
     // it("SUCCESS : Should get code of security token", async () => {
-    //   const callCode = await this.SecurityTokenContract.code();
+    //   const callCode = await this.ProxySecurityTokenContract.code();
     //   assert.equal(callCode, code);
     // });
 
     // it("SUCCESS : Should get assetType of security token", async () => {
-    //   const callAssetType = await this.SecurityTokenContract.assetType();
+    //   const callAssetType = await this.ProxySecurityTokenContract.assetType();
     //   assert.equal(callAssetType, assetType);
     // });
 
+    it("SUCCESS : Should setAddressProxy of SecurityTokenImmutableContract", async () => {
+      const callTotalSupply = await this.SecurityTokenImmutableContract.setAddressProxy(
+        this.ProxySecurityTokenContract.address,
+      );
+    });
+
+    it("SUCCESS : Should setSecurityTokenImmutable of ProxySecurityTokenContract", async () => {
+      const callTotalSupply =
+        await this.ProxySecurityTokenContract.setSecurityTokenImmutable(
+          this.SecurityTokenImmutableContract.address,
+        );
+    });
+
     it("SUCCESS : Should get totalSupply of security token", async () => {
-      const callTotalSupply = await this.SecurityTokenContract.totalSupply();
+      const callTotalSupply = await this.SecurityTokenImmutableContract.totalSupply();
       assert.equal(`${+callTotalSupply}`, 0);
     });
 
     it("SUCCESS : Should get balance from first founder before mint", async () => {
-      const balanceBeforeMint = await this.SecurityTokenContract.balanceOf(
+      const balanceBeforeMint = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceBeforeMint}`, 0);
     });
 
     it("SUCCESS : Should get transfers from first founder before mint", async () => {
-      const transfers = await this.SecurityTokenContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers();
       assert.equal(transfers.length, 0);
     });
 
     it("ERROR : Should not mint with not enough value eth", async () => {
       try {
-        await this.SecurityTokenContract.mint(walletDeployer, amount, {
+        await this.ProxySecurityTokenContract.mint(walletDeployer, amount, {
           from: walletFirstFounder,
           value: pricePerToken,
         });
@@ -88,21 +104,21 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should mint with deployer account", async () => {
       date = Math.floor(Date.now() / 10000);
-      await this.SecurityTokenContract.mint(walletFirstFounder, amount, {
+      await this.ProxySecurityTokenContract.mint(walletFirstFounder, amount, {
         from: walletFirstFounder,
         value: pricePerToken * amount,
       });
     });
 
     it("SUCCESS : Should get balance from first founder after mint", async () => {
-      const balanceAfterMint = await this.SecurityTokenContract.balanceOf(
+      const balanceAfterMint = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceAfterMint}`, amount);
     });
 
     it("SUCCESS : Should get transfers after mint of first founder", async () => {
-      const transfers = await this.SecurityTokenContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers();
       assert.equal(transfers.length, 1);
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
@@ -113,7 +129,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not burn with first founder account more of balance", async () => {
       try {
-        await this.SecurityTokenContract.burn(walletFirstFounder, amount + 1, {
+        await this.ProxySecurityTokenContract.burn(walletFirstFounder, amount + 1, {
           from: walletFirstFounder,
         });
       } catch (error) {
@@ -126,12 +142,12 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should randomly mint and burn some token with two other account", async () => {
       for (let index = 3; index < 7; index++) {
         let random = randomIntFromInterval(1, 10);
-        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+        await this.ProxySecurityTokenContract.mint(accounts[index], amount * random, {
           from: accounts[index],
           value: pricePerToken * amount * random,
         });
 
-        await this.SecurityTokenContract.burn(
+        await this.ProxySecurityTokenContract.burn(
           accounts[index],
           amount * random - randomIntFromInterval(1, 10),
           {
@@ -142,12 +158,11 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should burn with deployer account", async () => {
-      const totalSupply = await this.SecurityTokenContract.totalSupply();
-      const tokenBalanceWalletBeforeBurn = await this.SecurityTokenContract.balanceOf(
-        walletFirstFounder,
-      );
+      const totalSupply = await this.SecurityTokenImmutableContract.totalSupply();
+      const tokenBalanceWalletBeforeBurn =
+        await this.SecurityTokenImmutableContract.balanceOf(walletFirstFounder);
       const contractBalance = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.SecurityTokenImmutableContract.address,
       );
       const ethBalanceWalletBeforeBurn = await web3.eth.getBalance(walletFirstFounder);
 
@@ -165,19 +180,22 @@ contract("SECURITY TOKEN", async accounts => {
 
       console.log("refoundableOffChain", +refoundableOffChain);
 
-      const refoundableOnChain = await this.SecurityTokenContract.refoundable(amount, {
-        from: walletDeployer,
-      });
+      const refoundableOnChain = await this.ProxySecurityTokenContract.refoundable(
+        amount,
+        {
+          from: walletDeployer,
+        },
+      );
 
       assert.equal(+refoundableOnChain, +refoundableOffChain);
 
       console.log("refoundableOnChain", +refoundableOnChain);
 
-      await this.SecurityTokenContract.burn(walletFirstFounder, amount, {
+      await this.ProxySecurityTokenContract.burn(walletFirstFounder, amount, {
         from: walletDeployer,
       });
 
-      const tokenBalanceWalletAfterBurn = await this.SecurityTokenContract.balanceOf(
+      const tokenBalanceWalletAfterBurn = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
 
@@ -195,7 +213,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
-      const transfers = await this.SecurityTokenContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers();
       assert.equal(transfers.length, 10);
 
       assert.equal(transfers[0].transferType, "mint");
@@ -211,21 +229,28 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should transfer owner ship", async () => {
-      const ownerBeforeTransferOwnership = await this.SecurityTokenContract.owner();
+      const ownerBeforeTransferOwnership = await this.ProxySecurityTokenContract.owner();
       assert.equal(ownerBeforeTransferOwnership, walletDeployer);
 
-      await this.SecurityTokenContract.transferOwnership(walletNewOwner);
+      await this.ProxySecurityTokenContract.transferOwnership(walletNewOwner);
+      await this.SecurityTokenImmutableContract.transferOwnership(walletNewOwner);
 
-      await this.SecurityTokenContract.increaseAllowance(walletNewOwner, "20000000000");
+      await this.SecurityTokenImmutableContract.increaseAllowance(
+        walletNewOwner,
+        "20000000000",
+      );
 
-      await this.SecurityTokenContract.increaseAllowance(walletDeployer, "20000000000");
+      await this.SecurityTokenImmutableContract.increaseAllowance(
+        walletDeployer,
+        "20000000000",
+      );
 
-      const ownerAfterTransferOwnership = await this.SecurityTokenContract.owner();
+      const ownerAfterTransferOwnership = await this.ProxySecurityTokenContract.owner();
       assert.equal(ownerAfterTransferOwnership, walletNewOwner);
     });
 
     it("ERROR : Should not transfer with walletDeployer no balance", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletFirstFounder,
@@ -233,23 +258,23 @@ contract("SECURITY TOKEN", async accounts => {
       );
       assert.equal(canTransfer, "0x52");
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transfer(walletFirstFounder, amount, {
+        this.ProxySecurityTokenContract.transfer(walletFirstFounder, amount, {
           from: walletNewOwner,
         }),
       );
     });
 
     it("SUCCESS : Should mint with new owner account to new owner", async () => {
-      await this.SecurityTokenContract.mint(walletNewOwner, amount, {
+      await this.ProxySecurityTokenContract.mint(walletNewOwner, amount, {
         from: walletNewOwner,
         value: pricePerToken * amount,
       });
-      const balance = await this.SecurityTokenContract.balanceOf(walletNewOwner);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletNewOwner);
       assert.equal(`${+balance}`, amount);
     });
 
     it("SUCCESS : Should transfer with walletDeployer", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletDeployer,
@@ -257,21 +282,21 @@ contract("SECURITY TOKEN", async accounts => {
       );
       assert.equal(canTransfer, "0x51");
 
-      await this.SecurityTokenContract.transfer(walletDeployer, amount, {
+      await this.ProxySecurityTokenContract.transfer(walletDeployer, amount, {
         from: walletNewOwner,
       });
-      const balance = await this.SecurityTokenContract.balanceOf(walletDeployer);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletDeployer);
       assert.equal(`${+balance}`, amount);
     });
 
     it("SUCCESS : Should pause with walletNewOwner", async () => {
-      await this.SecurityTokenContract.pause(Math.floor(Date.now() / 1000) + 100, {
+      await this.SecurityTokenImmutableContract.pause(Math.floor(Date.now() / 1000) + 100, {
         from: walletNewOwner,
       });
     });
 
     it("ERROR : Should not transfer with new owner account because contract is paused", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletDeployer,
         walletFirstFounder,
@@ -280,7 +305,7 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x54");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transferFrom(
+        this.ProxySecurityTokenContract.transferFrom(
           walletDeployer,
           walletFirstFounder,
           amount,
@@ -293,7 +318,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not mint with walletNewOwner account because contract is paused", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.mint(walletFirstFounder, amount, {
+        this.ProxySecurityTokenContract.mint(walletFirstFounder, amount, {
           from: walletNewOwner,
           value: pricePerToken * amount,
         }),
@@ -302,20 +327,20 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not burn with walletNewOwner account because contract is paused", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.burn(walletFirstFounder, amount, {
+        this.ProxySecurityTokenContract.burn(walletFirstFounder, amount, {
           from: walletNewOwner,
         }),
       );
     });
 
     it("SUCCESS : Should unpause with walletNewOwner", async () => {
-      await this.SecurityTokenContract.unpause({
+      await this.SecurityTokenImmutableContract.unpause({
         from: walletNewOwner,
       });
     });
 
     it("SUCCESS : Should transfer with new owner account", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletDeployer,
         walletFirstFounder,
@@ -323,7 +348,7 @@ contract("SECURITY TOKEN", async accounts => {
       );
       assert.equal(canTransfer, "0x51");
 
-      await this.SecurityTokenContract.transferFrom(
+      await this.ProxySecurityTokenContract.transferFrom(
         walletDeployer,
         walletFirstFounder,
         amount,
@@ -331,12 +356,12 @@ contract("SECURITY TOKEN", async accounts => {
           from: walletNewOwner,
         },
       );
-      const balance = await this.SecurityTokenContract.balanceOf(walletFirstFounder);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletFirstFounder);
       assert.equal(`${+balance}`, amount);
     });
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
-      const transfers = await this.SecurityTokenContract.transfers({
+      const transfers = await this.SecurityTokenImmutableContract.transfers({
         from: walletNewOwner,
       });
       assert.equal(transfers.length, 13);
@@ -371,27 +396,30 @@ contract("SECURITY TOKEN", async accounts => {
   describe("FREEZING-ADDRESS MODULE", async () => {
     it("ERROR : Should not freeze address with not owner or agent address", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.setAddressFrozen(walletFirstFounder, false, {
+        this.ProxySecurityTokenContract.setAddressFrozen(walletFirstFounder, false, {
           from: walletDeployer,
         }),
       );
     });
 
     it("SUCCESS : Should freeze address", async () => {
-      await this.SecurityTokenContract.setAddressFrozen(walletFirstFounder, true, {
+      await this.ProxySecurityTokenContract.setAddressFrozen(walletFirstFounder, true, {
         from: walletNewOwner,
       });
     });
 
     it("SUCCESS : Should know if address it frozen", async () => {
-      const isFrozen = await this.SecurityTokenContract.isFrozen(walletFirstFounder, {
-        from: walletNewOwner,
-      });
+      const isFrozen = await this.ProxySecurityTokenContract.isFrozen(
+        walletFirstFounder,
+        {
+          from: walletNewOwner,
+        },
+      );
       assert.equal(isFrozen, true);
     });
 
     it("ERROR : Should not transfer with walletFirstFounder because freezed address", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
@@ -400,17 +428,17 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x5a");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transfer(walletDeployer, amount, {
+        this.ProxySecurityTokenContract.transfer(walletDeployer, amount, {
           from: walletFirstFounder,
         }),
         //'wallet is frozen',
       );
-      const balance = await this.SecurityTokenContract.balanceOf(walletFirstFounder);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletFirstFounder);
       assert.equal(`${+balance}`, amount);
     });
 
     it("ERROR : Should not transferFrom with new owner account to freezed account", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletFirstFounder,
@@ -419,7 +447,7 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x52");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transferFrom(
+        this.ProxySecurityTokenContract.transferFrom(
           walletNewOwner,
           walletFirstFounder,
           amount,
@@ -433,7 +461,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not transferFrom with new owner account from freezed account", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transferFrom(
+        this.ProxySecurityTokenContract.transferFrom(
           walletFirstFounder,
           walletNewOwner,
           amount,
@@ -446,7 +474,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should unfreeze address by batch", async () => {
-      await this.SecurityTokenContract.batchSetAddressFrozen(
+      await this.ProxySecurityTokenContract.batchSetAddressFrozen(
         [walletFirstFounder],
         [false],
         {
@@ -456,7 +484,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should transfer with walletFirstFounder", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
@@ -464,15 +492,15 @@ contract("SECURITY TOKEN", async accounts => {
       );
       assert.equal(canTransfer, "0x51");
 
-      await this.SecurityTokenContract.transfer(walletDeployer, amount, {
+      await this.ProxySecurityTokenContract.transfer(walletDeployer, amount, {
         from: walletFirstFounder,
       });
-      const balance = await this.SecurityTokenContract.balanceOf(walletDeployer);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletDeployer);
       assert.equal(`${+balance}`, amount);
     });
 
     it("SUCCESS : Should transferFrom with new owner", async () => {
-      await this.SecurityTokenContract.transferFrom(
+      await this.ProxySecurityTokenContract.transferFrom(
         walletDeployer,
         walletFirstFounder,
         amount,
@@ -486,15 +514,19 @@ contract("SECURITY TOKEN", async accounts => {
   describe("FREEZING-PARTIAL MODULE", async () => {
     it("ERROR : Should not freeze partial tokens address more than balance", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.freezePartialTokens(walletFirstFounder, amount + 1, {
-          from: walletNewOwner,
-        }),
+        this.ProxySecurityTokenContract.freezePartialTokens(
+          walletFirstFounder,
+          amount + 1,
+          {
+            from: walletNewOwner,
+          },
+        ),
         //'Amount exceeds available balance',
       );
     });
 
     it("SUCCESS : Should freeze partial tokens walletFirstFounder", async () => {
-      await this.SecurityTokenContract.freezePartialTokens(
+      await this.ProxySecurityTokenContract.freezePartialTokens(
         walletFirstFounder,
         amount / 2,
         {
@@ -504,7 +536,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get freezed partial tokens on walletFirstFounder", async () => {
-      const getFrozenTokens = await this.SecurityTokenContract.getFrozenTokens(
+      const getFrozenTokens = await this.ProxySecurityTokenContract.getFrozenTokens(
         walletFirstFounder,
         {
           from: walletNewOwner,
@@ -514,7 +546,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("ERROR : Should not transfer with walletFirstFounder with partial freezed token", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
@@ -523,44 +555,46 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transfer(walletDeployer, amount, {
+        this.ProxySecurityTokenContract.transfer(walletDeployer, amount, {
           from: walletFirstFounder,
         }),
         //'Insufficient Balance',
       );
 
-      const balance = await this.SecurityTokenContract.balanceOf(walletFirstFounder);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletFirstFounder);
       assert.equal(`${+balance}`, amount);
     });
 
     it("SUCCESS : Should transfer with walletFirstFounder", async () => {
-      await this.SecurityTokenContract.transfer(walletDeployer, amount / 2, {
+      await this.ProxySecurityTokenContract.transfer(walletDeployer, amount / 2, {
         from: walletFirstFounder,
       });
 
-      const balanceWalletDeployer = await this.SecurityTokenContract.balanceOf(
+      const balanceWalletDeployer = await this.SecurityTokenImmutableContract.balanceOf(
         walletDeployer,
       );
       assert.equal(`${+balanceWalletDeployer}`, amount / 2);
 
-      const balanceWalletFirstFounder = await this.SecurityTokenContract.balanceOf(
+      const balanceWalletFirstFounder = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceWalletFirstFounder}`, amount / 2);
 
-      await this.SecurityTokenContract.transfer(walletFirstFounder, amount / 2, {
+      await this.ProxySecurityTokenContract.transfer(walletFirstFounder, amount / 2, {
         from: walletDeployer,
       });
     });
 
     it("SUCCESS : Should batch freeze partial tokens walletFirstFounder", async () => {
-      const balanceOf = await this.SecurityTokenContract.balanceOf(walletFirstFounder);
-      const getFrozenTokens = await this.SecurityTokenContract.getFrozenTokens(
+      const balanceOf = await this.SecurityTokenImmutableContract.balanceOf(
+        walletFirstFounder,
+      );
+      const getFrozenTokens = await this.ProxySecurityTokenContract.getFrozenTokens(
         walletFirstFounder,
       );
       assert.equal(`${`${+balanceOf}` - +getFrozenTokens}`, amount / 2);
 
-      await this.SecurityTokenContract.batchFreezePartialTokens(
+      await this.ProxySecurityTokenContract.batchFreezePartialTokens(
         [walletFirstFounder],
         [`${`${+balanceOf}` - +getFrozenTokens}`],
         {
@@ -570,7 +604,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("ERROR : Should not transferFrom with new owner with partial freezed token", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletNewOwner,
         walletFirstFounder,
         walletDeployer,
@@ -579,14 +613,19 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transferFrom(walletFirstFounder, walletDeployer, 1, {
-          from: walletNewOwner,
-        }),
+        this.ProxySecurityTokenContract.transferFrom(
+          walletFirstFounder,
+          walletDeployer,
+          1,
+          {
+            from: walletNewOwner,
+          },
+        ),
       );
     });
 
     it("SUCCESS : Should batch freeze partial tokens walletFirstFounder", async () => {
-      await this.SecurityTokenContract.batchUnfreezePartialTokens(
+      await this.ProxySecurityTokenContract.batchUnfreezePartialTokens(
         [walletFirstFounder],
         [amount / 2],
         {
@@ -596,7 +635,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should freeze partial tokens walletFirstFounder", async () => {
-      await this.SecurityTokenContract.unfreezePartialTokens(
+      await this.ProxySecurityTokenContract.unfreezePartialTokens(
         walletFirstFounder,
         amount / 2,
         {
@@ -604,7 +643,7 @@ contract("SECURITY TOKEN", async accounts => {
         },
       );
 
-      const getFrozenTokens = await this.SecurityTokenContract.getFrozenTokens(
+      const getFrozenTokens = await this.ProxySecurityTokenContract.getFrozenTokens(
         walletFirstFounder,
       );
 
@@ -613,7 +652,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     // it('ERROR : Should force transfer', async () => {
     //   await truffleAssert.reverts(
-    //     this.SecurityTokenContract.forcedTransfer(
+    //     this.ProxySecurityTokenContract.forcedTransfer(
     //       walletFirstFounder,
     //       walletNewOwner,
     //       amount,
@@ -628,16 +667,16 @@ contract("SECURITY TOKEN", async accounts => {
 
   describe("FORCE MODULE", async () => {
     it("SUCCESS : add agent into identity registry and identity registrery storage", async () => {
-      await this.SecurityTokenContract.addAgent(agent, { from: walletNewOwner });
+      await this.ProxySecurityTokenContract.addAgent(agent, { from: walletNewOwner });
 
-      const isAgentToken = await this.SecurityTokenContract.isAgent(agent, {
+      const isAgentToken = await this.ProxySecurityTokenContract.isAgent(agent, {
         from: walletNewOwner,
       });
       assert.equal(isAgentToken, true);
     });
 
     it("SUCCESS : Should force transfer", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         agent,
         walletFirstFounder,
         walletDeployer,
@@ -645,7 +684,7 @@ contract("SECURITY TOKEN", async accounts => {
       );
       assert.equal(canTransfer, "0x51");
 
-      await this.SecurityTokenContract.forceTransfer(
+      await this.ProxySecurityTokenContract.forceTransfer(
         walletFirstFounder,
         walletDeployer,
         amount,
@@ -672,7 +711,7 @@ contract("SECURITY TOKEN", async accounts => {
       someDaysLater.setDate(now.getDate() + dayEndRandom);
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.setFreezedTokensPeriod(
+        this.ProxySecurityTokenContract.setFreezedTokensPeriod(
           Math.floor(+now / 1000),
           Math.floor(+someDaysLater / 1000),
           amount + 1,
@@ -690,7 +729,7 @@ contract("SECURITY TOKEN", async accounts => {
       const someDaysLater = new Date();
       someDaysLater.setDate(now.getDate() + dayEndRandom);
 
-      await this.SecurityTokenContract.setFreezedTokensPeriod(
+      await this.ProxySecurityTokenContract.setFreezedTokensPeriod(
         Math.floor(+now / 1000),
         Math.floor(+someDaysLater / 1000),
         amountRandom,
@@ -707,7 +746,7 @@ contract("SECURITY TOKEN", async accounts => {
       someDaysLater.setDate(now.getDate() + dayEndRandom);
 
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
 
@@ -727,7 +766,8 @@ contract("SECURITY TOKEN", async accounts => {
       const someDaysLater = new Date();
       someDaysLater.setDate(now.getDate() + dayWaitedRandom);
 
-      const blockTimeStampBeforeIncreaseTime = await this.SecurityTokenContract._now();
+      const blockTimeStampBeforeIncreaseTime =
+        await this.ProxySecurityTokenContract._now();
       assert.equal(
         Math.floor(+blockTimeStampBeforeIncreaseTime / 100),
         Math.floor(+now / 100000),
@@ -735,7 +775,8 @@ contract("SECURITY TOKEN", async accounts => {
 
       await increaseTimeTo(Math.floor(+someDaysLater / 1000));
 
-      const blockTimeStampAfterIncreaseTime = await this.SecurityTokenContract._now();
+      const blockTimeStampAfterIncreaseTime =
+        await this.ProxySecurityTokenContract._now();
       assert.equal(
         Math.floor(+blockTimeStampAfterIncreaseTime / 100),
         Math.floor(+someDaysLater / 100000),
@@ -744,16 +785,16 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should get unlockable tokens period off chain and compare with on chain result", async () => {
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
-      const now = await this.SecurityTokenContract._now();
+      const now = await this.ProxySecurityTokenContract._now();
       const diff = myFreezedTokensPeriod.endTime - myFreezedTokensPeriod.startTime;
       const timeBehind = now - myFreezedTokensPeriod.startTime;
       percentExpected = (timeBehind * 100) / diff;
 
       const unlockableTokensPeriod =
-        await this.SecurityTokenContract.unlockableTokensPeriod({
+        await this.ProxySecurityTokenContract.unlockableTokensPeriod({
           from: walletDeployer,
         });
       assert.equal(
@@ -763,19 +804,19 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("ERROR : Should compare result of eligibleBalanceOf", async () => {
-      const eligibleBalanceOf = await this.SecurityTokenContract.eligibleBalanceOf(
+      const eligibleBalanceOf = await this.ProxySecurityTokenContract.eligibleBalanceOf(
         walletDeployer,
       );
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
-      const balanceOf = await this.SecurityTokenContract.balanceOf(walletDeployer);
+      const balanceOf = await this.SecurityTokenImmutableContract.balanceOf(walletDeployer);
       assert.equal(+balanceOf - myFreezedTokensPeriod.amountFreezed, +eligibleBalanceOf);
     });
 
     it("ERROR : Should not transfer with walletFirstFounder with partial freezed token because upper to unlocked balance", async () => {
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletDeployer,
         walletDeployer,
         walletFirstFounder,
@@ -784,23 +825,23 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transfer(walletFirstFounder, amount, {
+        this.ProxySecurityTokenContract.transfer(walletFirstFounder, amount, {
           from: walletDeployer,
         }),
         //'Insufficient Balance',
       );
 
-      const balance = await this.SecurityTokenContract.balanceOf(walletDeployer);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletDeployer);
       assert.equal(+balance, amount);
     });
 
     it("ERROR : Should not transferFrom with walletDeployer account 1 more of eligibleBalanceOf", async () => {
-      const eligibleBalanceOf = await this.SecurityTokenContract.eligibleBalanceOf(
+      const eligibleBalanceOf = await this.ProxySecurityTokenContract.eligibleBalanceOf(
         walletDeployer,
       );
       assert.equal(+eligibleBalanceOf, amount - amountRandom);
 
-      const canTransfer = await this.SecurityTokenContract.canTransfer(
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
         walletDeployer,
         walletDeployer,
         walletFirstFounder,
@@ -809,7 +850,7 @@ contract("SECURITY TOKEN", async accounts => {
       assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
-        this.SecurityTokenContract.transferFrom(
+        this.ProxySecurityTokenContract.transferFrom(
           walletDeployer,
           walletFirstFounder,
           amount - amountRandom + 1,
@@ -822,14 +863,14 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it(`SUCCESS : Should redeem of tokens in freeze-period`, async () => {
-      await this.SecurityTokenContract.redeemFreezedTokens({
+      await this.ProxySecurityTokenContract.redeemFreezedTokens({
         from: walletDeployer,
       });
     });
 
     it("SUCCESS : Should get my freezed tokens period after redeem", async () => {
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
 
@@ -841,15 +882,15 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should transfer with walletFirstFounder with partial redeemed freezed tokens", async () => {
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
       firstTransfer = amountRandom - +myFreezedTokensPeriod.amountFreezed;
-      await this.SecurityTokenContract.transfer(walletFirstFounder, firstTransfer, {
+      await this.ProxySecurityTokenContract.transfer(walletFirstFounder, firstTransfer, {
         from: walletDeployer,
       });
 
-      const balance = await this.SecurityTokenContract.balanceOf(walletDeployer);
+      const balance = await this.SecurityTokenImmutableContract.balanceOf(walletDeployer);
       assert.equal(
         +balance,
         amount - (amountRandom - +myFreezedTokensPeriod.amountFreezed),
@@ -865,14 +906,14 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should redeem remaining freezed tokens period", async () => {
-      await this.SecurityTokenContract.redeemFreezedTokens({
+      await this.ProxySecurityTokenContract.redeemFreezedTokens({
         from: walletDeployer,
       });
     });
 
     it("SUCCESS : Should get my freezed tokens period and expected not remaining token freezed", async () => {
       const myFreezedTokensPeriod =
-        await this.SecurityTokenContract.myFreezedTokensPeriod({
+        await this.ProxySecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
         });
 
@@ -881,7 +922,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not redeem freezed tokens period but no token to unfreeze", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.redeemFreezedTokens({
+        this.ProxySecurityTokenContract.redeemFreezedTokens({
           from: walletDeployer,
         }),
         //'No token to unfreeze',
@@ -889,11 +930,11 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should transfer remaining tokens with walletFirstFounder after unfreezed totality token", async () => {
-      const balanceBeforeLastTransfer = await this.SecurityTokenContract.balanceOf(
+      const balanceBeforeLastTransfer = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
 
-      await this.SecurityTokenContract.transfer(
+      await this.ProxySecurityTokenContract.transfer(
         walletFirstFounder,
         amount - balanceBeforeLastTransfer,
         {
@@ -901,7 +942,7 @@ contract("SECURITY TOKEN", async accounts => {
         },
       );
 
-      const balanceAfterLastTransfer = await this.SecurityTokenContract.balanceOf(
+      const balanceAfterLastTransfer = await this.SecurityTokenImmutableContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceAfterLastTransfer}`, amount);
@@ -910,22 +951,23 @@ contract("SECURITY TOKEN", async accounts => {
 
   describe("BURN ALL", async () => {
     it("SUCCESS : Should burn with deployer account", async () => {
-      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyBeforeAllBurn =
+        await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.SecurityTokenImmutableContract.address,
       );
       console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
       console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
       for (let index = 0; index < accounts.length; index++) {
-        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        const balance = await this.SecurityTokenImmutableContract.balanceOf(accounts[index]);
         if (+balance > 0)
-          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+          await this.ProxySecurityTokenContract.burn(accounts[index], +balance, {
             from: accounts[index],
           });
       }
-      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyAfterAllBurn = await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceAfterAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.SecurityTokenImmutableContract.address,
       );
       console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
       console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
@@ -935,7 +977,7 @@ contract("SECURITY TOKEN", async accounts => {
   describe("WITHDRAW OWNER", async () => {
     it("ERROR : Should not withdraw because not enough eth", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.withdraw(amount, walletNewOwner, {
+        this.ProxySecurityTokenContract.withdraw(amount, walletNewOwner, {
           from: walletNewOwner,
         }),
       );
@@ -943,7 +985,7 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("ERROR : Should not withdraw because not owner of contract", async () => {
       await truffleAssert.reverts(
-        this.SecurityTokenContract.withdraw(amount, walletDeployer, {
+        this.ProxySecurityTokenContract.withdraw(amount, walletDeployer, {
           from: walletDeployer,
         }),
       );
@@ -952,12 +994,12 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should randomly mint and burn some token with two other account", async () => {
       for (let index = 3; index < 7; index++) {
         let random = randomIntFromInterval(1, 10);
-        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+        await this.ProxySecurityTokenContract.mint(accounts[index], amount * random, {
           from: accounts[index],
           value: pricePerToken * amount * random,
         });
 
-        await this.SecurityTokenContract.burn(
+        await this.ProxySecurityTokenContract.burn(
           accounts[index],
           amount * random - randomIntFromInterval(1, 10),
           {
@@ -969,12 +1011,12 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should withdraw because not owner of contract", async () => {
       const contractBalanceBeforeWithdraw = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       const walletFirstFounderBeforeWithdraw = await web3.eth.getBalance(
         walletFirstFounder,
       );
-      await this.SecurityTokenContract.withdraw(
+      await this.ProxySecurityTokenContract.withdraw(
         +contractBalanceBeforeWithdraw,
         walletFirstFounder,
         {
@@ -983,7 +1025,7 @@ contract("SECURITY TOKEN", async accounts => {
       );
 
       const contractBalanceAfterWithdraw = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       const walletFirstFounderAfterWithdraw = await web3.eth.getBalance(
         walletFirstFounder,
@@ -998,22 +1040,23 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should burn all remaining balances with deployer account", async () => {
-      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyBeforeAllBurn =
+        await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
       console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
       for (let index = 0; index < accounts.length; index++) {
-        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        const balance = await this.SecurityTokenImmutableContract.balanceOf(accounts[index]);
         if (+balance > 0)
-          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+          await this.ProxySecurityTokenContract.burn(accounts[index], +balance, {
             from: accounts[index],
           });
       }
-      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyAfterAllBurn = await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceAfterAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
       console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
@@ -1022,12 +1065,12 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should randomly mint and burn some token with two other account, then withdraw only 50 % of balance contract", async () => {
       for (let index = 3; index < 7; index++) {
         let random = randomIntFromInterval(1, 10);
-        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+        await this.ProxySecurityTokenContract.mint(accounts[index], amount * random, {
           from: accounts[index],
           value: pricePerToken * amount * random,
         });
 
-        await this.SecurityTokenContract.burn(
+        await this.ProxySecurityTokenContract.burn(
           accounts[index],
           amount * random - randomIntFromInterval(1, 10),
           {
@@ -1037,9 +1080,9 @@ contract("SECURITY TOKEN", async accounts => {
       }
 
       const contractBalanceBeforeWithdraw = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
-      await this.SecurityTokenContract.withdraw(
+      await this.ProxySecurityTokenContract.withdraw(
         Math.floor(+contractBalanceBeforeWithdraw / 2),
         walletFirstFounder,
         {
@@ -1049,16 +1092,17 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should burn all remaining balances with deployer account", async () => {
-      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyBeforeAllBurn =
+        await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
       console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
       for (let index = 0; index < accounts.length; index++) {
-        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        const balance = await this.SecurityTokenImmutableContract.balanceOf(accounts[index]);
         if (+balance > 0) {
-          const refoundableOnChain = await this.SecurityTokenContract.refoundable(
+          const refoundableOnChain = await this.ProxySecurityTokenContract.refoundable(
             balance,
             {
               from: walletDeployer,
@@ -1066,14 +1110,14 @@ contract("SECURITY TOKEN", async accounts => {
           );
           console.log("refoundable account [" + index + "]", +refoundableOnChain);
           console.log("balance account [" + index + "]", +balance);
-          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+          await this.ProxySecurityTokenContract.burn(accounts[index], +balance, {
             from: accounts[index],
           });
         }
       }
-      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const totalSupplyAfterAllBurn = await this.SecurityTokenImmutableContract.totalSupply();
       const contractBalanceAfterAllBurn = await web3.eth.getBalance(
-        this.SecurityTokenContract.address,
+        this.ProxySecurityTokenContract.address,
       );
       console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
       console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
