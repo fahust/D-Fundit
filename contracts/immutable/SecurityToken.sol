@@ -448,6 +448,11 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, StorageToken {
         return true;
     }
 
+    function withdraw(uint256 amount, address receiver) external onlyOwner {
+        (bool success, ) = payable(receiver).call{ value: amount}("");
+        require(success, "Withdraw not successful");
+    }
+
     /**
      * @notice Hook that is called after any transfer of tokens. This includes
      * minting and burning.
