@@ -7,7 +7,17 @@ import "../library/TokenLibrary.sol";
 
 interface ISecurityTokenImmutable {
 
+    /**
+     * @notice Set address of proxy contract to accept only proxy requests
+     * @param _addressProxy {address} address of contract proxy
+     */
     function setAddressProxy(address _addressProxy) external;
+
+    /**
+     * @notice Get address of proxy contract
+     * @return addressProxy {address} address of contract proxy
+     */
+    function getAddressProxy() external view returns(address);
 
     /**
      * @notice Set fundraising parameters to mint tokens in conditions
@@ -21,8 +31,16 @@ interface ISecurityTokenImmutable {
         uint256 maxSupply
     ) external;
 
+    /**
+     * @notice Set parameters rules of contract only if at start rules is setted modifiable
+     * @param _rules {TokenLibrary.Rules} struct of rules
+     */
     function setRules(TokenLibrary.Rules memory _rules) external;
 
+    /**
+     * @notice Get parameters rules of contract
+     * @return rules {TokenLibrary.Rules} struct of rules setted on smart contract
+     */
     function getRules() external view returns(TokenLibrary.Rules memory);
 
     /**
@@ -83,6 +101,16 @@ interface ISecurityTokenImmutable {
      */
     function transfer(address to, uint256 amount) external returns (bool);
 
+    /**
+     * @dev Transfer and send `amount` tokens from `from` to `to`
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     * @param from {address} wallet from transfer the token
+     * @param to {address} wallet to transfer the token
+     * @param amount {uint256[]} amount to transfer
+     */
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
 
 
@@ -97,6 +125,9 @@ interface ISecurityTokenImmutable {
      */
     function unpause() external;
 
+    /**
+     *  @notice Check if contract is paused or not
+     */
     function isPaused() external view returns(uint256);
 
     /**
@@ -106,6 +137,10 @@ interface ISecurityTokenImmutable {
      */
     function withdraw(uint256 amount, address receiver) external returns(bool);
 
+    /**
+     * @notice handle payment receive by everyone, everywhere, all at once
+     * @param senderAddress {address} address of sender
+     */
     function handlePayment(address senderAddress)external payable returns(bool);
 
     /**
