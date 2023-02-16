@@ -6,13 +6,14 @@ pragma solidity ^0.8.0;
 import "../immutable/StorageToken.sol";
 import "../library/TokenLibrary.sol";
 import "../interfaces/ISecurityTokenImmutable.sol";
+import "../interfaces/IProxySecurityToken.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
+contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecurityToken {
     using SafeMath for uint;
 
     ISecurityTokenImmutable public TokenContract;
@@ -59,7 +60,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
      * @notice Returns the address wallet of the smart contract owner.
      * @return owner {address} wallet addres from owner
      */
-    function owner() public view override(Ownable) returns (address) {
+    function owner() public view override(Ownable, IProxySecurityToken) returns (address) {
         return OWNER;
     }
 
@@ -67,7 +68,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
      * @notice Transfer ownership of the smart contract
      * @param account {address} address of the new owner
      */
-    function transferOwnership(address account) public virtual override(Ownable) onlyOwner {
+    function transferOwnership(address account) public virtual override(Ownable, IProxySecurityToken) onlyOwner {
         emit TransferOwnership(OWNER, account);
         OWNER = account;
     }
@@ -108,7 +109,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
      * @param amount {uint256} amount to burn
      */
     function burn(address account, uint256 amount)
-        public
+        external
         contractValid
         returns (bool)
     {
@@ -194,7 +195,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         if(TokenContract.balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) return(hex"55");
         if(from == address(0)) return(hex"56");
         if(to == address(0)) return(hex"57");
-        if(!isAgent(operator) && owner() != operator && from != operator ) return(hex"58");
+        if(!isAgent(operator) && OWNER != operator && from != operator ) return(hex"58");
         if(frozen[from]) return(hex"5a");
         if(frozen[to]) return(hex"5b");
         return (hex"51");
@@ -210,7 +211,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
         address from,
         address to,
         uint256 amount
-    ) public onlyAgent contractValid returns (bool) {
+    ) external onlyAgent contractValid returns (bool) {
         require(TokenContract.getRules().forcableTransfer == true, "forceTransfer is not authorized on this contract");
         uint256 freeBalance = eligibleBalanceOf(from);
 
@@ -271,7 +272,6 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken {
             setAddressFrozen(userAddresses[i], freeze[i]);
         }
     }
-
 
     /**
      *  @notice Freeze patial tokens of single wallet

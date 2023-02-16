@@ -3,8 +3,6 @@
 pragma solidity ^0.8.0;
 
 
-import "../immutable/SecurityToken.sol";
-
 contract factory {
 
     mapping(uint256 => address) securityToken;
@@ -21,7 +19,7 @@ contract factory {
         countSecurityToken++;
     }
 
-    function listSecurityTokensByBalances(uint256 limit) external view returns(address[] memory){
+    function listSecurityTokens(uint256 limit) external view returns(address[] memory){
         uint256 count = limit > countSecurityToken ? countSecurityToken : limit;
         address[] memory result = new address[](count);
         for (uint256 i = 0; i < count; i++) {

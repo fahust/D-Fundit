@@ -5,16 +5,17 @@ pragma solidity ^0.8.0;
 
 import "../library/TokenLibrary.sol";
 import "../interfaces/IProxySecurityToken.sol";
+import "../interfaces/ISecurityTokenImmutable.sol";
 import "../roles/AgentRole.sol";
 import "../roles/ReaderRole.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
+contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenImmutable {
     using SafeMath for uint;
 
-    address public addressProxy;
+    address internal addressProxy;
     address internal OWNER;
     uint32 internal _transfersCount;
     mapping(uint256 => TokenLibrary.Transfer) internal _transfers;
@@ -25,6 +26,8 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
     event TransferOwnership(address indexed oldAccount, address indexed newAccount);
     event Paused(address indexed sender, uint256 indexed paused);
     event Transfer(string eventType, address indexed from, address indexed to, uint256 value);
+    event HandlePaiement(address operator, address sender, uint256 value);
+    event InjectCapital(address operator, uint256 value);
 
     function _now() public view returns (uint256) {
         return block.timestamp;
@@ -53,14 +56,27 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
         _;
     }
 
+    /// @dev Modifier to make a function callable only when the contract is paused.
     modifier onlyProxy() {
         require(_msgSender() == addressProxy, "Pausable: not paused");
         _;
     }
 
+    /**
+     * @notice Set address of proxy contract to accept only proxy requests
+     * @param _addressProxy {address} address of contract proxy
+     */
     function setAddressProxy(address _addressProxy) external {
         require(IProxySecurityToken(_addressProxy).owner() == owner(),"Invalid contract & Owner");
         addressProxy = _addressProxy;
+    }
+
+    /**
+     * @notice Get address of proxy contract
+     * @return addressProxy {address} address of contract proxy
+     */
+    function getAddressProxy() external view returns(address){
+        return addressProxy;
     }
 
     /**
@@ -79,12 +95,20 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
         rules.maxSupply = maxSupply;
     }
 
+    /**
+     * @notice Set parameters rules of contract only if at start rules is setted modifiable
+     * @param _rules {TokenLibrary.Rules} struct of rules
+     */
     function setRules(TokenLibrary.Rules memory _rules) external onlyOwner {
         require(rules.rulesModifiable == true, "Rules is not modifiable");
         rules = _rules;
 
     }
 
+    /**
+     * @notice Get parameters rules of contract
+     * @return rules {TokenLibrary.Rules} struct of rules setted on smart contract
+     */
     function getRules() external view onlyProxy returns(TokenLibrary.Rules memory) {
         return rules;
     }
@@ -101,7 +125,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
      * @notice Returns the address wallet of the smart contract owner.
      * @return owner {address} wallet addres from owner
      */
-    function owner() public view override(Ownable) returns (address) {
+    function owner() public view override(Ownable, ISecurityTokenImmutable) returns (address) {
         return OWNER;
     }
 
@@ -121,7 +145,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
      * @notice Transfer ownership of the smart contract
      * @param account {address} address of the new owner
      */
-    function transferOwnership(address account) public virtual override(Ownable) onlyOwner {
+    function transferOwnership(address account) public virtual override(Ownable, ISecurityTokenImmutable) onlyOwner {
         emit TransferOwnership(OWNER, account);
         OWNER = account;
     }
@@ -170,12 +194,22 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
      * @param to {address} wallet to transfer the token
      * @param amount {uint256[]} amount to transfer
      */
-    function transfer(address to, uint256 amount) public virtual override returns (bool) {
+    function transfer(address to, uint256 amount) public virtual override(ERC20, ISecurityTokenImmutable) returns (bool) {
         _transfer(_msgSender(), to, amount);
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 amount) public virtual override onlyProxy returns (bool) {
+    /**
+     * @dev Transfer and send `amount` tokens from `from` to `to`
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     * @param from {address} wallet from transfer the token
+     * @param to {address} wallet to transfer the token
+     * @param amount {uint256[]} amount to transfer
+     */
+    function transferFrom(address from, address to, uint256 amount) public virtual override(ERC20, ISecurityTokenImmutable) onlyProxy returns (bool) {
         _transfer(from, to, amount);
         return true;
     }
@@ -218,6 +252,20 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
     }
 
     /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function totalSupply() public view virtual override(ERC20, ISecurityTokenImmutable) returns (uint256) {
+        return super.totalSupply();
+    }
+
+    /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function balanceOf(address account) public view virtual override(ERC20, ISecurityTokenImmutable) returns (uint256) {
+        return super.balanceOf(account);
+    }
+
+    /**
      *  @notice Pause transfer tokens of smart contract
      *  @param _paused {uint256} represents date when transfer restart
      */
@@ -236,6 +284,9 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
         emit Paused(_msgSender(), paused);
     }
 
+    /**
+     *  @notice Check if contract is paused or not
+     */
     function isPaused() external view returns(uint256){
         return paused;
     }
@@ -251,7 +302,12 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
         return success;
     }
 
+    /**
+     * @notice handle payment receive by everyone, everywhere, all at once
+     * @param senderAddress {address} address of sender
+     */
     function handlePayment(address senderAddress) payable public returns(bool) {
+        emit HandlePaiement(_msgSender(), senderAddress, msg.value);
         return true;
     }
 
@@ -260,6 +316,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole {
      */
     function injectCapital() external payable onlyOwner returns(bool) {
         ///maybe todo reduce lastWithdraw ??
+        emit InjectCapital(_msgSender(), msg.value);
         return true;
     }
 
