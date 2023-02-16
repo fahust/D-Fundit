@@ -6,16 +6,11 @@ import "../library/TokenLibrary.sol";
 
 contract StorageToken {
 
+    uint256 constant oneDay = 86400;
     uint256 immutable pricePerToken;
-
-
-    constructor(
-        uint256 _pricePerToken
-    ) {
-        pricePerToken = _pricePerToken;
-    }
-
     uint256 internal paused;
+    uint256 internal lastWithdraw;
+    uint256 internal dayToWithdraw;
 
     address internal OWNER;
 
@@ -59,5 +54,11 @@ contract StorageToken {
     
     function _now() public view returns (uint256) {
         return block.timestamp;
+    }
+
+    constructor(
+        uint256 _pricePerToken
+    ) {
+        pricePerToken = _pricePerToken;
     }
 }
