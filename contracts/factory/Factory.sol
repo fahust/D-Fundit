@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 
-contract factory {
+contract Factory {
 
     mapping(uint256 => address) securityToken;
     uint256 internal countSecurityToken;
@@ -20,7 +20,7 @@ contract factory {
     }
 
     function listSecurityTokens(uint256 limit) external view returns(address[] memory){
-        uint256 count = limit > countSecurityToken ? countSecurityToken : limit;
+        uint256 count = limit > countSecurityToken || limit == 0 ? countSecurityToken : limit;
         address[] memory result = new address[](count);
         for (uint256 i = 0; i < count; i++) {
             result[i] = securityToken[i];
