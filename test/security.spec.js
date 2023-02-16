@@ -24,8 +24,6 @@ contract("SECURITY TOKEN", async accounts => {
   const walletDeployer = accounts[0];
   const walletFirstFounder = accounts[1];
   const walletNewOwner = accounts[2];
-  const walletSecondFounder = accounts[3];
-  const walletThirdFounder = accounts[4];
   const agent = accounts[8];
 
   it("SUCCESS : Should deploy smart contract security token", async () => {
@@ -122,33 +120,21 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should randomly mint and burn some token with two other account", async () => {
-      let random = randomIntFromInterval(1, 10);
-      await this.SecurityTokenContract.mint(walletSecondFounder, amount * random, {
-        from: walletSecondFounder,
-        value: pricePerToken * amount * random,
-      });
+      for (let index = 3; index < 7; index++) {
+        let random = randomIntFromInterval(1, 10);
+        await this.SecurityTokenContract.mint(accounts[index], amount * random, {
+          from: accounts[index],
+          value: pricePerToken * amount * random,
+        });
 
-      await this.SecurityTokenContract.burn(
-        walletSecondFounder,
-        amount * random - randomIntFromInterval(1, 10),
-        {
-          from: walletSecondFounder,
-        },
-      );
-
-      random = randomIntFromInterval(1, 10);
-      await this.SecurityTokenContract.mint(walletThirdFounder, amount * random, {
-        from: walletThirdFounder,
-        value: pricePerToken * amount * random,
-      });
-
-      await this.SecurityTokenContract.burn(
-        walletThirdFounder,
-        amount * random - randomIntFromInterval(1, 10),
-        {
-          from: walletThirdFounder,
-        },
-      );
+        await this.SecurityTokenContract.burn(
+          accounts[index],
+          amount * random - randomIntFromInterval(1, 10),
+          {
+            from: accounts[index],
+          },
+        );
+      }
     });
 
     it("SUCCESS : Should burn with deployer account", async () => {
@@ -171,7 +157,7 @@ contract("SECURITY TOKEN", async accounts => {
 
       console.log("current value", +currentValueOneToken);
 
-      const refoundableOffChain = Math.floor((currentValueOneToken * amount) / 100);
+      const refoundableOffChain = Math.floor(currentValueOneToken * amount);
 
       console.log("refoundableOffChain", +refoundableOffChain);
 
@@ -206,17 +192,17 @@ contract("SECURITY TOKEN", async accounts => {
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
       const transfers = await this.SecurityTokenContract.transfers();
-      assert.equal(transfers.length, 6);
+      assert.equal(transfers.length, 10);
 
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[5].transferType, "burn");
-      assert.equal(transfers[5].from, walletFirstFounder);
-      assert.equal(transfers[5].to, ADDRESS_ZERO);
-      assert.equal(transfers[5].amount, amount);
+      assert.equal(transfers[9].transferType, "burn");
+      assert.equal(transfers[9].from, walletFirstFounder);
+      assert.equal(transfers[9].to, ADDRESS_ZERO);
+      assert.equal(transfers[9].amount, amount);
       // assert.equal(Math.floor(transfers[1].date / 10), date);
     });
 
@@ -349,32 +335,32 @@ contract("SECURITY TOKEN", async accounts => {
       const transfers = await this.SecurityTokenContract.transfers({
         from: walletNewOwner,
       });
-      assert.equal(transfers.length, 9);
+      assert.equal(transfers.length, 13);
 
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[5].transferType, "burn");
-      assert.equal(transfers[5].from, walletFirstFounder);
-      assert.equal(transfers[5].to, ADDRESS_ZERO);
-      assert.equal(transfers[5].amount, amount);
+      assert.equal(transfers[9].transferType, "burn");
+      assert.equal(transfers[9].from, walletFirstFounder);
+      assert.equal(transfers[9].to, ADDRESS_ZERO);
+      assert.equal(transfers[9].amount, amount);
 
-      assert.equal(transfers[6].transferType, "mint");
-      assert.equal(transfers[6].from, ADDRESS_ZERO);
-      assert.equal(transfers[6].to, walletNewOwner);
-      assert.equal(transfers[6].amount, amount);
+      assert.equal(transfers[10].transferType, "mint");
+      assert.equal(transfers[10].from, ADDRESS_ZERO);
+      assert.equal(transfers[10].to, walletNewOwner);
+      assert.equal(transfers[10].amount, amount);
 
-      assert.equal(transfers[7].transferType, "transfer");
-      assert.equal(transfers[7].from, walletNewOwner);
-      assert.equal(transfers[7].to, walletDeployer);
-      assert.equal(transfers[7].amount, amount);
+      assert.equal(transfers[11].transferType, "transfer");
+      assert.equal(transfers[11].from, walletNewOwner);
+      assert.equal(transfers[11].to, walletDeployer);
+      assert.equal(transfers[11].amount, amount);
 
-      assert.equal(transfers[8].transferType, "transfer");
-      assert.equal(transfers[8].from, walletDeployer);
-      assert.equal(transfers[8].to, walletFirstFounder);
-      assert.equal(transfers[8].amount, amount);
+      assert.equal(transfers[12].transferType, "transfer");
+      assert.equal(transfers[12].from, walletDeployer);
+      assert.equal(transfers[12].to, walletFirstFounder);
+      assert.equal(transfers[12].amount, amount);
     });
   });
 
@@ -722,12 +708,12 @@ contract("SECURITY TOKEN", async accounts => {
         });
 
       assert.equal(
-        Math.floor(myFreezedTokensPeriod.startTime / 10),
-        Math.floor(+now / 10000),
+        Math.floor(myFreezedTokensPeriod.startTime / 100),
+        Math.floor(+now / 100000),
       );
       assert.equal(
-        Math.floor(myFreezedTokensPeriod.endTime / 10),
-        Math.floor(+someDaysLater / 10000),
+        Math.floor(myFreezedTokensPeriod.endTime / 100),
+        Math.floor(+someDaysLater / 100000),
       );
       assert.equal(myFreezedTokensPeriod.amountFreezed, amountRandom);
     });
@@ -739,8 +725,8 @@ contract("SECURITY TOKEN", async accounts => {
 
       const blockTimeStampBeforeIncreaseTime = await this.SecurityTokenContract._now();
       assert.equal(
-        Math.floor(+blockTimeStampBeforeIncreaseTime / 10),
-        Math.floor(+now / 10000),
+        Math.floor(+blockTimeStampBeforeIncreaseTime / 100),
+        Math.floor(+now / 100000),
       );
 
       await increaseTimeTo(Math.floor(+someDaysLater / 1000));
@@ -915,6 +901,30 @@ contract("SECURITY TOKEN", async accounts => {
         walletFirstFounder,
       );
       assert.equal(`${+balanceAfterLastTransfer}`, amount);
+    });
+  });
+
+  describe("BURN ALL", async () => {
+    it("SUCCESS : Should burn with deployer account", async () => {
+      const totalSupplyBeforeAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceBeforeAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyBeforeAllBurn", +totalSupplyBeforeAllBurn);
+      console.log("contractBalanceBeforeAllBurn", +contractBalanceBeforeAllBurn);
+      for (let index = 0; index < accounts.length; index++) {
+        const balance = await this.SecurityTokenContract.balanceOf(accounts[index]);
+        if (+balance > 0)
+          await this.SecurityTokenContract.burn(accounts[index], +balance, {
+            from: accounts[index],
+          });
+      }
+      const totalSupplyAfterAllBurn = await this.SecurityTokenContract.totalSupply();
+      const contractBalanceAfterAllBurn = await web3.eth.getBalance(
+        this.SecurityTokenContract.address,
+      );
+      console.log("totalSupplyAfterAllBurn", +totalSupplyAfterAllBurn);
+      console.log("contractBalanceAfterAllBurn", +contractBalanceAfterAllBurn);
     });
   });
 });
