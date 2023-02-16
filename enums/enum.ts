@@ -21,19 +21,6 @@ export enum PERCENT_ENUM {
   NINETY_FIVE = 9500,
 }
 
-export enum CONTRACT_ENUM {
-  // MYOS = "MYOS.sol",
-  // PROXYMYOS = "ProxyContractMYOS.sol",
-  // CLASS = "Class.sol",
-  // PROXYHERO = "ProxyContract.sol",
-  // EQUIPEMENTS = "Equipements.sol",
-  // GUILD = "Guild.sol",
-  // HERO = "Hero.sol",
-  // ITEMS = "Items.sol",
-  // POTIONS = "Potions.sol",
-  // QUEST = "Quest.sol",
-}
-
 export enum CHAIN_HEXA_ENUM {
   MATIC = "0x89",
   MUMBAI = "0x13881",
