@@ -3,18 +3,6 @@
 pragma solidity ^0.8.0;
 
 library TokenLibrary {
-    struct Token {
-        address owner;
-        string name;
-        string code;
-        string assetType;
-    }
-
-    struct TokenInput {
-        string name;
-        string code;
-        string assetType;
-    }
 
     struct Transfer {
         string transferType;
