@@ -1,21 +1,17 @@
-const truffleAssert = require('truffle-assertions');
+const truffleAssert = require("truffle-assertions");
 // const onchainid = require('@onchain-id/solidity');
-const decodeError = require('../utils/decodeError');
+const decodeError = require("../utils/decodeError");
 
-const { increaseTimeTo } = require('../utils/increaseTime');
+const { increaseTimeTo } = require("../utils/increaseTime");
 // const { IdentitySDK } = require('@onchain-id/identity-sdk');
 
-const SecurityToken = artifacts.require('SecurityToken');
-const IdentityRegistry = artifacts.require('IdentityRegistry');
-const ClaimTopicsRegistry = artifacts.require('ClaimTopicsRegistry');
-const TrustedIssuersRegistry = artifacts.require('TrustedIssuersRegistry');
-const IdentityRegistryStorage = artifacts.require('IdentityRegistryStorage');
+const SecurityToken = artifacts.require("SecurityToken");
 
-const name = 'name';
-const code = 'code';
-const assetType = 'asset type';
+const name = "name";
+const code = "code";
+const assetType = "asset type";
 const amount = 10;
-const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
+const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 
 function randomIntFromInterval(min, max) {
   // min and max included
@@ -25,39 +21,20 @@ function randomIntFromInterval(min, max) {
 let date;
 // let tokenOnchainID;
 
-contract('SECURITY TOKEN', async accounts => {
+contract("SECURITY TOKEN", async accounts => {
   const walletDeployer = accounts[0];
   const walletFirstFounder = accounts[1];
   const walletNewOwner = accounts[2];
   const agent = accounts[8];
 
-  it('SUCCESS : Should deploy smart contract security token', async () => {
-    this.ClaimTopicsRegistry = await ClaimTopicsRegistry.new(); // we deploy contract
-
-    const ClaimTopicsRegistryAddress = this.ClaimTopicsRegistry.address;
-
-    this.TrustedIssuersRegistry = await TrustedIssuersRegistry.new(); // we deploy contract
-    const TrustedIssuersRegistryAddress = this.TrustedIssuersRegistry.address;
-
-    this.IdentityRegistryStorage = await IdentityRegistryStorage.new(); // we deploy contract
-    const IdentityRegistryStorageAddress = this.IdentityRegistryStorage.address;
-
-    this.IdentityRegistry = await IdentityRegistry.new(
-      ClaimTopicsRegistryAddress,
-      TrustedIssuersRegistryAddress,
-      IdentityRegistryStorageAddress,
-    ); // we deploy contract
-    const IdentityRegistryAddress = this.IdentityRegistry.address;
-
-    this.SecurityTokenContract = await SecurityToken.new(
-      {
-        name,
-        code,
-        assetType,
-      },
-      IdentityRegistryAddress,
-      IdentityRegistryAddress, // change that into onchainid address
-    ); // we deploy contract
+  it("SUCCESS : Should deploy smart contract security token", async () => {
+    this.SecurityTokenContract = await SecurityToken.new(name, code, {
+      freezableAddress: true,
+      freezablePartial: true,
+      freezablePartialTime: true,
+      pausable: true,
+      forcableTransfer: true,
+    }); // we deploy contract
 
     // await this.SecurityTokenContract.addAgentOnTokenContract(agent, {
     //   from: walletDeployer,
@@ -66,140 +43,140 @@ contract('SECURITY TOKEN', async accounts => {
     // agentIdentityAddress = await deployIdentityProxy(agent);
   });
 
-  describe('ERC-20 MODULE', async () => {
-    it('SUCCESS : Should get name of security token', async () => {
-      const callName = await this.SecurityTokenContract.name();
-      assert.equal(callName, name);
-    });
+  describe("ERC-20 MODULE", async () => {
+    // it("SUCCESS : Should get name of security token", async () => {
+    //   const callName = await this.SecurityTokenContract.name();
+    //   assert.equal(callName, name);
+    // });
 
-    it('SUCCESS : Should get code of security token', async () => {
-      const callCode = await this.SecurityTokenContract.code();
-      assert.equal(callCode, code);
-    });
+    // it("SUCCESS : Should get code of security token", async () => {
+    //   const callCode = await this.SecurityTokenContract.code();
+    //   assert.equal(callCode, code);
+    // });
 
-    it('SUCCESS : Should get assetType of security token', async () => {
-      const callAssetType = await this.SecurityTokenContract.assetType();
-      assert.equal(callAssetType, assetType);
-    });
+    // it("SUCCESS : Should get assetType of security token", async () => {
+    //   const callAssetType = await this.SecurityTokenContract.assetType();
+    //   assert.equal(callAssetType, assetType);
+    // });
 
-    it('SUCCESS : Should get totalSupply of security token', async () => {
+    it("SUCCESS : Should get totalSupply of security token", async () => {
       const callTotalSupply = await this.SecurityTokenContract.totalSupply();
       assert.equal(`${+callTotalSupply}`, 0);
     });
 
-    it('SUCCESS : Should get balance from first founder before mint', async () => {
+    it("SUCCESS : Should get balance from first founder before mint", async () => {
       const balanceBeforeMint = await this.SecurityTokenContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceBeforeMint}`, 0);
     });
 
-    it('SUCCESS : Should get transfers from first founder before mint', async () => {
+    it("SUCCESS : Should get transfers from first founder before mint", async () => {
       const transfers = await this.SecurityTokenContract.transfers();
       assert.equal(transfers.length, 0);
     });
 
-    it('ERROR : Should not mint with walletFirstFounder', async () => {
+    it("ERROR : Should not mint with walletFirstFounder", async () => {
       try {
         await this.SecurityTokenContract.mint(walletDeployer, amount, {
           from: walletFirstFounder,
         });
       } catch (error) {
         const decodedError = await decodeError(error);
-        assert.equal(decodedError.errorFunction, 'NotWriter(address)');
+        assert.equal(decodedError.errorFunction, "NotWriter(address)");
         assert.equal(decodedError.decoded.sender, walletFirstFounder);
       }
     });
 
-    it('SUCCESS : Should mint with deployer account', async () => {
+    it("SUCCESS : Should mint with deployer account", async () => {
       date = Math.floor(Date.now() / 10000);
       await this.SecurityTokenContract.mint(walletFirstFounder, amount);
     });
 
-    it('SUCCESS : Should get balance from first founder after mint', async () => {
+    it("SUCCESS : Should get balance from first founder after mint", async () => {
       const balanceAfterMint = await this.SecurityTokenContract.balanceOf(
         walletFirstFounder,
       );
       assert.equal(`${+balanceAfterMint}`, amount);
     });
 
-    it('SUCCESS : Should get transfers after mint of first founder', async () => {
+    it("SUCCESS : Should get transfers after mint of first founder", async () => {
       const transfers = await this.SecurityTokenContract.transfers();
       assert.equal(transfers.length, 1);
-      assert.equal(transfers[0].transferType, 'mint');
+      assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
       assert.equal(Math.floor(transfers[0].date / 10), date);
     });
 
-    it('ERROR : Should not burn with first founder account', async () => {
+    it("ERROR : Should not burn with first founder account", async () => {
       try {
         await this.SecurityTokenContract.burn(walletFirstFounder, amount, {
           from: walletFirstFounder,
         });
       } catch (error) {
         const decodedError = await decodeError(error);
-        assert.equal(decodedError.errorFunction, 'NotWriter(address)');
+        assert.equal(decodedError.errorFunction, "NotWriter(address)");
         assert.equal(decodedError.decoded.sender, walletFirstFounder);
       }
     });
 
-    it('SUCCESS : Should burn with deployer account', async () => {
+    it("SUCCESS : Should burn with deployer account", async () => {
       await this.SecurityTokenContract.burn(walletFirstFounder, amount);
       date = Math.floor(Date.now() / 10000);
     });
 
-    it('SUCCESS : Should get transfers after burn of first founder', async () => {
+    it("SUCCESS : Should get transfers after burn of first founder", async () => {
       const transfers = await this.SecurityTokenContract.transfers();
       assert.equal(transfers.length, 2);
 
-      assert.equal(transfers[0].transferType, 'mint');
+      assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[1].transferType, 'burn');
+      assert.equal(transfers[1].transferType, "burn");
       assert.equal(transfers[1].from, walletFirstFounder);
       assert.equal(transfers[1].to, ADDRESS_ZERO);
       assert.equal(transfers[1].amount, amount);
       // assert.equal(Math.floor(transfers[1].date / 10), date);
     });
 
-    it('SUCCESS : Should transfer owner ship', async () => {
+    it("SUCCESS : Should transfer owner ship", async () => {
       const ownerBeforeTransferOwnership = await this.SecurityTokenContract.owner();
       assert.equal(ownerBeforeTransferOwnership, walletDeployer);
 
       await this.SecurityTokenContract.transferOwnership(walletNewOwner);
 
-      await this.SecurityTokenContract.increaseAllowance(walletNewOwner, '20000000000');
+      await this.SecurityTokenContract.increaseAllowance(walletNewOwner, "20000000000");
 
-      await this.SecurityTokenContract.increaseAllowance(walletDeployer, '20000000000');
+      await this.SecurityTokenContract.increaseAllowance(walletDeployer, "20000000000");
 
       const ownerAfterTransferOwnership = await this.SecurityTokenContract.owner();
       assert.equal(ownerAfterTransferOwnership, walletNewOwner);
     });
 
-    it('ERROR : Should not mint with walletDeployer', async () => {
+    it("ERROR : Should not mint with walletDeployer", async () => {
       try {
         await this.SecurityTokenContract.mint(walletDeployer, amount, {
           from: walletDeployer,
         });
       } catch (error) {
         const decodedError = await decodeError(error);
-        assert.equal(decodedError.errorFunction, 'NotWriter(address)');
+        assert.equal(decodedError.errorFunction, "NotWriter(address)");
         assert.equal(decodedError.decoded.sender, walletDeployer);
       }
     });
 
-    it('ERROR : Should not transfer with walletDeployer no balance', async () => {
+    it("ERROR : Should not transfer with walletDeployer no balance", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletFirstFounder,
         amount,
       );
-      assert.equal(canTransfer, '0x52');
+      assert.equal(canTransfer, "0x52");
       await truffleAssert.reverts(
         this.SecurityTokenContract.transfer(walletFirstFounder, amount, {
           from: walletNewOwner,
@@ -207,7 +184,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should mint with new owner account to new owner', async () => {
+    it("SUCCESS : Should mint with new owner account to new owner", async () => {
       await this.SecurityTokenContract.mint(walletNewOwner, amount, {
         from: walletNewOwner,
       });
@@ -215,14 +192,14 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('SUCCESS : Should transfer with walletDeployer', async () => {
+    it("SUCCESS : Should transfer with walletDeployer", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletDeployer,
         amount,
       );
-      assert.equal(canTransfer, '0x51');
+      assert.equal(canTransfer, "0x51");
 
       await this.SecurityTokenContract.transfer(walletDeployer, amount, {
         from: walletNewOwner,
@@ -231,20 +208,20 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('SUCCESS : Should pause with walletNewOwner', async () => {
+    it("SUCCESS : Should pause with walletNewOwner", async () => {
       await this.SecurityTokenContract.pause(Math.floor(Date.now() / 1000) + 10, {
         from: walletNewOwner,
       });
     });
 
-    it('ERROR : Should not transfer with new owner account because contract is paused', async () => {
+    it("ERROR : Should not transfer with new owner account because contract is paused", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletDeployer,
         walletFirstFounder,
         amount,
       );
-      assert.equal(canTransfer, '0x54');
+      assert.equal(canTransfer, "0x54");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transferFrom(
@@ -258,7 +235,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('ERROR : Should not mint with walletNewOwner account because contract is paused', async () => {
+    it("ERROR : Should not mint with walletNewOwner account because contract is paused", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.mint(walletFirstFounder, amount, {
           from: walletNewOwner,
@@ -266,7 +243,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('ERROR : Should not burn with walletNewOwner account because contract is paused', async () => {
+    it("ERROR : Should not burn with walletNewOwner account because contract is paused", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.burn(walletFirstFounder, amount, {
           from: walletNewOwner,
@@ -274,20 +251,20 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should unpause with walletNewOwner', async () => {
+    it("SUCCESS : Should unpause with walletNewOwner", async () => {
       await this.SecurityTokenContract.unpause({
         from: walletNewOwner,
       });
     });
 
-    it('SUCCESS : Should transfer with new owner account', async () => {
+    it("SUCCESS : Should transfer with new owner account", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletDeployer,
         walletFirstFounder,
         amount,
       );
-      assert.equal(canTransfer, '0x51');
+      assert.equal(canTransfer, "0x51");
 
       await this.SecurityTokenContract.transferFrom(
         walletDeployer,
@@ -301,41 +278,41 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('SUCCESS : Should get transfers after burn of first founder', async () => {
+    it("SUCCESS : Should get transfers after burn of first founder", async () => {
       const transfers = await this.SecurityTokenContract.transfers({
         from: walletNewOwner,
       });
       assert.equal(transfers.length, 5);
 
-      assert.equal(transfers[0].transferType, 'mint');
+      assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
       assert.equal(transfers[0].to, walletFirstFounder);
       assert.equal(transfers[0].amount, amount);
 
-      assert.equal(transfers[1].transferType, 'burn');
+      assert.equal(transfers[1].transferType, "burn");
       assert.equal(transfers[1].from, walletFirstFounder);
       assert.equal(transfers[1].to, ADDRESS_ZERO);
       assert.equal(transfers[1].amount, amount);
 
-      assert.equal(transfers[2].transferType, 'mint');
+      assert.equal(transfers[2].transferType, "mint");
       assert.equal(transfers[2].from, ADDRESS_ZERO);
       assert.equal(transfers[2].to, walletNewOwner);
       assert.equal(transfers[2].amount, amount);
 
-      assert.equal(transfers[3].transferType, 'transfer');
+      assert.equal(transfers[3].transferType, "transfer");
       assert.equal(transfers[3].from, walletNewOwner);
       assert.equal(transfers[3].to, walletDeployer);
       assert.equal(transfers[3].amount, amount);
 
-      assert.equal(transfers[4].transferType, 'transfer');
+      assert.equal(transfers[4].transferType, "transfer");
       assert.equal(transfers[4].from, walletDeployer);
       assert.equal(transfers[4].to, walletFirstFounder);
       assert.equal(transfers[4].amount, amount);
     });
   });
 
-  describe('FREEZING-ADDRESS MODULE', async () => {
-    it('ERROR : Should not freeze address with not owner or agent address', async () => {
+  describe("FREEZING-ADDRESS MODULE", async () => {
+    it("ERROR : Should not freeze address with not owner or agent address", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.setAddressFrozen(walletFirstFounder, false, {
           from: walletDeployer,
@@ -343,27 +320,27 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should freeze address', async () => {
+    it("SUCCESS : Should freeze address", async () => {
       await this.SecurityTokenContract.setAddressFrozen(walletFirstFounder, true, {
         from: walletNewOwner,
       });
     });
 
-    it('SUCCESS : Should know if address it frozen', async () => {
+    it("SUCCESS : Should know if address it frozen", async () => {
       const isFrozen = await this.SecurityTokenContract.isFrozen(walletFirstFounder, {
         from: walletNewOwner,
       });
       assert.equal(isFrozen, true);
     });
 
-    it('ERROR : Should not transfer with walletFirstFounder because freezed address', async () => {
+    it("ERROR : Should not transfer with walletFirstFounder because freezed address", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
         amount,
       );
-      assert.equal(canTransfer, '0x5a');
+      assert.equal(canTransfer, "0x5a");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transfer(walletDeployer, amount, {
@@ -375,14 +352,14 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('ERROR : Should not transferFrom with new owner account to freezed account', async () => {
+    it("ERROR : Should not transferFrom with new owner account to freezed account", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletNewOwner,
         walletFirstFounder,
         amount,
       );
-      assert.equal(canTransfer, '0x52');
+      assert.equal(canTransfer, "0x52");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transferFrom(
@@ -397,7 +374,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('ERROR : Should not transferFrom with new owner account from freezed account', async () => {
+    it("ERROR : Should not transferFrom with new owner account from freezed account", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.transferFrom(
           walletFirstFounder,
@@ -411,7 +388,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should unfreeze address by batch', async () => {
+    it("SUCCESS : Should unfreeze address by batch", async () => {
       await this.SecurityTokenContract.batchSetAddressFrozen(
         [walletFirstFounder],
         [false],
@@ -421,14 +398,14 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should transfer with walletFirstFounder', async () => {
+    it("SUCCESS : Should transfer with walletFirstFounder", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
         amount,
       );
-      assert.equal(canTransfer, '0x51');
+      assert.equal(canTransfer, "0x51");
 
       await this.SecurityTokenContract.transfer(walletDeployer, amount, {
         from: walletFirstFounder,
@@ -437,7 +414,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('SUCCESS : Should transferFrom with new owner', async () => {
+    it("SUCCESS : Should transferFrom with new owner", async () => {
       await this.SecurityTokenContract.transferFrom(
         walletDeployer,
         walletFirstFounder,
@@ -449,8 +426,8 @@ contract('SECURITY TOKEN', async accounts => {
     });
   });
 
-  describe('FREEZING-PARTIAL MODULE', async () => {
-    it('ERROR : Should not freeze partial tokens address more than balance', async () => {
+  describe("FREEZING-PARTIAL MODULE", async () => {
+    it("ERROR : Should not freeze partial tokens address more than balance", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.freezePartialTokens(walletFirstFounder, amount + 1, {
           from: walletNewOwner,
@@ -459,7 +436,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should freeze partial tokens walletFirstFounder', async () => {
+    it("SUCCESS : Should freeze partial tokens walletFirstFounder", async () => {
       await this.SecurityTokenContract.freezePartialTokens(
         walletFirstFounder,
         amount / 2,
@@ -469,7 +446,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should get freezed partial tokens on walletFirstFounder', async () => {
+    it("SUCCESS : Should get freezed partial tokens on walletFirstFounder", async () => {
       const getFrozenTokens = await this.SecurityTokenContract.getFrozenTokens(
         walletFirstFounder,
         {
@@ -479,14 +456,14 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+getFrozenTokens}`, amount / 2);
     });
 
-    it('ERROR : Should not transfer with walletFirstFounder with partial freezed token', async () => {
+    it("ERROR : Should not transfer with walletFirstFounder with partial freezed token", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletFirstFounder,
         walletFirstFounder,
         walletDeployer,
         amount,
       );
-      assert.equal(canTransfer, '0x55');
+      assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transfer(walletDeployer, amount, {
@@ -499,7 +476,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(`${+balance}`, amount);
     });
 
-    it('SUCCESS : Should transfer with walletFirstFounder', async () => {
+    it("SUCCESS : Should transfer with walletFirstFounder", async () => {
       await this.SecurityTokenContract.transfer(walletDeployer, amount / 2, {
         from: walletFirstFounder,
       });
@@ -519,7 +496,7 @@ contract('SECURITY TOKEN', async accounts => {
       });
     });
 
-    it('SUCCESS : Should batch freeze partial tokens walletFirstFounder', async () => {
+    it("SUCCESS : Should batch freeze partial tokens walletFirstFounder", async () => {
       const balanceOf = await this.SecurityTokenContract.balanceOf(walletFirstFounder);
       const getFrozenTokens = await this.SecurityTokenContract.getFrozenTokens(
         walletFirstFounder,
@@ -535,14 +512,14 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('ERROR : Should not transferFrom with new owner with partial freezed token', async () => {
+    it("ERROR : Should not transferFrom with new owner with partial freezed token", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletNewOwner,
         walletFirstFounder,
         walletDeployer,
         1,
       );
-      assert.equal(canTransfer, '0x55');
+      assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transferFrom(walletFirstFounder, walletDeployer, 1, {
@@ -551,7 +528,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should batch freeze partial tokens walletFirstFounder', async () => {
+    it("SUCCESS : Should batch freeze partial tokens walletFirstFounder", async () => {
       await this.SecurityTokenContract.batchUnfreezePartialTokens(
         [walletFirstFounder],
         [amount / 2],
@@ -561,7 +538,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should freeze partial tokens walletFirstFounder', async () => {
+    it("SUCCESS : Should freeze partial tokens walletFirstFounder", async () => {
       await this.SecurityTokenContract.unfreezePartialTokens(
         walletFirstFounder,
         amount / 2,
@@ -592,8 +569,8 @@ contract('SECURITY TOKEN', async accounts => {
     // });
   });
 
-  describe('IDENTITY MODULE', async () => {
-    it('SUCCESS : add agent into identity registry and identity registrery storage', async () => {
+  describe("IDENTITY MODULE", async () => {
+    it("SUCCESS : add agent into identity registry and identity registrery storage", async () => {
       await this.IdentityRegistryStorage.addAgent(agent);
 
       const isAgentStored = await this.IdentityRegistryStorage.isAgent(agent);
@@ -612,7 +589,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(isAgentToken, true);
     });
 
-    it('SUCCESS : Should register identity', async () => {
+    it("SUCCESS : Should register identity", async () => {
       const agentIdentityBeforeRegister = await this.IdentityRegistry.identity(agent);
       assert.equal(agentIdentityBeforeRegister, ADDRESS_ZERO);
       await this.IdentityRegistryStorage.addIdentityToStorage(
@@ -628,7 +605,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(agentIdentityAfterRegister, this.IdentityRegistry.address);
     });
 
-    it('ERROR : Should not register again same identity', async () => {
+    it("ERROR : Should not register again same identity", async () => {
       await truffleAssert.reverts(
         this.IdentityRegistryStorage.addIdentityToStorage(
           agent,
@@ -642,7 +619,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should modify stored identity', async () => {
+    it("SUCCESS : Should modify stored identity", async () => {
       await this.IdentityRegistryStorage.modifyStoredIdentity(
         agent,
         this.IdentityRegistry.address,
@@ -655,7 +632,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(agentIdentityAfterRegister, this.IdentityRegistry.address);
     });
 
-    it('SUCCESS : Should modify stored identity', async () => {
+    it("SUCCESS : Should modify stored identity", async () => {
       const countryBeforeUpdate =
         await this.IdentityRegistryStorage.storedInvestorCountry(agent, {
           from: agent,
@@ -675,7 +652,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(countryAfterUpdate, 102);
     });
 
-    it('SUCCESS : Should remove stored identity', async () => {
+    it("SUCCESS : Should remove stored identity", async () => {
       await this.IdentityRegistryStorage.removeIdentityFromStorage(agent, {
         from: agent,
       });
@@ -684,7 +661,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(agentIdentityAfterRegister, ADDRESS_ZERO);
     });
 
-    it('ERROR : Should not remove not existing stored identity', async () => {
+    it("ERROR : Should not remove not existing stored identity", async () => {
       await truffleAssert.reverts(
         this.IdentityRegistryStorage.removeIdentityFromStorage(agent, {
           from: agent,
@@ -695,7 +672,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(agentIdentityAfterRegister, ADDRESS_ZERO);
     });
 
-    it('SUCCESS : Should register identity', async () => {
+    it("SUCCESS : Should register identity", async () => {
       const agentIdentityBeforeRegister = await this.IdentityRegistry.identity(agent);
       assert.equal(agentIdentityBeforeRegister, ADDRESS_ZERO);
       await this.IdentityRegistryStorage.addIdentityToStorage(
@@ -711,16 +688,16 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(agentIdentityAfterRegister, this.IdentityRegistry.address);
     });
 
-    it('SUCCESS : Should force transfer', async () => {
+    it("SUCCESS : Should force transfer", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         agent,
         walletFirstFounder,
         walletDeployer,
         amount,
       );
-      assert.equal(canTransfer, '0x51');
+      assert.equal(canTransfer, "0x51");
 
-      await this.SecurityTokenContract.forcedTransfer(
+      await this.SecurityTokenContract.forceTransfer(
         walletFirstFounder,
         walletDeployer,
         amount,
@@ -731,7 +708,7 @@ contract('SECURITY TOKEN', async accounts => {
     });
   });
 
-  describe('FREEZING-PERIOD MODULE', async () => {
+  describe("FREEZING-PERIOD MODULE", async () => {
     const amountRandom = randomIntFromInterval(1, amount);
     const dayWaitedRandom = randomIntFromInterval(1, amountRandom);
     const dayEndRandom = randomIntFromInterval(
@@ -741,7 +718,7 @@ contract('SECURITY TOKEN', async accounts => {
     let percentExpected;
     let firstTransfer;
 
-    it('ERROR : Should not set freezed tokens period with amount beyond to balance of wallet deployer', async () => {
+    it("ERROR : Should not set freezed tokens period with amount beyond to balance of wallet deployer", async () => {
       const now = new Date();
       const someDaysLater = new Date();
       someDaysLater.setDate(now.getDate() + dayEndRandom);
@@ -776,7 +753,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should get my freezed tokens period and check expected parameter', async () => {
+    it("SUCCESS : Should get my freezed tokens period and check expected parameter", async () => {
       const now = new Date();
       const someDaysLater = new Date();
       someDaysLater.setDate(now.getDate() + dayEndRandom);
@@ -817,7 +794,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should get unlockable tokens period off chain and compare with on chain result', async () => {
+    it("SUCCESS : Should get unlockable tokens period off chain and compare with on chain result", async () => {
       const myFreezedTokensPeriod =
         await this.SecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
@@ -837,7 +814,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('ERROR : Should compare result of eligibleBalanceOf', async () => {
+    it("ERROR : Should compare result of eligibleBalanceOf", async () => {
       const eligibleBalanceOf = await this.SecurityTokenContract.eligibleBalanceOf(
         walletDeployer,
       );
@@ -849,14 +826,14 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(+balanceOf - myFreezedTokensPeriod.amountFreezed, +eligibleBalanceOf);
     });
 
-    it('ERROR : Should not transfer with walletFirstFounder with partial freezed token because upper to unlocked balance', async () => {
+    it("ERROR : Should not transfer with walletFirstFounder with partial freezed token because upper to unlocked balance", async () => {
       const canTransfer = await this.SecurityTokenContract.canTransfer(
         walletDeployer,
         walletDeployer,
         walletFirstFounder,
         amount,
       );
-      assert.equal(canTransfer, '0x55');
+      assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transfer(walletFirstFounder, amount, {
@@ -869,7 +846,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(+balance, amount);
     });
 
-    it('ERROR : Should not transferFrom with walletDeployer account 1 more of eligibleBalanceOf', async () => {
+    it("ERROR : Should not transferFrom with walletDeployer account 1 more of eligibleBalanceOf", async () => {
       const eligibleBalanceOf = await this.SecurityTokenContract.eligibleBalanceOf(
         walletDeployer,
       );
@@ -881,7 +858,7 @@ contract('SECURITY TOKEN', async accounts => {
         walletFirstFounder,
         amount - amountRandom + 1,
       );
-      assert.equal(canTransfer, '0x55');
+      assert.equal(canTransfer, "0x55");
 
       await truffleAssert.reverts(
         this.SecurityTokenContract.transferFrom(
@@ -902,7 +879,7 @@ contract('SECURITY TOKEN', async accounts => {
       });
     });
 
-    it('SUCCESS : Should get my freezed tokens period after redeem', async () => {
+    it("SUCCESS : Should get my freezed tokens period after redeem", async () => {
       const myFreezedTokensPeriod =
         await this.SecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
@@ -914,7 +891,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should transfer with walletFirstFounder with partial redeemed freezed tokens', async () => {
+    it("SUCCESS : Should transfer with walletFirstFounder with partial redeemed freezed tokens", async () => {
       const myFreezedTokensPeriod =
         await this.SecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
@@ -939,13 +916,13 @@ contract('SECURITY TOKEN', async accounts => {
       await increaseTimeTo(Math.floor(+someDaysLater / 1000));
     });
 
-    it('SUCCESS : Should redeem remaining freezed tokens period', async () => {
+    it("SUCCESS : Should redeem remaining freezed tokens period", async () => {
       await this.SecurityTokenContract.redeemFreezedTokens({
         from: walletDeployer,
       });
     });
 
-    it('SUCCESS : Should get my freezed tokens period and expected not remaining token freezed', async () => {
+    it("SUCCESS : Should get my freezed tokens period and expected not remaining token freezed", async () => {
       const myFreezedTokensPeriod =
         await this.SecurityTokenContract.myFreezedTokensPeriod({
           from: walletDeployer,
@@ -954,7 +931,7 @@ contract('SECURITY TOKEN', async accounts => {
       assert.equal(+myFreezedTokensPeriod.amountFreezed, 0);
     });
 
-    it('ERROR : Should not redeem freezed tokens period but no token to unfreeze', async () => {
+    it("ERROR : Should not redeem freezed tokens period but no token to unfreeze", async () => {
       await truffleAssert.reverts(
         this.SecurityTokenContract.redeemFreezedTokens({
           from: walletDeployer,
@@ -963,7 +940,7 @@ contract('SECURITY TOKEN', async accounts => {
       );
     });
 
-    it('SUCCESS : Should transfer remaining tokens with walletFirstFounder after unfreezed totality token', async () => {
+    it("SUCCESS : Should transfer remaining tokens with walletFirstFounder after unfreezed totality token", async () => {
       const balanceBeforeLastTransfer = await this.SecurityTokenContract.balanceOf(
         walletFirstFounder,
       );

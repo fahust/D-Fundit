@@ -227,7 +227,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
             return(hex"52"); // 0x52 insufficient balance
         // } else if(allowance(from, operator) <= value) {
         //     return(hex"53"); // 0x53 insufficient allowance
-        } else if(_now() < paused) {
+        } else if(_now() < paused && rules.pausable == true) {
             return(hex"54"); // 0x54 transfers halted (contract paused)
         } else if(balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) {
             return(hex"55"); // 0x55 funds locked (lockup period)
@@ -251,12 +251,13 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param to {address} to wallet to transfer
      *  @param amount {uint256} amounts of tokens to be transfered
      */
-    function forcedTransfer(
+    function forceTransfer(
         address from,
         address to,
         uint256 amount
     ) public onlyAgent returns (bool) {
         uint256 freeBalance = eligibleBalanceOf(from);
+        require(rules.forcableTransfer == true, "forceTransfer is not authorized on this contract");
 
         if (amount > freeBalance) {
             uint256 tokensToUnfreeze = amount - (balanceOf(from) - frozenTokens[from]);
@@ -282,13 +283,13 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param toList {address[]} to wallet to transfer
      *  @param amounts {uint256[]} amounts of tokens to be transfered
      */
-    function batchForcedTransfer(
+    function batchForceTransfer(
         address[] calldata fromList,
         address[] calldata toList,
         uint256[] calldata amounts
     ) external {
         for (uint256 i = 0; i < fromList.length; i++) {
-            forcedTransfer(fromList[i], toList[i], amounts[i]);
+            forceTransfer(fromList[i], toList[i], amounts[i]);
         }
     }
 
@@ -355,6 +356,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param freeze {boolean} representing freezing
      */
     function setAddressFrozen(address userAddress, bool freeze) public onlyAgent {
+        require(rules.freezableAddress == true, "Freeze address is not allowed");
         frozen[userAddress] = freeze;
         emit AddressFrozen(userAddress, freeze, _msgSender());
     }
@@ -377,6 +379,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param amount {uint256} of token to be unfreezed
      */
     function freezePartialTokens(address userAddress, uint256 amount) public onlyAgent {
+        require(rules.freezablePartial == true, "Freeze partial address is not allowed");
         uint256 balance = balanceOf(userAddress);
         require(balance >= frozenTokens[userAddress] + amount, "Amount exceeds available balance");
         frozenTokens[userAddress] = frozenTokens[userAddress] + (amount);
@@ -400,6 +403,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param amount {uint256} of token to be unfreezed
      */
     function unfreezePartialTokens(address userAddress, uint256 amount) public onlyAgent {
+        require(rules.freezablePartial == true, "Freeze partial address is not allowed");
         require(frozenTokens[userAddress] >= amount, "Amount should be less than or equal to frozen tokens");
         frozenTokens[userAddress] = frozenTokens[userAddress] - (amount);
         emit TokensUnfrozen(userAddress, amount);
@@ -429,7 +433,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
         uint256 amountFreezed,
         address userAddress
     ) external onlyAgent {
-        ///need to verify is valid identity user ?
+        require(rules.freezablePartialTime == true, "Freeze partial period address is not allowed");
         require(amountFreezed <= balanceOf(userAddress), "Amount is upper than balance of user");
         freezedPeriod[userAddress] = TokenLibrary.FreezePeriod(
             startTime,
