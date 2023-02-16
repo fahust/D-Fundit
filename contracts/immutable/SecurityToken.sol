@@ -28,13 +28,13 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
 
     /// @dev Modifier to make a function callable only when the contract is not paused.
     modifier whenNotPaused() {
-        require(_now() > paused || rules.pausable == false, "Pausable: paused");
+        require(_now() > paused, "Pausable: paused");
         _;
     }
 
     /// @dev Modifier to make a function callable only when the contract is paused.
     modifier whenPaused() {
-        require(_now() <= paused && rules.pausable == true, "Pausable: not paused");
+        require(_now() <= paused, "Pausable: not paused");
         _;
     }
 
@@ -223,25 +223,18 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
     }
 
     function canTransfer(address operator, address from, address to, uint256 value) public view returns (bytes1) {
-        if (balanceOf(from) < value){
-            return(hex"52"); // 0x52 insufficient balance
+        if (balanceOf(from) < value) return(hex"52"); // 0x52 insufficient balance
         // } else if(allowance(from, operator) <= value) {
         //     return(hex"53"); // 0x53 insufficient allowance
-        } else if(_now() < paused && rules.pausable == true) {
-            return(hex"54"); // 0x54 transfers halted (contract paused)
-        } else if(balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) {
+        if(_now() < paused) return(hex"54"); // 0x54 transfers halted (contract paused)
+        if(balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value)
             return(hex"55"); // 0x55 funds locked (lockup period)
-        } else if (from == address(0)){
-            return(hex"56"); // 0x56 invalid sender
-        } else if (to == address(0)){
-            return(hex"57"); // 0x57 invalid receiver
-        } else if (!isAgent(operator) && owner() != operator && from != operator ){
+        if(from == address(0)) return(hex"56"); // 0x56 invalid sender
+        if(to == address(0)) return(hex"57"); // 0x57 invalid receiver
+        if(!isAgent(operator) && owner() != operator && from != operator )
             return(hex"58"); // 0x58 invalid operator
-        } else if (frozen[from]){
-            return(hex"5a"); // 0x5a frozen sender
-        }  else if (frozen[to]){
-            return(hex"5b"); // 0x5b frozen receiver
-        }
+        if(frozen[from]) return(hex"5a"); // 0x5a frozen sender
+        if(frozen[to]) return(hex"5b"); // 0x5b frozen receiver
         return (hex"51"); // 0x51 success
     }
 
@@ -320,6 +313,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @param _paused {uint256} represents date when transfer restart
      */
     function pause(uint256 _paused) external onlyAgent whenNotPaused {
+        require(rules.pausable == true, "Pause is not allowed");
         paused = _paused;
         emit Paused(_msgSender(), paused);
     }
@@ -328,6 +322,7 @@ contract SecurityToken is ERC20, AgentRole, ReaderRole, WriterRole, StorageToken
      *  @notice Unpause transfer tokens of smart contract
      */
     function unpause() external onlyAgent whenPaused {
+        require(rules.pausable == true, "Pause is not allowed");
         paused = 0;
         emit Paused(_msgSender(), paused);
     }
