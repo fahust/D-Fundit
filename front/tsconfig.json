@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist/js",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "paths": {
+    "@abi": ["src/abi"]
+  },
+  "include": ["src/**/*", "src/**/*.json"],
+  "exclude": ["src/types/*.ts", "node_modules", ".vscode"]
+}
