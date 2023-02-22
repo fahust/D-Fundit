@@ -58,7 +58,12 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
 
     /// @dev Modifier to make a function callable only when the contract is paused.
     modifier onlyProxy() {
-        require(_msgSender() == addressProxy, "Pausable: not paused");
+        require(_msgSender() == addressProxy, "Not called by proxy contract");
+        _;
+    }
+
+    modifier soulBound() {
+        require(rules.soulBoundSecurityToken == false, "Token is soulbound");
         _;
     }
 
@@ -109,7 +114,8 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
      * @notice Get parameters rules of contract
      * @return rules {TokenLibrary.Rules} struct of rules setted on smart contract
      */
-    function getRules() external view onlyProxy returns(TokenLibrary.Rules memory) {
+    function getRules() external view returns(TokenLibrary.Rules memory) {
+        require(_msgSender() == addressProxy || _msgSender() == OWNER, "Caller is not owner or proxy");
         return rules;
     }
 
@@ -194,7 +200,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
      * @param to {address} wallet to transfer the token
      * @param amount {uint256[]} amount to transfer
      */
-    function transfer(address to, uint256 amount) public virtual override(ERC20, ISecurityTokenImmutable) returns (bool) {
+    function transfer(address to, uint256 amount) public virtual override(ERC20, ISecurityTokenImmutable) soulBound returns (bool) {
         _transfer(_msgSender(), to, amount);
         return true;
     }

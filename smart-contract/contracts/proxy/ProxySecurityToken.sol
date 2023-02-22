@@ -198,6 +198,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         if(!isAgent(operator) && OWNER != operator && from != operator ) return(hex"58");
         if(frozen[from]) return(hex"5a");
         if(frozen[to]) return(hex"5b");
+        if(TokenContract.getRules().soulBoundSecurityToken == true) return(hex"5c");
         return (hex"51");
     }
 

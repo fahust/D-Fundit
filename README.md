@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# Smart Contracts
+# D-Fundit
 
 <!-- TABLE OF CONTENTS -->
 <details open>
