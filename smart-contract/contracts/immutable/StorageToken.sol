@@ -10,9 +10,10 @@ contract StorageToken {
     uint256 internal immutable pricePerToken;
     uint256 internal paused;
     uint256 internal lastWithdraw;
-    uint256 internal amountRequestWithdraw;
-    uint256 internal acceptedRequestWithdraw;
-    uint256 internal refusedRequestWithdraw;
+
+    uint256 internal amountRequest;
+    uint256 internal acceptedRequest;
+    uint256 internal refusedRequest;
 
     address internal OWNER;
 
@@ -30,7 +31,7 @@ contract StorageToken {
     uint32 internal _transfersCount;
 
     string internal constant TOKEN_VERSION = "0.0.1";
-    string internal messageRequestWithdraw;
+    string internal messageRequest;
     
     error NotTheOwner(address sender, bytes32 role);
     error TransferFromZeroAddress(address from);
