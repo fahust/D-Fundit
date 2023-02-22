@@ -26,6 +26,7 @@ library TokenLibrary {
         bool forcableTransfer;
         bool rulesModifiable;
         bool soulBoundSecurityToken;
+        bool voteToWithdraw;
         uint256 dayToWithdraw;
         uint256 startFundraising;
         uint256 endFundraising;
