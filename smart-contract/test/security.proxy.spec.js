@@ -13,6 +13,19 @@ const assetType = "asset type";
 const amount = 10;
 const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 const pricePerToken = 10;
+let rules = {
+  freezableAddress: true,
+  freezablePartial: true,
+  freezablePartialTime: true,
+  pausable: true,
+  forcableTransfer: true,
+  soulBoundSecurityToken: false,
+  rulesModifiable: true,
+  dayToWithdraw: 0,
+  startFundraising: Math.floor(Date.now() / 1000),
+  endFundraising: Math.floor(Date.now() / 1000) + 1000000000,
+  maxSupply: 10000,
+};
 
 function randomIntFromInterval(min, max) {
   // min and max included
@@ -29,17 +42,11 @@ contract("SECURITY TOKEN", async accounts => {
   const agent = accounts[8];
 
   it("SUCCESS : Should deploy smart contract security token", async () => {
-    this.SecurityTokenImmutableContract = await SecurityTokenImmutable.new(name, code, {
-      freezableAddress: true,
-      freezablePartial: true,
-      freezablePartialTime: true,
-      pausable: true,
-      forcableTransfer: true,
-      dayToWithdraw: 0,
-      startFundraising: Math.floor(Date.now() / 1000),
-      endFundraising: Math.floor(Date.now() / 1000) + 1000000000,
-      maxSupply: 10000,
-    }); // we deploy contract
+    this.SecurityTokenImmutableContract = await SecurityTokenImmutable.new(
+      name,
+      code,
+      rules,
+    ); // we deploy contract
 
     this.ProxySecurityTokenContract = await ProxySecurityToken.new(pricePerToken); // we deploy contract
   });
@@ -1163,7 +1170,9 @@ contract("SECURITY TOKEN", async accounts => {
       this.FactoryContract = await Factory.new(); // we deploy contract
     });
     it("SUCCESS : Add security contract to factory", async () => {
-      await this.FactoryContract.addSecurityToken(this.SecurityTokenImmutableContract.address);
+      await this.FactoryContract.addSecurityToken(
+        this.SecurityTokenImmutableContract.address,
+      );
     });
     it("SUCCESS : list security tokens contract", async () => {
       const list = await this.FactoryContract.listSecurityTokens(0);
@@ -1173,6 +1182,60 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : count security tokens contract", async () => {
       const count = await this.FactoryContract.getCountSecurityToken();
       assert.equal(count, 1);
+    });
+  });
+
+  describe("RULES", async () => {
+    it("SUCCESS : Get rules", async () => {
+      rules = await this.SecurityTokenImmutableContract.getRules({
+        from: walletNewOwner,
+      });
+      console.log(rules);
+    });
+    it("SUCCESS : Set rules, soul bound security token", async () => {
+      await this.ProxySecurityTokenContract.mint(walletFirstFounder, amount, {
+        from: walletFirstFounder,
+        value: pricePerToken * amount,
+      });
+
+      rules = {
+        ...rules,
+        soulBoundSecurityToken: true,
+      };
+
+      await this.SecurityTokenImmutableContract.setRules(rules, {
+        from: walletNewOwner,
+      });
+
+      const canTransfer = await this.ProxySecurityTokenContract.canTransfer(
+        walletFirstFounder,
+        walletFirstFounder,
+        walletDeployer,
+        amount,
+      );
+      assert.equal(canTransfer, "0x5c");
+    });
+
+    it("SUCCESS : Set rules, rule modifiable to false", async () => {
+      rules = {
+        ...rules,
+        rulesModifiable: false,
+      };
+      await this.SecurityTokenImmutableContract.setRules(rules, {
+        from: walletNewOwner,
+      });
+    });
+
+    it("ERROR : Set rules, rule modifiable to true but rules is now not modifiable", async () => {
+      rules = {
+        ...rules,
+        rulesModifiable: true,
+      };
+      await truffleAssert.reverts(
+        this.SecurityTokenImmutableContract.setRules(rules, {
+          from: walletNewOwner,
+        }),
+      );
     });
   });
   //TODO withdraw in period

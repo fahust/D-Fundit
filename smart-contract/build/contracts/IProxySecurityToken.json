@@ -559,7 +559,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"batchFreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"freeze\",\"type\":\"bool[]\"}],\"name\":\"batchSetAddressFrozen\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"batchUnfreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"burn\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"canTransfer\",\"outputs\":[{\"internalType\":\"bytes1\",\"name\":\"\",\"type\":\"bytes1\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"eligibleBalanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"forceTransfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"freezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"getFreezedTokensPeriod\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"}],\"internalType\":\"struct TokenLibrary.FreezePeriod\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"getFrozenTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"isFrozen\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"myFreezedTokensPeriod\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"}],\"internalType\":\"struct TokenLibrary.FreezePeriod\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"redeemFreezedTokens\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"refoundable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"freeze\",\"type\":\"bool\"}],\"name\":\"setAddressFrozen\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"setFreezedTokensPeriod\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_securityTokenImmutableAddress\",\"type\":\"address\"}],\"name\":\"setSecurityTokenImmutable\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"unfreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unlockableTokensPeriod\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"version\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"weiWithdrawable\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"batchFreezePartialTokens(address[],uint256[])\":{\"params\":{\"amounts\":\"{uint256[]} of amounts of token to be unfreezed\",\"userAddresses\":\"{address[]} of user addresses\"}},\"batchSetAddressFrozen(address[],bool[])\":{\"params\":{\"freeze\":\"{bool[]} representing freezing\",\"userAddresses\":\"{address[]} of user addresses\"}},\"batchUnfreezePartialTokens(address[],uint256[])\":{\"params\":{\"amounts\":\"{uint256[]} of amounts of token to be unfreezed\",\"userAddresses\":\"{address[]} of user addresses\"}},\"burn(address,uint256)\":{\"params\":{\"account\":\"{address} wallet to burn the token\",\"amount\":\"{uint256} amount to burn\"}},\"canTransfer(address,address,address,uint256)\":{\"params\":{\"from\":\"{address} the origin of the token transfer\",\"operator\":\"{address} operator of transaction (sender)\",\"to\":\"{address} the recipient of the token transfer\",\"value\":\"{uint256} the number of tokens transferred\"},\"returns\":{\"_0\":\"hex {bytes1} code error message\"}},\"eligibleBalanceOf(address)\":{\"params\":{\"account\":\"{address} wallet address of account you want to get not freezed balance\"},\"returns\":{\"_0\":\"balance {uint256} balance of wallet address totaly open\"}},\"forceTransfer(address,address,uint256)\":{\"params\":{\"amount\":\"{uint256} amounts of tokens to be transfered\",\"from\":\"{address} from wallet to transfer\",\"to\":\"{address} to wallet to transfer\"}},\"freezePartialTokens(address,uint256)\":{\"params\":{\"amount\":\"{uint256} of token to be unfreezed\",\"userAddress\":\"{address} of the user\"}},\"getFreezedTokensPeriod(address)\":{\"params\":{\"userAddress\":\"{address} of the user freezed tokens\"},\"returns\":{\"_0\":\"freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\"}},\"getFrozenTokens(address)\":{\"params\":{\"userAddress\":\"{address} of the user\"},\"returns\":{\"_0\":\"frozenTokens {uint256} amount of freezed tokens\"}},\"isFrozen(address)\":{\"params\":{\"userAddress\":\"{address} of the user\"},\"returns\":{\"_0\":\"frozen {bool} represents freezed wallet address\"}},\"mint(address,uint256)\":{\"params\":{\"amount\":\"{uint256} amount to mint\",\"to\":\"{address} wallet to send the token\"},\"returns\":{\"_0\":\"result {boolean} success or failure\"}},\"myFreezedTokensPeriod()\":{\"returns\":{\"_0\":\"freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\"}},\"owner()\":{\"returns\":{\"_0\":\"owner {address} wallet addres from owner\"}},\"redeemFreezedTokens()\":{\"returns\":{\"_0\":\"success {bool} success of redeeming tokens\"}},\"refoundable(uint256)\":{\"params\":{\"amount\":\"{uint256} amout of tokens burn\"},\"returns\":{\"_0\":\"wei {uint256} amount of wei refoundable\"}},\"setAddressFrozen(address,bool)\":{\"params\":{\"freeze\":\"{boolean} representing freezing\",\"userAddress\":\"{address} of the user\"}},\"setFreezedTokensPeriod(uint256,uint256,uint256,address)\":{\"params\":{\"amountFreezed\":\"{uint256} Amount of frozen token\",\"endTime\":\"{uint256} End time of freezing partial token\",\"startTime\":\"{uint256} Start time of freezing partial token\",\"userAddress\":\"{address} Address wallet of the user frozen token\"}},\"setSecurityTokenImmutable(address)\":{\"params\":{\"_securityTokenImmutableAddress\":\"{address} address of security token immutable contract\"}},\"transfer(address,uint256)\":{\"details\":\"Transfer and send `amount` tokens from `_msgSender()` to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\",\"params\":{\"amount\":\"{uint256[]} amount to transfer\",\"to\":\"{address} wallet to transfer the token\"}},\"transferFrom(address,address,uint256)\":{\"details\":\"Transfer and send `amount` tokens from `from` to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\",\"params\":{\"amount\":\"{uint256[]} amount to transfer\",\"from\":\"{address} wallet from transfer the token\",\"to\":\"{address} wallet to transfer the token\"}},\"transferOwnership(address)\":{\"params\":{\"account\":\"{address} address of the new owner\"}},\"unfreezePartialTokens(address,uint256)\":{\"params\":{\"amount\":\"{uint256} of token to be unfreezed\",\"userAddress\":\"{address} of the user\"}},\"unlockableTokensPeriod()\":{\"returns\":{\"_0\":\"unlockable {uint256} of unlockable tokens freezed in period\"}},\"version()\":{\"returns\":{\"_0\":\"TOKEN_VERSION {string} version of the smart contract\"}},\"withdraw(uint256,address)\":{\"params\":{\"amount\":\"{uint256} the number of tokens transferred\",\"receiver\":\"{address} the recipient of the token transfer\"}},\"withdrawable(uint256)\":{\"params\":{\"amount\":\"{uint256} the number of tokens withdraw\"},\"returns\":{\"weiWithdrawable\":\"{uint256} the number of wei transferrable\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"batchFreezePartialTokens(address[],uint256[])\":{\"notice\":\"Freeze patial tokens of multiples wallets\"},\"batchSetAddressFrozen(address[],bool[])\":{\"notice\":\"Freeze totality tokens of multiples wallet addresses\"},\"batchUnfreezePartialTokens(address[],uint256[])\":{\"notice\":\"Unfreeze patial tokens of multiples wallets\"},\"burn(address,uint256)\":{\"notice\":\"Remove `amount` tokens from `account` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\"},\"canTransfer(address,address,address,uint256)\":{\"notice\":\"Interface of transfer method, return hex code error message\"},\"eligibleBalanceOf(address)\":{\"notice\":\"Return not freezed tokens from an address wallet\"},\"forceTransfer(address,address,uint256)\":{\"notice\":\"Force an address wallet to transfer by agent\"},\"freezePartialTokens(address,uint256)\":{\"notice\":\"Freeze patial tokens of single wallet\"},\"getFreezedTokensPeriod(address)\":{\"notice\":\"Retrieve struct of freezed tokens in period of one wallet address by agent\"},\"getFrozenTokens(address)\":{\"notice\":\"Return freezed tokens amount of wallet address\"},\"isFrozen(address)\":{\"notice\":\"Return freezed or not wallet address tokens\"},\"mint(address,uint256)\":{\"notice\":\"Mint and send `amount` tokens to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\"},\"myFreezedTokensPeriod()\":{\"notice\":\"Retrieve struct of freezed tokens in period of msg.sender\"},\"owner()\":{\"notice\":\"Returns the address wallet of the smart contract owner.\"},\"redeemFreezedTokens()\":{\"notice\":\"Redeem unlockable freezed tokens periodically\"},\"refoundable(uint256)\":{\"notice\":\"Return amount of refoundable for amount of tokens burned\"},\"setAddressFrozen(address,bool)\":{\"notice\":\"Freeze totality tokens of single wallet address\"},\"setFreezedTokensPeriod(uint256,uint256,uint256,address)\":{\"notice\":\"Freeze token of one address wallet periodically\"},\"setSecurityTokenImmutable(address)\":{\"notice\":\"set the contract address of security token immutable\"},\"transferOwnership(address)\":{\"notice\":\"Transfer ownership of the smart contract\"},\"unfreezePartialTokens(address,uint256)\":{\"notice\":\"Unfreeze patial tokens of single wallet\"},\"unlockableTokensPeriod()\":{\"notice\":\"Get unlockable tokens freezed in period for msg.sender\"},\"version()\":{\"notice\":\"Returns the version of the token contract\"},\"withdraw(uint256,address)\":{\"notice\":\"Withdraw tokens amount of contract balance\"},\"withdrawable(uint256)\":{\"notice\":\"Check amount of withdrawable\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IProxySecurityToken.sol\":\"IProxySecurityToken\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/immutable/StorageToken.sol\":{\"keccak256\":\"0x7a6468b1c259e33b474b8979b37a95fe18e1e85cf18ae71682dfab49da0efa4a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7c6b39abec171bd99cd52e928881df32a29222ea953a95591c934fadf4e34e50\",\"dweb:/ipfs/QmTwuPt5EzYj2DYoVF99y4f1FBASYrtPpT5kZsRGhGgUd9\"]},\"project:/contracts/interfaces/IProxySecurityToken.sol\":{\"keccak256\":\"0xcc577ad3330fcb9f5d0196d027d628cb2f31c1082dbe98655aa3484d86bb300d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3da8aa8b82fb7896363d28fec5bc65a3ba81a9b6d7b49fc5543be21e930c17d2\",\"dweb:/ipfs/Qmb2TW2o6ARNGi29ALBzRQYLAYXBnBTwuFif5fey6aGanR\"]},\"project:/contracts/interfaces/ISecurityTokenImmutable.sol\":{\"keccak256\":\"0x4ed71013c0f3e491b64ddf134f632b9193b59bb397b94703cdbddb6247dbc33c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f3541e0fc6e3e3bebcd5b4d09fcd7ee6f89222326b2259413f10e68e59c8ad53\",\"dweb:/ipfs/QmbdNvQMT1iW4Nmgidv8TBKQ42LtWssowcAhycuJXczMpK\"]},\"project:/contracts/library/TokenLibrary.sol\":{\"keccak256\":\"0x03352b66720ee45bffaea9539b06dc445bc7c2c3da85a70ca25e9af854c3fd85\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://60dafbfe280296b0f312c992d7050bff0eaa665ce21774ff004473eac61fb5f3\",\"dweb:/ipfs/QmTSuDCgfwBjECS147nyQdzALD69QgS4JcecLAwwp5p6Je\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"batchFreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"bool[]\",\"name\":\"freeze\",\"type\":\"bool[]\"}],\"name\":\"batchSetAddressFrozen\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"userAddresses\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"batchUnfreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"burn\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"canTransfer\",\"outputs\":[{\"internalType\":\"bytes1\",\"name\":\"\",\"type\":\"bytes1\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"eligibleBalanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"forceTransfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"freezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"getFreezedTokensPeriod\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"}],\"internalType\":\"struct TokenLibrary.FreezePeriod\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"getFrozenTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"isFrozen\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"mint\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"myFreezedTokensPeriod\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"}],\"internalType\":\"struct TokenLibrary.FreezePeriod\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"redeemFreezedTokens\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"refoundable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"freeze\",\"type\":\"bool\"}],\"name\":\"setAddressFrozen\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountFreezed\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"setFreezedTokensPeriod\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_securityTokenImmutableAddress\",\"type\":\"address\"}],\"name\":\"setSecurityTokenImmutable\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"unfreezePartialTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unlockableTokensPeriod\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"version\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"weiWithdrawable\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"batchFreezePartialTokens(address[],uint256[])\":{\"params\":{\"amounts\":\"{uint256[]} of amounts of token to be unfreezed\",\"userAddresses\":\"{address[]} of user addresses\"}},\"batchSetAddressFrozen(address[],bool[])\":{\"params\":{\"freeze\":\"{bool[]} representing freezing\",\"userAddresses\":\"{address[]} of user addresses\"}},\"batchUnfreezePartialTokens(address[],uint256[])\":{\"params\":{\"amounts\":\"{uint256[]} of amounts of token to be unfreezed\",\"userAddresses\":\"{address[]} of user addresses\"}},\"burn(address,uint256)\":{\"params\":{\"account\":\"{address} wallet to burn the token\",\"amount\":\"{uint256} amount to burn\"}},\"canTransfer(address,address,address,uint256)\":{\"params\":{\"from\":\"{address} the origin of the token transfer\",\"operator\":\"{address} operator of transaction (sender)\",\"to\":\"{address} the recipient of the token transfer\",\"value\":\"{uint256} the number of tokens transferred\"},\"returns\":{\"_0\":\"hex {bytes1} code error message\"}},\"eligibleBalanceOf(address)\":{\"params\":{\"account\":\"{address} wallet address of account you want to get not freezed balance\"},\"returns\":{\"_0\":\"balance {uint256} balance of wallet address totaly open\"}},\"forceTransfer(address,address,uint256)\":{\"params\":{\"amount\":\"{uint256} amounts of tokens to be transfered\",\"from\":\"{address} from wallet to transfer\",\"to\":\"{address} to wallet to transfer\"}},\"freezePartialTokens(address,uint256)\":{\"params\":{\"amount\":\"{uint256} of token to be unfreezed\",\"userAddress\":\"{address} of the user\"}},\"getFreezedTokensPeriod(address)\":{\"params\":{\"userAddress\":\"{address} of the user freezed tokens\"},\"returns\":{\"_0\":\"freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\"}},\"getFrozenTokens(address)\":{\"params\":{\"userAddress\":\"{address} of the user\"},\"returns\":{\"_0\":\"frozenTokens {uint256} amount of freezed tokens\"}},\"isFrozen(address)\":{\"params\":{\"userAddress\":\"{address} of the user\"},\"returns\":{\"_0\":\"frozen {bool} represents freezed wallet address\"}},\"mint(address,uint256)\":{\"params\":{\"amount\":\"{uint256} amount to mint\",\"to\":\"{address} wallet to send the token\"},\"returns\":{\"_0\":\"result {boolean} success or failure\"}},\"myFreezedTokensPeriod()\":{\"returns\":{\"_0\":\"freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\"}},\"owner()\":{\"returns\":{\"_0\":\"owner {address} wallet addres from owner\"}},\"redeemFreezedTokens()\":{\"returns\":{\"_0\":\"success {bool} success of redeeming tokens\"}},\"refoundable(uint256)\":{\"params\":{\"amount\":\"{uint256} amout of tokens burn\"},\"returns\":{\"_0\":\"wei {uint256} amount of wei refoundable\"}},\"setAddressFrozen(address,bool)\":{\"params\":{\"freeze\":\"{boolean} representing freezing\",\"userAddress\":\"{address} of the user\"}},\"setFreezedTokensPeriod(uint256,uint256,uint256,address)\":{\"params\":{\"amountFreezed\":\"{uint256} Amount of frozen token\",\"endTime\":\"{uint256} End time of freezing partial token\",\"startTime\":\"{uint256} Start time of freezing partial token\",\"userAddress\":\"{address} Address wallet of the user frozen token\"}},\"setSecurityTokenImmutable(address)\":{\"params\":{\"_securityTokenImmutableAddress\":\"{address} address of security token immutable contract\"}},\"transfer(address,uint256)\":{\"details\":\"Transfer and send `amount` tokens from `_msgSender()` to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\",\"params\":{\"amount\":\"{uint256[]} amount to transfer\",\"to\":\"{address} wallet to transfer the token\"}},\"transferFrom(address,address,uint256)\":{\"details\":\"Transfer and send `amount` tokens from `from` to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\",\"params\":{\"amount\":\"{uint256[]} amount to transfer\",\"from\":\"{address} wallet from transfer the token\",\"to\":\"{address} wallet to transfer the token\"}},\"transferOwnership(address)\":{\"params\":{\"account\":\"{address} address of the new owner\"}},\"unfreezePartialTokens(address,uint256)\":{\"params\":{\"amount\":\"{uint256} of token to be unfreezed\",\"userAddress\":\"{address} of the user\"}},\"unlockableTokensPeriod()\":{\"returns\":{\"_0\":\"unlockable {uint256} of unlockable tokens freezed in period\"}},\"version()\":{\"returns\":{\"_0\":\"TOKEN_VERSION {string} version of the smart contract\"}},\"withdraw(uint256,address)\":{\"params\":{\"amount\":\"{uint256} the number of tokens transferred\",\"receiver\":\"{address} the recipient of the token transfer\"}},\"withdrawable(uint256)\":{\"params\":{\"amount\":\"{uint256} the number of tokens withdraw\"},\"returns\":{\"weiWithdrawable\":\"{uint256} the number of wei transferrable\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"batchFreezePartialTokens(address[],uint256[])\":{\"notice\":\"Freeze patial tokens of multiples wallets\"},\"batchSetAddressFrozen(address[],bool[])\":{\"notice\":\"Freeze totality tokens of multiples wallet addresses\"},\"batchUnfreezePartialTokens(address[],uint256[])\":{\"notice\":\"Unfreeze patial tokens of multiples wallets\"},\"burn(address,uint256)\":{\"notice\":\"Remove `amount` tokens from `account` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\"},\"canTransfer(address,address,address,uint256)\":{\"notice\":\"Interface of transfer method, return hex code error message\"},\"eligibleBalanceOf(address)\":{\"notice\":\"Return not freezed tokens from an address wallet\"},\"forceTransfer(address,address,uint256)\":{\"notice\":\"Force an address wallet to transfer by agent\"},\"freezePartialTokens(address,uint256)\":{\"notice\":\"Freeze patial tokens of single wallet\"},\"getFreezedTokensPeriod(address)\":{\"notice\":\"Retrieve struct of freezed tokens in period of one wallet address by agent\"},\"getFrozenTokens(address)\":{\"notice\":\"Return freezed tokens amount of wallet address\"},\"isFrozen(address)\":{\"notice\":\"Return freezed or not wallet address tokens\"},\"mint(address,uint256)\":{\"notice\":\"Mint and send `amount` tokens to `to` Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event.\"},\"myFreezedTokensPeriod()\":{\"notice\":\"Retrieve struct of freezed tokens in period of msg.sender\"},\"owner()\":{\"notice\":\"Returns the address wallet of the smart contract owner.\"},\"redeemFreezedTokens()\":{\"notice\":\"Redeem unlockable freezed tokens periodically\"},\"refoundable(uint256)\":{\"notice\":\"Return amount of refoundable for amount of tokens burned\"},\"setAddressFrozen(address,bool)\":{\"notice\":\"Freeze totality tokens of single wallet address\"},\"setFreezedTokensPeriod(uint256,uint256,uint256,address)\":{\"notice\":\"Freeze token of one address wallet periodically\"},\"setSecurityTokenImmutable(address)\":{\"notice\":\"set the contract address of security token immutable\"},\"transferOwnership(address)\":{\"notice\":\"Transfer ownership of the smart contract\"},\"unfreezePartialTokens(address,uint256)\":{\"notice\":\"Unfreeze patial tokens of single wallet\"},\"unlockableTokensPeriod()\":{\"notice\":\"Get unlockable tokens freezed in period for msg.sender\"},\"version()\":{\"notice\":\"Returns the version of the token contract\"},\"withdraw(uint256,address)\":{\"notice\":\"Withdraw tokens amount of contract balance\"},\"withdrawable(uint256)\":{\"notice\":\"Check amount of withdrawable\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IProxySecurityToken.sol\":\"IProxySecurityToken\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/immutable/StorageToken.sol\":{\"keccak256\":\"0x7a6468b1c259e33b474b8979b37a95fe18e1e85cf18ae71682dfab49da0efa4a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7c6b39abec171bd99cd52e928881df32a29222ea953a95591c934fadf4e34e50\",\"dweb:/ipfs/QmTwuPt5EzYj2DYoVF99y4f1FBASYrtPpT5kZsRGhGgUd9\"]},\"project:/contracts/interfaces/IProxySecurityToken.sol\":{\"keccak256\":\"0xcc577ad3330fcb9f5d0196d027d628cb2f31c1082dbe98655aa3484d86bb300d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3da8aa8b82fb7896363d28fec5bc65a3ba81a9b6d7b49fc5543be21e930c17d2\",\"dweb:/ipfs/Qmb2TW2o6ARNGi29ALBzRQYLAYXBnBTwuFif5fey6aGanR\"]},\"project:/contracts/interfaces/ISecurityTokenImmutable.sol\":{\"keccak256\":\"0x4ed71013c0f3e491b64ddf134f632b9193b59bb397b94703cdbddb6247dbc33c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f3541e0fc6e3e3bebcd5b4d09fcd7ee6f89222326b2259413f10e68e59c8ad53\",\"dweb:/ipfs/QmbdNvQMT1iW4Nmgidv8TBKQ42LtWssowcAhycuJXczMpK\"]},\"project:/contracts/library/TokenLibrary.sol\":{\"keccak256\":\"0x1eeb695d87d531c54003c3f97ebdc44b1c1b233c27f1607483052b6dc72f4ef8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bfae32482b5c729791334f642850b13e4b6cf4fa54d2e95f8ec00a8608609d3e\",\"dweb:/ipfs/QmUjitaQdX9ipbyzd5QPmehQ75rfScqc7EeZkviGhNmnDK\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -568,29 +568,29 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\n\nimport \"../immutable/StorageToken.sol\";\nimport \"../library/TokenLibrary.sol\";\nimport \"../interfaces/ISecurityTokenImmutable.sol\";\n\ninterface IProxySecurityToken {\n\n    /**\n     * @notice set the contract address of security token immutable\n     * @param _securityTokenImmutableAddress {address} address of security token immutable contract\n     */\n    function setSecurityTokenImmutable(address _securityTokenImmutableAddress) external;\n\n    /**\n     * @notice Returns the version of the token contract\n     * @return TOKEN_VERSION {string} version of the smart contract\n     */\n    function version() external pure returns (string memory);\n\n    /**\n     * @notice Returns the address wallet of the smart contract owner.\n     * @return owner {address} wallet addres from owner\n     */\n    function owner() external view returns (address);\n\n    /**\n     * @notice Transfer ownership of the smart contract\n     * @param account {address} address of the new owner\n     */\n    function transferOwnership(address account) external;\n\n    /**\n     * @notice Return not freezed tokens from an address wallet\n     * @param account {address} wallet address of account you want to get not freezed balance\n     * @return balance {uint256} balance of wallet address totaly open\n     */\n    function eligibleBalanceOf(address account) external view returns(uint256);\n\n    /**\n     * @notice Mint and send `amount` tokens to `to`\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     * @param to {address} wallet to send the token\n     * @param amount {uint256} amount to mint\n     * @return result {boolean} success or failure\n     */\n    function mint(address to, uint256 amount) external payable returns (bool);\n\n    /**\n     * @notice Remove `amount` tokens from `account`\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     * @param account {address} wallet to burn the token\n     * @param amount {uint256} amount to burn\n     */\n    function burn(address account, uint256 amount) external returns (bool);\n\n    /**\n     * @notice Return amount of refoundable for amount of tokens burned\n     * @param amount {uint256} amout of tokens burn\n     * @return wei {uint256} amount of wei refoundable\n     */\n    function refoundable(uint256 amount) external view returns(uint256);\n\n    /**\n     * @dev Transfer and send `amount` tokens from `_msgSender()` to `to`\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     * @param to {address} wallet to transfer the token\n     * @param amount {uint256[]} amount to transfer\n     */\n    function transfer(address to, uint256 amount) external returns (bool);\n\n    /**\n     * @dev Transfer and send `amount` tokens from `from` to `to`\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     * @param from {address} wallet from transfer the token\n     * @param to {address} wallet to transfer the token\n     * @param amount {uint256[]} amount to transfer\n     */\n    function transferFrom(address from, address to, uint256 amount) external returns (bool);\n\n    /**\n     * @notice Interface of transfer method, return hex code error message\n     * @param operator {address} operator of transaction (sender)\n     * @param from {address} the origin of the token transfer\n     * @param to {address} the recipient of the token transfer\n     * @param value {uint256} the number of tokens transferred\n     * @return hex {bytes1} code error message\n     */\n    function canTransfer(\n        address operator,\n        address from,\n        address to,\n        uint256 value\n    ) external view returns (bytes1);\n\n    /**\n     *  @notice Force an address wallet to transfer by agent\n     *  @param from {address} from wallet to transfer\n     *  @param to {address} to wallet to transfer\n     *  @param amount {uint256} amounts of tokens to be transfered\n     */\n    function forceTransfer(\n        address from,\n        address to,\n        uint256 amount\n    ) external returns (bool);\n\n    /**\n     *  @notice Return freezed or not wallet address tokens\n     *  @param userAddress {address} of the user\n     *  @return frozen {bool} represents freezed wallet address\n     */\n    function isFrozen(address userAddress) external view returns (bool);\n\n    /**\n     *  @notice Return freezed tokens amount of wallet address\n     *  @param userAddress {address} of the user\n     *  @return frozenTokens {uint256} amount of freezed tokens\n     */\n    function getFrozenTokens(address userAddress) external view returns (uint256);\n\n    /**\n     *  @notice Freeze totality tokens of single wallet address\n     *  @param userAddress {address} of the user\n     *  @param freeze {boolean} representing freezing\n     */\n    function setAddressFrozen(address userAddress, bool freeze) external;\n\n    /**\n     *  @notice Freeze totality tokens of multiples wallet addresses\n     *  @param userAddresses {address[]} of user addresses\n     *  @param freeze {bool[]} representing freezing\n     */\n    function batchSetAddressFrozen(address[] calldata userAddresses, bool[] calldata freeze) external;\n\n\n    /**\n     *  @notice Freeze patial tokens of single wallet\n     *  @param userAddress {address} of the user\n     *  @param amount {uint256} of token to be unfreezed\n     */\n    function freezePartialTokens(address userAddress, uint256 amount) external;\n\n    /**\n     *  @notice Freeze patial tokens of multiples wallets\n     *  @param userAddresses {address[]} of user addresses\n     *  @param amounts {uint256[]} of amounts of token to be unfreezed\n     */\n    function batchFreezePartialTokens(address[] calldata userAddresses, uint256[] calldata amounts) external;\n\n    /**\n     *  @notice Unfreeze patial tokens of single wallet\n     *  @param userAddress {address} of the user\n     *  @param amount {uint256} of token to be unfreezed\n     */\n    function unfreezePartialTokens(address userAddress, uint256 amount) external;\n\n    /**\n     *  @notice Unfreeze patial tokens of multiples wallets\n     *  @param userAddresses {address[]} of user addresses\n     *  @param amounts {uint256[]} of amounts of token to be unfreezed\n     */\n    function batchUnfreezePartialTokens(address[] calldata userAddresses, uint256[] calldata amounts) external;\n\n    /**\n     * @notice Freeze token of one address wallet periodically\n     * @param startTime {uint256} Start time of freezing partial token\n     * @param endTime {uint256} End time of freezing partial token\n     * @param amountFreezed {uint256} Amount of frozen token\n     * @param userAddress {address} Address wallet of the user frozen token\n     */\n    function setFreezedTokensPeriod(\n        uint256 startTime,\n        uint256 endTime,\n        uint256 amountFreezed,\n        address userAddress\n    ) external;\n\n    /**\n     * @notice Retrieve struct of freezed tokens in period of msg.sender\n     * @return freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\n     */\n    function myFreezedTokensPeriod() external view returns (TokenLibrary.FreezePeriod memory);\n\n    /**\n     * @notice Retrieve struct of freezed tokens in period of one wallet address by agent\n     * @param userAddress {address} of the user freezed tokens\n     * @return freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period\n     */\n    function getFreezedTokensPeriod(address userAddress) external view returns (TokenLibrary.FreezePeriod memory);\n\n    /**\n     * @notice Get unlockable tokens freezed in period for msg.sender\n     * @return unlockable {uint256} of unlockable tokens freezed in period\n     */\n    function unlockableTokensPeriod() external view returns (uint256);\n\n    /**\n     * @notice Redeem unlockable freezed tokens periodically\n     * @return success {bool} success of redeeming tokens\n     */\n    function redeemFreezedTokens() external returns (bool);\n\n    /**\n     * @notice Withdraw tokens amount of contract balance\n     * @param amount {uint256} the number of tokens transferred\n     * @param receiver {address} the recipient of the token transfer\n     */\n    function withdraw(uint256 amount, address receiver) external;\n\n    /**\n     * @notice Check amount of withdrawable\n     * @param amount {uint256} the number of tokens withdraw\n     * @return weiWithdrawable {uint256} the number of wei transferrable\n     */\n    function withdrawable(uint256 amount) external view returns(uint256 weiWithdrawable);\n}\n",
-  "sourcePath": "/home/solid-solution/Bureau/HOMEWORK/Smart-Starter/contracts/interfaces/IProxySecurityToken.sol",
+  "sourcePath": "/home/solid-solution/Bureau/HOMEWORK/Smart-Starter/smart-contract/contracts/interfaces/IProxySecurityToken.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IProxySecurityToken.sol",
     "exportedSymbols": {
       "IProxySecurityToken": [
-        3860
+        2392
       ],
       "ISecurityTokenImmutable": [
-        4024
+        2556
       ],
       "StorageToken": [
-        3620
+        2152
       ],
       "TokenLibrary": [
-        4066
+        2600
       ]
     },
-    "id": 3861,
+    "id": 2393,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3622,
+        "id": 2154,
         "literals": [
           "solidity",
           "^",
@@ -598,41 +598,41 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:23:10"
+        "src": "33:23:9"
       },
       {
         "absolutePath": "project:/contracts/immutable/StorageToken.sol",
         "file": "../immutable/StorageToken.sol",
-        "id": 3623,
+        "id": 2155,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 3861,
-        "sourceUnit": 3621,
-        "src": "59:39:10",
+        "scope": 2393,
+        "sourceUnit": 2153,
+        "src": "59:39:9",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "absolutePath": "project:/contracts/library/TokenLibrary.sol",
         "file": "../library/TokenLibrary.sol",
-        "id": 3624,
+        "id": 2156,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 3861,
-        "sourceUnit": 4067,
-        "src": "99:37:10",
+        "scope": 2393,
+        "sourceUnit": 2601,
+        "src": "99:37:9",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "absolutePath": "project:/contracts/interfaces/ISecurityTokenImmutable.sol",
         "file": "../interfaces/ISecurityTokenImmutable.sol",
-        "id": 3625,
+        "id": 2157,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 3861,
-        "sourceUnit": 4025,
-        "src": "137:51:10",
+        "scope": 2393,
+        "sourceUnit": 2557,
+        "src": "137:51:9",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -643,42 +643,42 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3860,
+        "id": 2392,
         "linearizedBaseContracts": [
-          3860
+          2392
         ],
         "name": "IProxySecurityToken",
-        "nameLocation": "200:19:10",
+        "nameLocation": "200:19:9",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 3626,
+              "id": 2158,
               "nodeType": "StructuredDocumentation",
-              "src": "227:179:10",
+              "src": "227:179:9",
               "text": " @notice set the contract address of security token immutable\n @param _securityTokenImmutableAddress {address} address of security token immutable contract"
             },
             "functionSelector": "881bd973",
-            "id": 3631,
+            "id": 2163,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setSecurityTokenImmutable",
-            "nameLocation": "420:25:10",
+            "nameLocation": "420:25:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3629,
+              "id": 2161,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3628,
+                  "id": 2160,
                   "mutability": "mutable",
                   "name": "_securityTokenImmutableAddress",
-                  "nameLocation": "454:30:10",
+                  "nameLocation": "454:30:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3631,
-                  "src": "446:38:10",
+                  "scope": 2163,
+                  "src": "446:38:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -686,10 +686,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3627,
+                    "id": 2159,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "446:7:10",
+                    "src": "446:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -699,54 +699,54 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "445:40:10"
+              "src": "445:40:9"
             },
             "returnParameters": {
-              "id": 3630,
+              "id": 2162,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "494:0:10"
+              "src": "494:0:9"
             },
-            "scope": 3860,
-            "src": "411:84:10",
+            "scope": 2392,
+            "src": "411:84:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3632,
+              "id": 2164,
               "nodeType": "StructuredDocumentation",
-              "src": "501:136:10",
+              "src": "501:136:9",
               "text": " @notice Returns the version of the token contract\n @return TOKEN_VERSION {string} version of the smart contract"
             },
             "functionSelector": "54fd4d50",
-            "id": 3637,
+            "id": 2169,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "version",
-            "nameLocation": "651:7:10",
+            "nameLocation": "651:7:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3633,
+              "id": 2165,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "658:2:10"
+              "src": "658:2:9"
             },
             "returnParameters": {
-              "id": 3636,
+              "id": 2168,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3635,
+                  "id": 2167,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "684:13:10",
+                  "scope": 2169,
+                  "src": "684:13:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -754,10 +754,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3634,
+                    "id": 2166,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "684:6:10",
+                    "src": "684:6:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -766,48 +766,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "683:15:10"
+              "src": "683:15:9"
             },
-            "scope": 3860,
-            "src": "642:57:10",
+            "scope": 2392,
+            "src": "642:57:9",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3638,
+              "id": 2170,
               "nodeType": "StructuredDocumentation",
-              "src": "705:138:10",
+              "src": "705:138:9",
               "text": " @notice Returns the address wallet of the smart contract owner.\n @return owner {address} wallet addres from owner"
             },
             "functionSelector": "8da5cb5b",
-            "id": 3643,
+            "id": 2175,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "owner",
-            "nameLocation": "857:5:10",
+            "nameLocation": "857:5:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3639,
+              "id": 2171,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "862:2:10"
+              "src": "862:2:9"
             },
             "returnParameters": {
-              "id": 3642,
+              "id": 2174,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3641,
+                  "id": 2173,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3643,
-                  "src": "888:7:10",
+                  "scope": 2175,
+                  "src": "888:7:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -815,10 +815,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3640,
+                    "id": 2172,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "888:7:10",
+                    "src": "888:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -828,42 +828,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "887:9:10"
+              "src": "887:9:9"
             },
-            "scope": 3860,
-            "src": "848:49:10",
+            "scope": 2392,
+            "src": "848:49:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3644,
+              "id": 2176,
               "nodeType": "StructuredDocumentation",
-              "src": "903:124:10",
+              "src": "903:124:9",
               "text": " @notice Transfer ownership of the smart contract\n @param account {address} address of the new owner"
             },
             "functionSelector": "f2fde38b",
-            "id": 3649,
+            "id": 2181,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferOwnership",
-            "nameLocation": "1041:17:10",
+            "nameLocation": "1041:17:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3647,
+              "id": 2179,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3646,
+                  "id": 2178,
                   "mutability": "mutable",
                   "name": "account",
-                  "nameLocation": "1067:7:10",
+                  "nameLocation": "1067:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3649,
-                  "src": "1059:15:10",
+                  "scope": 2181,
+                  "src": "1059:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -871,10 +871,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3645,
+                    "id": 2177,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1059:7:10",
+                    "src": "1059:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -884,48 +884,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1058:17:10"
+              "src": "1058:17:9"
             },
             "returnParameters": {
-              "id": 3648,
+              "id": 2180,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1084:0:10"
+              "src": "1084:0:9"
             },
-            "scope": 3860,
-            "src": "1032:53:10",
+            "scope": 2392,
+            "src": "1032:53:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3650,
+              "id": 2182,
               "nodeType": "StructuredDocumentation",
-              "src": "1091:240:10",
+              "src": "1091:240:9",
               "text": " @notice Return not freezed tokens from an address wallet\n @param account {address} wallet address of account you want to get not freezed balance\n @return balance {uint256} balance of wallet address totaly open"
             },
             "functionSelector": "afde442a",
-            "id": 3657,
+            "id": 2189,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "eligibleBalanceOf",
-            "nameLocation": "1345:17:10",
+            "nameLocation": "1345:17:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3653,
+              "id": 2185,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3652,
+                  "id": 2184,
                   "mutability": "mutable",
                   "name": "account",
-                  "nameLocation": "1371:7:10",
+                  "nameLocation": "1371:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3657,
-                  "src": "1363:15:10",
+                  "scope": 2189,
+                  "src": "1363:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -933,10 +933,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3651,
+                    "id": 2183,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1363:7:10",
+                    "src": "1363:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -946,21 +946,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1362:17:10"
+              "src": "1362:17:9"
             },
             "returnParameters": {
-              "id": 3656,
+              "id": 2188,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3655,
+                  "id": 2187,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3657,
-                  "src": "1402:7:10",
+                  "scope": 2189,
+                  "src": "1402:7:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -968,10 +968,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3654,
+                    "id": 2186,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1402:7:10",
+                    "src": "1402:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -980,42 +980,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1401:9:10"
+              "src": "1401:9:9"
             },
-            "scope": 3860,
-            "src": "1336:75:10",
+            "scope": 2392,
+            "src": "1336:75:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3658,
+              "id": 2190,
               "nodeType": "StructuredDocumentation",
-              "src": "1417:335:10",
+              "src": "1417:335:9",
               "text": " @notice Mint and send `amount` tokens to `to`\n Returns a boolean value indicating whether the operation succeeded.\n Emits a {Transfer} event.\n @param to {address} wallet to send the token\n @param amount {uint256} amount to mint\n @return result {boolean} success or failure"
             },
             "functionSelector": "40c10f19",
-            "id": 3667,
+            "id": 2199,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "mint",
-            "nameLocation": "1766:4:10",
+            "nameLocation": "1766:4:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3663,
+              "id": 2195,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3660,
+                  "id": 2192,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "1779:2:10",
+                  "nameLocation": "1779:2:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3667,
-                  "src": "1771:10:10",
+                  "scope": 2199,
+                  "src": "1771:10:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1023,10 +1023,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3659,
+                    "id": 2191,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1771:7:10",
+                    "src": "1771:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1037,13 +1037,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3662,
+                  "id": 2194,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "1791:6:10",
+                  "nameLocation": "1791:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3667,
-                  "src": "1783:14:10",
+                  "scope": 2199,
+                  "src": "1783:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1051,10 +1051,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3661,
+                    "id": 2193,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1783:7:10",
+                    "src": "1783:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1063,21 +1063,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1770:28:10"
+              "src": "1770:28:9"
             },
             "returnParameters": {
-              "id": 3666,
+              "id": 2198,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3665,
+                  "id": 2197,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3667,
-                  "src": "1825:4:10",
+                  "scope": 2199,
+                  "src": "1825:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1085,10 +1085,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3664,
+                    "id": 2196,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1825:4:10",
+                    "src": "1825:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1097,42 +1097,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1824:6:10"
+              "src": "1824:6:9"
             },
-            "scope": 3860,
-            "src": "1757:74:10",
+            "scope": 2392,
+            "src": "1757:74:9",
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3668,
+              "id": 2200,
               "nodeType": "StructuredDocumentation",
-              "src": "1837:289:10",
+              "src": "1837:289:9",
               "text": " @notice Remove `amount` tokens from `account`\n Returns a boolean value indicating whether the operation succeeded.\n Emits a {Transfer} event.\n @param account {address} wallet to burn the token\n @param amount {uint256} amount to burn"
             },
             "functionSelector": "9dc29fac",
-            "id": 3677,
+            "id": 2209,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "burn",
-            "nameLocation": "2140:4:10",
+            "nameLocation": "2140:4:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3673,
+              "id": 2205,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3670,
+                  "id": 2202,
                   "mutability": "mutable",
                   "name": "account",
-                  "nameLocation": "2153:7:10",
+                  "nameLocation": "2153:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3677,
-                  "src": "2145:15:10",
+                  "scope": 2209,
+                  "src": "2145:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1140,10 +1140,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3669,
+                    "id": 2201,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2145:7:10",
+                    "src": "2145:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1154,13 +1154,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3672,
+                  "id": 2204,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "2170:6:10",
+                  "nameLocation": "2170:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3677,
-                  "src": "2162:14:10",
+                  "scope": 2209,
+                  "src": "2162:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1168,10 +1168,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3671,
+                    "id": 2203,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2162:7:10",
+                    "src": "2162:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1180,21 +1180,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2144:33:10"
+              "src": "2144:33:9"
             },
             "returnParameters": {
-              "id": 3676,
+              "id": 2208,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3675,
+                  "id": 2207,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3677,
-                  "src": "2196:4:10",
+                  "scope": 2209,
+                  "src": "2196:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1202,10 +1202,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3674,
+                    "id": 2206,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2196:4:10",
+                    "src": "2196:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1214,42 +1214,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2195:6:10"
+              "src": "2195:6:9"
             },
-            "scope": 3860,
-            "src": "2131:71:10",
+            "scope": 2392,
+            "src": "2131:71:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3678,
+              "id": 2210,
               "nodeType": "StructuredDocumentation",
-              "src": "2208:190:10",
+              "src": "2208:190:9",
               "text": " @notice Return amount of refoundable for amount of tokens burned\n @param amount {uint256} amout of tokens burn\n @return wei {uint256} amount of wei refoundable"
             },
             "functionSelector": "586abfbd",
-            "id": 3685,
+            "id": 2217,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "refoundable",
-            "nameLocation": "2412:11:10",
+            "nameLocation": "2412:11:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3681,
+              "id": 2213,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3680,
+                  "id": 2212,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "2432:6:10",
+                  "nameLocation": "2432:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3685,
-                  "src": "2424:14:10",
+                  "scope": 2217,
+                  "src": "2424:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1257,10 +1257,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3679,
+                    "id": 2211,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2424:7:10",
+                    "src": "2424:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1269,21 +1269,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2423:16:10"
+              "src": "2423:16:9"
             },
             "returnParameters": {
-              "id": 3684,
+              "id": 2216,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3683,
+                  "id": 2215,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3685,
-                  "src": "2462:7:10",
+                  "scope": 2217,
+                  "src": "2462:7:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1291,10 +1291,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3682,
+                    "id": 2214,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2462:7:10",
+                    "src": "2462:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1303,42 +1303,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2461:9:10"
+              "src": "2461:9:9"
             },
-            "scope": 3860,
-            "src": "2403:68:10",
+            "scope": 2392,
+            "src": "2403:68:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3686,
+              "id": 2218,
               "nodeType": "StructuredDocumentation",
-              "src": "2477:315:10",
+              "src": "2477:315:9",
               "text": " @dev Transfer and send `amount` tokens from `_msgSender()` to `to`\n Returns a boolean value indicating whether the operation succeeded.\n Emits a {Transfer} event.\n @param to {address} wallet to transfer the token\n @param amount {uint256[]} amount to transfer"
             },
             "functionSelector": "a9059cbb",
-            "id": 3695,
+            "id": 2227,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transfer",
-            "nameLocation": "2806:8:10",
+            "nameLocation": "2806:8:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3691,
+              "id": 2223,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3688,
+                  "id": 2220,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "2823:2:10",
+                  "nameLocation": "2823:2:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3695,
-                  "src": "2815:10:10",
+                  "scope": 2227,
+                  "src": "2815:10:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1346,10 +1346,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3687,
+                    "id": 2219,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2815:7:10",
+                    "src": "2815:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1360,13 +1360,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3690,
+                  "id": 2222,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "2835:6:10",
+                  "nameLocation": "2835:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3695,
-                  "src": "2827:14:10",
+                  "scope": 2227,
+                  "src": "2827:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1374,10 +1374,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3689,
+                    "id": 2221,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2827:7:10",
+                    "src": "2827:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1386,21 +1386,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2814:28:10"
+              "src": "2814:28:9"
             },
             "returnParameters": {
-              "id": 3694,
+              "id": 2226,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3693,
+                  "id": 2225,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3695,
-                  "src": "2861:4:10",
+                  "scope": 2227,
+                  "src": "2861:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1408,10 +1408,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3692,
+                    "id": 2224,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2861:4:10",
+                    "src": "2861:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1420,42 +1420,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2860:6:10"
+              "src": "2860:6:9"
             },
-            "scope": 3860,
-            "src": "2797:70:10",
+            "scope": 2392,
+            "src": "2797:70:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3696,
+              "id": 2228,
               "nodeType": "StructuredDocumentation",
-              "src": "2873:367:10",
+              "src": "2873:367:9",
               "text": " @dev Transfer and send `amount` tokens from `from` to `to`\n Returns a boolean value indicating whether the operation succeeded.\n Emits a {Transfer} event.\n @param from {address} wallet from transfer the token\n @param to {address} wallet to transfer the token\n @param amount {uint256[]} amount to transfer"
             },
             "functionSelector": "23b872dd",
-            "id": 3707,
+            "id": 2239,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferFrom",
-            "nameLocation": "3254:12:10",
+            "nameLocation": "3254:12:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3703,
+              "id": 2235,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3698,
+                  "id": 2230,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "3275:4:10",
+                  "nameLocation": "3275:4:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3707,
-                  "src": "3267:12:10",
+                  "scope": 2239,
+                  "src": "3267:12:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1463,10 +1463,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3697,
+                    "id": 2229,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3267:7:10",
+                    "src": "3267:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1477,13 +1477,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3700,
+                  "id": 2232,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "3289:2:10",
+                  "nameLocation": "3289:2:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3707,
-                  "src": "3281:10:10",
+                  "scope": 2239,
+                  "src": "3281:10:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1491,10 +1491,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3699,
+                    "id": 2231,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3281:7:10",
+                    "src": "3281:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1505,13 +1505,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3702,
+                  "id": 2234,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "3301:6:10",
+                  "nameLocation": "3301:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3707,
-                  "src": "3293:14:10",
+                  "scope": 2239,
+                  "src": "3293:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1519,10 +1519,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3701,
+                    "id": 2233,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3293:7:10",
+                    "src": "3293:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1531,21 +1531,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3266:42:10"
+              "src": "3266:42:9"
             },
             "returnParameters": {
-              "id": 3706,
+              "id": 2238,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3705,
+                  "id": 2237,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3707,
-                  "src": "3327:4:10",
+                  "scope": 2239,
+                  "src": "3327:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1553,10 +1553,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3704,
+                    "id": 2236,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3327:4:10",
+                    "src": "3327:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1565,42 +1565,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3326:6:10"
+              "src": "3326:6:9"
             },
-            "scope": 3860,
-            "src": "3245:88:10",
+            "scope": 2392,
+            "src": "3245:88:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3708,
+              "id": 2240,
               "nodeType": "StructuredDocumentation",
-              "src": "3339:387:10",
+              "src": "3339:387:9",
               "text": " @notice Interface of transfer method, return hex code error message\n @param operator {address} operator of transaction (sender)\n @param from {address} the origin of the token transfer\n @param to {address} the recipient of the token transfer\n @param value {uint256} the number of tokens transferred\n @return hex {bytes1} code error message"
             },
             "functionSelector": "6d62a4fe",
-            "id": 3721,
+            "id": 2253,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "canTransfer",
-            "nameLocation": "3740:11:10",
+            "nameLocation": "3740:11:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3717,
+              "id": 2249,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3710,
+                  "id": 2242,
                   "mutability": "mutable",
                   "name": "operator",
-                  "nameLocation": "3769:8:10",
+                  "nameLocation": "3769:8:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3721,
-                  "src": "3761:16:10",
+                  "scope": 2253,
+                  "src": "3761:16:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1608,10 +1608,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3709,
+                    "id": 2241,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3761:7:10",
+                    "src": "3761:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1622,13 +1622,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3712,
+                  "id": 2244,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "3795:4:10",
+                  "nameLocation": "3795:4:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3721,
-                  "src": "3787:12:10",
+                  "scope": 2253,
+                  "src": "3787:12:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1636,10 +1636,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3711,
+                    "id": 2243,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3787:7:10",
+                    "src": "3787:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1650,13 +1650,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3714,
+                  "id": 2246,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "3817:2:10",
+                  "nameLocation": "3817:2:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3721,
-                  "src": "3809:10:10",
+                  "scope": 2253,
+                  "src": "3809:10:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1664,10 +1664,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3713,
+                    "id": 2245,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3809:7:10",
+                    "src": "3809:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1678,13 +1678,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3716,
+                  "id": 2248,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "3837:5:10",
+                  "nameLocation": "3837:5:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3721,
-                  "src": "3829:13:10",
+                  "scope": 2253,
+                  "src": "3829:13:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1692,10 +1692,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3715,
+                    "id": 2247,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3829:7:10",
+                    "src": "3829:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1704,21 +1704,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3751:97:10"
+              "src": "3751:97:9"
             },
             "returnParameters": {
-              "id": 3720,
+              "id": 2252,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3719,
+                  "id": 2251,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3721,
-                  "src": "3872:6:10",
+                  "scope": 2253,
+                  "src": "3872:6:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1726,10 +1726,10 @@
                     "typeString": "bytes1"
                   },
                   "typeName": {
-                    "id": 3718,
+                    "id": 2250,
                     "name": "bytes1",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3872:6:10",
+                    "src": "3872:6:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes1",
                       "typeString": "bytes1"
@@ -1738,42 +1738,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3871:8:10"
+              "src": "3871:8:9"
             },
-            "scope": 3860,
-            "src": "3731:149:10",
+            "scope": 2392,
+            "src": "3731:149:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3722,
+              "id": 2254,
               "nodeType": "StructuredDocumentation",
-              "src": "3886:243:10",
+              "src": "3886:243:9",
               "text": "  @notice Force an address wallet to transfer by agent\n  @param from {address} from wallet to transfer\n  @param to {address} to wallet to transfer\n  @param amount {uint256} amounts of tokens to be transfered"
             },
             "functionSelector": "33bebb77",
-            "id": 3733,
+            "id": 2265,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "forceTransfer",
-            "nameLocation": "4143:13:10",
+            "nameLocation": "4143:13:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3729,
+              "id": 2261,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3724,
+                  "id": 2256,
                   "mutability": "mutable",
                   "name": "from",
-                  "nameLocation": "4174:4:10",
+                  "nameLocation": "4174:4:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3733,
-                  "src": "4166:12:10",
+                  "scope": 2265,
+                  "src": "4166:12:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1781,10 +1781,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3723,
+                    "id": 2255,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4166:7:10",
+                    "src": "4166:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1795,13 +1795,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3726,
+                  "id": 2258,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "4196:2:10",
+                  "nameLocation": "4196:2:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3733,
-                  "src": "4188:10:10",
+                  "scope": 2265,
+                  "src": "4188:10:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1809,10 +1809,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3725,
+                    "id": 2257,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4188:7:10",
+                    "src": "4188:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1823,13 +1823,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3728,
+                  "id": 2260,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "4216:6:10",
+                  "nameLocation": "4216:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3733,
-                  "src": "4208:14:10",
+                  "scope": 2265,
+                  "src": "4208:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1837,10 +1837,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3727,
+                    "id": 2259,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4208:7:10",
+                    "src": "4208:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1849,21 +1849,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4156:72:10"
+              "src": "4156:72:9"
             },
             "returnParameters": {
-              "id": 3732,
+              "id": 2264,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3731,
+                  "id": 2263,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3733,
-                  "src": "4247:4:10",
+                  "scope": 2265,
+                  "src": "4247:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1871,10 +1871,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3730,
+                    "id": 2262,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4247:4:10",
+                    "src": "4247:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1883,42 +1883,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4246:6:10"
+              "src": "4246:6:9"
             },
-            "scope": 3860,
-            "src": "4134:119:10",
+            "scope": 2392,
+            "src": "4134:119:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3734,
+              "id": 2266,
               "nodeType": "StructuredDocumentation",
-              "src": "4259:184:10",
+              "src": "4259:184:9",
               "text": "  @notice Return freezed or not wallet address tokens\n  @param userAddress {address} of the user\n  @return frozen {bool} represents freezed wallet address"
             },
             "functionSelector": "e5839836",
-            "id": 3741,
+            "id": 2273,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isFrozen",
-            "nameLocation": "4457:8:10",
+            "nameLocation": "4457:8:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3737,
+              "id": 2269,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3736,
+                  "id": 2268,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "4474:11:10",
+                  "nameLocation": "4474:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3741,
-                  "src": "4466:19:10",
+                  "scope": 2273,
+                  "src": "4466:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1926,10 +1926,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3735,
+                    "id": 2267,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4466:7:10",
+                    "src": "4466:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1939,21 +1939,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4465:21:10"
+              "src": "4465:21:9"
             },
             "returnParameters": {
-              "id": 3740,
+              "id": 2272,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3739,
+                  "id": 2271,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3741,
-                  "src": "4510:4:10",
+                  "scope": 2273,
+                  "src": "4510:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1961,10 +1961,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3738,
+                    "id": 2270,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4510:4:10",
+                    "src": "4510:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1973,42 +1973,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4509:6:10"
+              "src": "4509:6:9"
             },
-            "scope": 3860,
-            "src": "4448:68:10",
+            "scope": 2392,
+            "src": "4448:68:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3742,
+              "id": 2274,
               "nodeType": "StructuredDocumentation",
-              "src": "4522:187:10",
+              "src": "4522:187:9",
               "text": "  @notice Return freezed tokens amount of wallet address\n  @param userAddress {address} of the user\n  @return frozenTokens {uint256} amount of freezed tokens"
             },
             "functionSelector": "158b1a57",
-            "id": 3749,
+            "id": 2281,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getFrozenTokens",
-            "nameLocation": "4723:15:10",
+            "nameLocation": "4723:15:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3745,
+              "id": 2277,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3744,
+                  "id": 2276,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "4747:11:10",
+                  "nameLocation": "4747:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3749,
-                  "src": "4739:19:10",
+                  "scope": 2281,
+                  "src": "4739:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2016,10 +2016,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3743,
+                    "id": 2275,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4739:7:10",
+                    "src": "4739:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2029,21 +2029,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4738:21:10"
+              "src": "4738:21:9"
             },
             "returnParameters": {
-              "id": 3748,
+              "id": 2280,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3747,
+                  "id": 2279,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3749,
-                  "src": "4783:7:10",
+                  "scope": 2281,
+                  "src": "4783:7:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2051,10 +2051,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3746,
+                    "id": 2278,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4783:7:10",
+                    "src": "4783:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2063,42 +2063,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4782:9:10"
+              "src": "4782:9:9"
             },
-            "scope": 3860,
-            "src": "4714:78:10",
+            "scope": 2392,
+            "src": "4714:78:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3750,
+              "id": 2282,
               "nodeType": "StructuredDocumentation",
-              "src": "4798:178:10",
+              "src": "4798:178:9",
               "text": "  @notice Freeze totality tokens of single wallet address\n  @param userAddress {address} of the user\n  @param freeze {boolean} representing freezing"
             },
             "functionSelector": "c69c09cf",
-            "id": 3757,
+            "id": 2289,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setAddressFrozen",
-            "nameLocation": "4990:16:10",
+            "nameLocation": "4990:16:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3755,
+              "id": 2287,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3752,
+                  "id": 2284,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "5015:11:10",
+                  "nameLocation": "5015:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3757,
-                  "src": "5007:19:10",
+                  "scope": 2289,
+                  "src": "5007:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2106,10 +2106,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3751,
+                    "id": 2283,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5007:7:10",
+                    "src": "5007:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2120,13 +2120,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3754,
+                  "id": 2286,
                   "mutability": "mutable",
                   "name": "freeze",
-                  "nameLocation": "5033:6:10",
+                  "nameLocation": "5033:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3757,
-                  "src": "5028:11:10",
+                  "scope": 2289,
+                  "src": "5028:11:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2134,10 +2134,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3753,
+                    "id": 2285,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5028:4:10",
+                    "src": "5028:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2146,48 +2146,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5006:34:10"
+              "src": "5006:34:9"
             },
             "returnParameters": {
-              "id": 3756,
+              "id": 2288,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "5049:0:10"
+              "src": "5049:0:9"
             },
-            "scope": 3860,
-            "src": "4981:69:10",
+            "scope": 2392,
+            "src": "4981:69:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3758,
+              "id": 2290,
               "nodeType": "StructuredDocumentation",
-              "src": "5056:192:10",
+              "src": "5056:192:9",
               "text": "  @notice Freeze totality tokens of multiples wallet addresses\n  @param userAddresses {address[]} of user addresses\n  @param freeze {bool[]} representing freezing"
             },
             "functionSelector": "1a7af379",
-            "id": 3767,
+            "id": 2299,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "batchSetAddressFrozen",
-            "nameLocation": "5262:21:10",
+            "nameLocation": "5262:21:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3765,
+              "id": 2297,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3761,
+                  "id": 2293,
                   "mutability": "mutable",
                   "name": "userAddresses",
-                  "nameLocation": "5303:13:10",
+                  "nameLocation": "5303:13:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3767,
-                  "src": "5284:32:10",
+                  "scope": 2299,
+                  "src": "5284:32:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2196,19 +2196,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3759,
+                      "id": 2291,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "5284:7:10",
+                      "src": "5284:7:9",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3760,
+                    "id": 2292,
                     "nodeType": "ArrayTypeName",
-                    "src": "5284:9:10",
+                    "src": "5284:9:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -2218,13 +2218,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3764,
+                  "id": 2296,
                   "mutability": "mutable",
                   "name": "freeze",
-                  "nameLocation": "5334:6:10",
+                  "nameLocation": "5334:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3767,
-                  "src": "5318:22:10",
+                  "scope": 2299,
+                  "src": "5318:22:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2233,18 +2233,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3762,
+                      "id": 2294,
                       "name": "bool",
                       "nodeType": "ElementaryTypeName",
-                      "src": "5318:4:10",
+                      "src": "5318:4:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
                       }
                     },
-                    "id": 3763,
+                    "id": 2295,
                     "nodeType": "ArrayTypeName",
-                    "src": "5318:6:10",
+                    "src": "5318:6:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_bool_$dyn_storage_ptr",
                       "typeString": "bool[]"
@@ -2253,48 +2253,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5283:58:10"
+              "src": "5283:58:9"
             },
             "returnParameters": {
-              "id": 3766,
+              "id": 2298,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "5350:0:10"
+              "src": "5350:0:9"
             },
-            "scope": 3860,
-            "src": "5253:98:10",
+            "scope": 2392,
+            "src": "5253:98:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3768,
+              "id": 2300,
               "nodeType": "StructuredDocumentation",
-              "src": "5358:171:10",
+              "src": "5358:171:9",
               "text": "  @notice Freeze patial tokens of single wallet\n  @param userAddress {address} of the user\n  @param amount {uint256} of token to be unfreezed"
             },
             "functionSelector": "125c4a33",
-            "id": 3775,
+            "id": 2307,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "freezePartialTokens",
-            "nameLocation": "5543:19:10",
+            "nameLocation": "5543:19:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3773,
+              "id": 2305,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3770,
+                  "id": 2302,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "5571:11:10",
+                  "nameLocation": "5571:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3775,
-                  "src": "5563:19:10",
+                  "scope": 2307,
+                  "src": "5563:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2302,10 +2302,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3769,
+                    "id": 2301,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5563:7:10",
+                    "src": "5563:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2316,13 +2316,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3772,
+                  "id": 2304,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "5592:6:10",
+                  "nameLocation": "5592:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3775,
-                  "src": "5584:14:10",
+                  "scope": 2307,
+                  "src": "5584:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2330,10 +2330,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3771,
+                    "id": 2303,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5584:7:10",
+                    "src": "5584:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2342,48 +2342,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5562:37:10"
+              "src": "5562:37:9"
             },
             "returnParameters": {
-              "id": 3774,
+              "id": 2306,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "5608:0:10"
+              "src": "5608:0:9"
             },
-            "scope": 3860,
-            "src": "5534:75:10",
+            "scope": 2392,
+            "src": "5534:75:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3776,
+              "id": 2308,
               "nodeType": "StructuredDocumentation",
-              "src": "5615:199:10",
+              "src": "5615:199:9",
               "text": "  @notice Freeze patial tokens of multiples wallets\n  @param userAddresses {address[]} of user addresses\n  @param amounts {uint256[]} of amounts of token to be unfreezed"
             },
             "functionSelector": "fc7e5fa8",
-            "id": 3785,
+            "id": 2317,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "batchFreezePartialTokens",
-            "nameLocation": "5828:24:10",
+            "nameLocation": "5828:24:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3783,
+              "id": 2315,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3779,
+                  "id": 2311,
                   "mutability": "mutable",
                   "name": "userAddresses",
-                  "nameLocation": "5872:13:10",
+                  "nameLocation": "5872:13:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3785,
-                  "src": "5853:32:10",
+                  "scope": 2317,
+                  "src": "5853:32:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2392,19 +2392,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3777,
+                      "id": 2309,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "5853:7:10",
+                      "src": "5853:7:9",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3778,
+                    "id": 2310,
                     "nodeType": "ArrayTypeName",
-                    "src": "5853:9:10",
+                    "src": "5853:9:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -2414,13 +2414,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3782,
+                  "id": 2314,
                   "mutability": "mutable",
                   "name": "amounts",
-                  "nameLocation": "5906:7:10",
+                  "nameLocation": "5906:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3785,
-                  "src": "5887:26:10",
+                  "scope": 2317,
+                  "src": "5887:26:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2429,18 +2429,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3780,
+                      "id": 2312,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "5887:7:10",
+                      "src": "5887:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3781,
+                    "id": 2313,
                     "nodeType": "ArrayTypeName",
-                    "src": "5887:9:10",
+                    "src": "5887:9:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -2449,48 +2449,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5852:62:10"
+              "src": "5852:62:9"
             },
             "returnParameters": {
-              "id": 3784,
+              "id": 2316,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "5923:0:10"
+              "src": "5923:0:9"
             },
-            "scope": 3860,
-            "src": "5819:105:10",
+            "scope": 2392,
+            "src": "5819:105:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3786,
+              "id": 2318,
               "nodeType": "StructuredDocumentation",
-              "src": "5930:173:10",
+              "src": "5930:173:9",
               "text": "  @notice Unfreeze patial tokens of single wallet\n  @param userAddress {address} of the user\n  @param amount {uint256} of token to be unfreezed"
             },
             "functionSelector": "1fe56f7d",
-            "id": 3793,
+            "id": 2325,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unfreezePartialTokens",
-            "nameLocation": "6117:21:10",
+            "nameLocation": "6117:21:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3791,
+              "id": 2323,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3788,
+                  "id": 2320,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "6147:11:10",
+                  "nameLocation": "6147:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3793,
-                  "src": "6139:19:10",
+                  "scope": 2325,
+                  "src": "6139:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2498,10 +2498,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3787,
+                    "id": 2319,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6139:7:10",
+                    "src": "6139:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2512,13 +2512,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3790,
+                  "id": 2322,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "6168:6:10",
+                  "nameLocation": "6168:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3793,
-                  "src": "6160:14:10",
+                  "scope": 2325,
+                  "src": "6160:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2526,10 +2526,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3789,
+                    "id": 2321,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6160:7:10",
+                    "src": "6160:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2538,48 +2538,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6138:37:10"
+              "src": "6138:37:9"
             },
             "returnParameters": {
-              "id": 3792,
+              "id": 2324,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "6184:0:10"
+              "src": "6184:0:9"
             },
-            "scope": 3860,
-            "src": "6108:77:10",
+            "scope": 2392,
+            "src": "6108:77:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3794,
+              "id": 2326,
               "nodeType": "StructuredDocumentation",
-              "src": "6191:201:10",
+              "src": "6191:201:9",
               "text": "  @notice Unfreeze patial tokens of multiples wallets\n  @param userAddresses {address[]} of user addresses\n  @param amounts {uint256[]} of amounts of token to be unfreezed"
             },
             "functionSelector": "4710362d",
-            "id": 3803,
+            "id": 2335,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "batchUnfreezePartialTokens",
-            "nameLocation": "6406:26:10",
+            "nameLocation": "6406:26:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3801,
+              "id": 2333,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3797,
+                  "id": 2329,
                   "mutability": "mutable",
                   "name": "userAddresses",
-                  "nameLocation": "6452:13:10",
+                  "nameLocation": "6452:13:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3803,
-                  "src": "6433:32:10",
+                  "scope": 2335,
+                  "src": "6433:32:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2588,19 +2588,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3795,
+                      "id": 2327,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "6433:7:10",
+                      "src": "6433:7:9",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3796,
+                    "id": 2328,
                     "nodeType": "ArrayTypeName",
-                    "src": "6433:9:10",
+                    "src": "6433:9:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -2610,13 +2610,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3800,
+                  "id": 2332,
                   "mutability": "mutable",
                   "name": "amounts",
-                  "nameLocation": "6486:7:10",
+                  "nameLocation": "6486:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3803,
-                  "src": "6467:26:10",
+                  "scope": 2335,
+                  "src": "6467:26:9",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -2625,18 +2625,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3798,
+                      "id": 2330,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "6467:7:10",
+                      "src": "6467:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3799,
+                    "id": 2331,
                     "nodeType": "ArrayTypeName",
-                    "src": "6467:9:10",
+                    "src": "6467:9:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -2645,48 +2645,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6432:62:10"
+              "src": "6432:62:9"
             },
             "returnParameters": {
-              "id": 3802,
+              "id": 2334,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "6503:0:10"
+              "src": "6503:0:9"
             },
-            "scope": 3860,
-            "src": "6397:107:10",
+            "scope": 2392,
+            "src": "6397:107:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3804,
+              "id": 2336,
               "nodeType": "StructuredDocumentation",
-              "src": "6510:349:10",
+              "src": "6510:349:9",
               "text": " @notice Freeze token of one address wallet periodically\n @param startTime {uint256} Start time of freezing partial token\n @param endTime {uint256} End time of freezing partial token\n @param amountFreezed {uint256} Amount of frozen token\n @param userAddress {address} Address wallet of the user frozen token"
             },
             "functionSelector": "85269dcb",
-            "id": 3815,
+            "id": 2347,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setFreezedTokensPeriod",
-            "nameLocation": "6873:22:10",
+            "nameLocation": "6873:22:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3813,
+              "id": 2345,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3806,
+                  "id": 2338,
                   "mutability": "mutable",
                   "name": "startTime",
-                  "nameLocation": "6913:9:10",
+                  "nameLocation": "6913:9:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3815,
-                  "src": "6905:17:10",
+                  "scope": 2347,
+                  "src": "6905:17:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2694,10 +2694,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3805,
+                    "id": 2337,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6905:7:10",
+                    "src": "6905:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2707,13 +2707,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3808,
+                  "id": 2340,
                   "mutability": "mutable",
                   "name": "endTime",
-                  "nameLocation": "6940:7:10",
+                  "nameLocation": "6940:7:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3815,
-                  "src": "6932:15:10",
+                  "scope": 2347,
+                  "src": "6932:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2721,10 +2721,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3807,
+                    "id": 2339,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6932:7:10",
+                    "src": "6932:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2734,13 +2734,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3810,
+                  "id": 2342,
                   "mutability": "mutable",
                   "name": "amountFreezed",
-                  "nameLocation": "6965:13:10",
+                  "nameLocation": "6965:13:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3815,
-                  "src": "6957:21:10",
+                  "scope": 2347,
+                  "src": "6957:21:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2748,10 +2748,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3809,
+                    "id": 2341,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6957:7:10",
+                    "src": "6957:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2761,13 +2761,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3812,
+                  "id": 2344,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "6996:11:10",
+                  "nameLocation": "6996:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3815,
-                  "src": "6988:19:10",
+                  "scope": 2347,
+                  "src": "6988:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2775,10 +2775,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3811,
+                    "id": 2343,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6988:7:10",
+                    "src": "6988:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2788,116 +2788,116 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6895:118:10"
+              "src": "6895:118:9"
             },
             "returnParameters": {
-              "id": 3814,
+              "id": 2346,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "7022:0:10"
+              "src": "7022:0:9"
             },
-            "scope": 3860,
-            "src": "6864:159:10",
+            "scope": 2392,
+            "src": "6864:159:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3816,
+              "id": 2348,
               "nodeType": "StructuredDocumentation",
-              "src": "7029:176:10",
+              "src": "7029:176:9",
               "text": " @notice Retrieve struct of freezed tokens in period of msg.sender\n @return freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period"
             },
             "functionSelector": "c7464bf1",
-            "id": 3822,
+            "id": 2354,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "myFreezedTokensPeriod",
-            "nameLocation": "7219:21:10",
+            "nameLocation": "7219:21:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3817,
+              "id": 2349,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "7240:2:10"
+              "src": "7240:2:9"
             },
             "returnParameters": {
-              "id": 3821,
+              "id": 2353,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3820,
+                  "id": 2352,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3822,
-                  "src": "7266:32:10",
+                  "scope": 2354,
+                  "src": "7266:32:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FreezePeriod_$4044_memory_ptr",
+                    "typeIdentifier": "t_struct$_FreezePeriod_$2576_memory_ptr",
                     "typeString": "struct TokenLibrary.FreezePeriod"
                   },
                   "typeName": {
-                    "id": 3819,
+                    "id": 2351,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 3818,
+                      "id": 2350,
                       "name": "TokenLibrary.FreezePeriod",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 4044,
-                      "src": "7266:25:10"
+                      "referencedDeclaration": 2576,
+                      "src": "7266:25:9"
                     },
-                    "referencedDeclaration": 4044,
-                    "src": "7266:25:10",
+                    "referencedDeclaration": 2576,
+                    "src": "7266:25:9",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FreezePeriod_$4044_storage_ptr",
+                      "typeIdentifier": "t_struct$_FreezePeriod_$2576_storage_ptr",
                       "typeString": "struct TokenLibrary.FreezePeriod"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "7265:34:10"
+              "src": "7265:34:9"
             },
-            "scope": 3860,
-            "src": "7210:90:10",
+            "scope": 2392,
+            "src": "7210:90:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3823,
+              "id": 2355,
               "nodeType": "StructuredDocumentation",
-              "src": "7306:256:10",
+              "src": "7306:256:9",
               "text": " @notice Retrieve struct of freezed tokens in period of one wallet address by agent\n @param userAddress {address} of the user freezed tokens\n @return freezedPeriod {TokenLibrary.FreezePeriod} struct of freezed tokens in period"
             },
             "functionSelector": "6df68630",
-            "id": 3831,
+            "id": 2363,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getFreezedTokensPeriod",
-            "nameLocation": "7576:22:10",
+            "nameLocation": "7576:22:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3826,
+              "id": 2358,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3825,
+                  "id": 2357,
                   "mutability": "mutable",
                   "name": "userAddress",
-                  "nameLocation": "7607:11:10",
+                  "nameLocation": "7607:11:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3831,
-                  "src": "7599:19:10",
+                  "scope": 2363,
+                  "src": "7599:19:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2905,10 +2905,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3824,
+                    "id": 2356,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7599:7:10",
+                    "src": "7599:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2918,89 +2918,89 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "7598:21:10"
+              "src": "7598:21:9"
             },
             "returnParameters": {
-              "id": 3830,
+              "id": 2362,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3829,
+                  "id": 2361,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3831,
-                  "src": "7643:32:10",
+                  "scope": 2363,
+                  "src": "7643:32:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FreezePeriod_$4044_memory_ptr",
+                    "typeIdentifier": "t_struct$_FreezePeriod_$2576_memory_ptr",
                     "typeString": "struct TokenLibrary.FreezePeriod"
                   },
                   "typeName": {
-                    "id": 3828,
+                    "id": 2360,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 3827,
+                      "id": 2359,
                       "name": "TokenLibrary.FreezePeriod",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 4044,
-                      "src": "7643:25:10"
+                      "referencedDeclaration": 2576,
+                      "src": "7643:25:9"
                     },
-                    "referencedDeclaration": 4044,
-                    "src": "7643:25:10",
+                    "referencedDeclaration": 2576,
+                    "src": "7643:25:9",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FreezePeriod_$4044_storage_ptr",
+                      "typeIdentifier": "t_struct$_FreezePeriod_$2576_storage_ptr",
                       "typeString": "struct TokenLibrary.FreezePeriod"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "7642:34:10"
+              "src": "7642:34:9"
             },
-            "scope": 3860,
-            "src": "7567:110:10",
+            "scope": 2392,
+            "src": "7567:110:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3832,
+              "id": 2364,
               "nodeType": "StructuredDocumentation",
-              "src": "7683:156:10",
+              "src": "7683:156:9",
               "text": " @notice Get unlockable tokens freezed in period for msg.sender\n @return unlockable {uint256} of unlockable tokens freezed in period"
             },
             "functionSelector": "9d200d1f",
-            "id": 3837,
+            "id": 2369,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unlockableTokensPeriod",
-            "nameLocation": "7853:22:10",
+            "nameLocation": "7853:22:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3833,
+              "id": 2365,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "7875:2:10"
+              "src": "7875:2:9"
             },
             "returnParameters": {
-              "id": 3836,
+              "id": 2368,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3835,
+                  "id": 2367,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3837,
-                  "src": "7901:7:10",
+                  "scope": 2369,
+                  "src": "7901:7:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3008,10 +3008,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3834,
+                    "id": 2366,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "7901:7:10",
+                    "src": "7901:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3020,48 +3020,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "7900:9:10"
+              "src": "7900:9:9"
             },
-            "scope": 3860,
-            "src": "7844:66:10",
+            "scope": 2392,
+            "src": "7844:66:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3838,
+              "id": 2370,
               "nodeType": "StructuredDocumentation",
-              "src": "7916:130:10",
+              "src": "7916:130:9",
               "text": " @notice Redeem unlockable freezed tokens periodically\n @return success {bool} success of redeeming tokens"
             },
             "functionSelector": "c7b0d8b7",
-            "id": 3843,
+            "id": 2375,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "redeemFreezedTokens",
-            "nameLocation": "8060:19:10",
+            "nameLocation": "8060:19:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3839,
+              "id": 2371,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "8079:2:10"
+              "src": "8079:2:9"
             },
             "returnParameters": {
-              "id": 3842,
+              "id": 2374,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3841,
+                  "id": 2373,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3843,
-                  "src": "8100:4:10",
+                  "scope": 2375,
+                  "src": "8100:4:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3069,10 +3069,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3840,
+                    "id": 2372,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8100:4:10",
+                    "src": "8100:4:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -3081,42 +3081,42 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8099:6:10"
+              "src": "8099:6:9"
             },
-            "scope": 3860,
-            "src": "8051:55:10",
+            "scope": 2392,
+            "src": "8051:55:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3844,
+              "id": 2376,
               "nodeType": "StructuredDocumentation",
-              "src": "8112:202:10",
+              "src": "8112:202:9",
               "text": " @notice Withdraw tokens amount of contract balance\n @param amount {uint256} the number of tokens transferred\n @param receiver {address} the recipient of the token transfer"
             },
             "functionSelector": "00f714ce",
-            "id": 3851,
+            "id": 2383,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "withdraw",
-            "nameLocation": "8328:8:10",
+            "nameLocation": "8328:8:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3849,
+              "id": 2381,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3846,
+                  "id": 2378,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "8345:6:10",
+                  "nameLocation": "8345:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3851,
-                  "src": "8337:14:10",
+                  "scope": 2383,
+                  "src": "8337:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3124,10 +3124,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3845,
+                    "id": 2377,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8337:7:10",
+                    "src": "8337:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3137,13 +3137,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 3848,
+                  "id": 2380,
                   "mutability": "mutable",
                   "name": "receiver",
-                  "nameLocation": "8361:8:10",
+                  "nameLocation": "8361:8:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3851,
-                  "src": "8353:16:10",
+                  "scope": 2383,
+                  "src": "8353:16:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3151,10 +3151,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3847,
+                    "id": 2379,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8353:7:10",
+                    "src": "8353:7:9",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3164,48 +3164,48 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8336:34:10"
+              "src": "8336:34:9"
             },
             "returnParameters": {
-              "id": 3850,
+              "id": 2382,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "8379:0:10"
+              "src": "8379:0:9"
             },
-            "scope": 3860,
-            "src": "8319:61:10",
+            "scope": 2392,
+            "src": "8319:61:9",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3852,
+              "id": 2384,
               "nodeType": "StructuredDocumentation",
-              "src": "8386:189:10",
+              "src": "8386:189:9",
               "text": " @notice Check amount of withdrawable\n @param amount {uint256} the number of tokens withdraw\n @return weiWithdrawable {uint256} the number of wei transferrable"
             },
             "functionSelector": "f11988e0",
-            "id": 3859,
+            "id": 2391,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "withdrawable",
-            "nameLocation": "8589:12:10",
+            "nameLocation": "8589:12:9",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3855,
+              "id": 2387,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3854,
+                  "id": 2386,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "8610:6:10",
+                  "nameLocation": "8610:6:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3859,
-                  "src": "8602:14:10",
+                  "scope": 2391,
+                  "src": "8602:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3213,10 +3213,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3853,
+                    "id": 2385,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8602:7:10",
+                    "src": "8602:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3225,21 +3225,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8601:16:10"
+              "src": "8601:16:9"
             },
             "returnParameters": {
-              "id": 3858,
+              "id": 2390,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3857,
+                  "id": 2389,
                   "mutability": "mutable",
                   "name": "weiWithdrawable",
-                  "nameLocation": "8648:15:10",
+                  "nameLocation": "8648:15:9",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3859,
-                  "src": "8640:23:10",
+                  "scope": 2391,
+                  "src": "8640:23:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3247,10 +3247,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3856,
+                    "id": 2388,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "8640:7:10",
+                    "src": "8640:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3259,21 +3259,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "8639:25:10"
+              "src": "8639:25:9"
             },
-            "scope": 3860,
-            "src": "8580:85:10",
+            "scope": 2392,
+            "src": "8580:85:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 3861,
-        "src": "190:8477:10",
+        "scope": 2393,
+        "src": "190:8477:9",
         "usedErrors": []
       }
     ],
-    "src": "33:8635:10"
+    "src": "33:8635:9"
   },
   "compiler": {
     "name": "solc",
@@ -3281,7 +3281,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.10",
-  "updatedAt": "2023-02-16T14:57:27.437Z",
+  "updatedAt": "2023-02-22T12:34:32.985Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

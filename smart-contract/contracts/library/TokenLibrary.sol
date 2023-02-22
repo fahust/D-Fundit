@@ -25,6 +25,7 @@ library TokenLibrary {
         bool pausable;
         bool forcableTransfer;
         bool rulesModifiable;
+        bool soulBoundSecurityToken;
         uint256 dayToWithdraw;
         uint256 startFundraising;
         uint256 endFundraising;
