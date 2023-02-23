@@ -48,12 +48,6 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         _;
     }
 
-    modifier withdrawVotable() {
-        TokenLibrary.Rules memory _rules = TokenContract.getRules();
-        require(rules.voteToWithdraw == true, "No vote required to withdraw");
-        _;
-    }
-
     /**
      * @notice Returns the version of the token contract
      * @return TOKEN_VERSION {string} version of the smart contract
@@ -400,6 +394,45 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
     }
 
     /**
+     * @notice Owner request (and request for withdraw if _rules.voteToWithdraw == true) with a comment and amount (Request can't be equal to last request and set request restart all votes)
+     * @param _messageRequest {string} message comment of request
+     * @param _amountRequest {uint256} amount of request
+     */
+    function setRequest(string memory _messageRequest, uint256 _amountRequest) external onlyOwner {
+        require(compare(messageRequest, _messageRequest) == false, "Request can't be equal to last request");
+        messageRequest = _messageRequest;
+        amountRequest = _amountRequest;
+        acceptedRequest = 0;
+        refusedRequest = 0;
+    }
+
+    /**
+     * @notice Get request to by owner
+     * @return request {string, uint256, uint256, uint256} (messageRequest, amountRequest, acceptedRequest, refusedRequest)
+     */
+    function getRequest() external view returns(string memory , uint256, uint256, uint256) {
+        return (
+            messageRequest,
+            amountRequest,
+            acceptedRequest,
+            refusedRequest
+        );
+    }
+
+    /**
+     * @notice Shareholder vote to the request of owner
+     * @param vote {boolean} accept (true) or reject (false) request
+     * @param amount {uint256} amount of vote request, need to be lower than balance of shareholder
+     */
+    function voteToRequest(bool vote, uint256 amount) external contractValid {
+        require(TokenContract.balanceOf(_msgSender()) >= amount, "Balance of sender is lower than the amount");
+        require(compare(hasVoted[_msgSender()], messageRequest) == false, "Sender has already voted to this request");
+        hasVoted[_msgSender()] = messageRequest;
+        if(vote == true) acceptedRequest += amount;
+        if(vote == false) refusedRequest += amount;
+    }
+
+    /**
      * @notice Withdraw tokens amount of contract balance
      * @param amount {uint256} the number of tokens transferred
      * @param receiver {address} the recipient of the token transfer
@@ -409,43 +442,9 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         TokenLibrary.Rules memory _rules = TokenContract.getRules();
         if(_rules.dayToWithdraw != 0)
             lastWithdraw += oneDay.mul(_rules.dayToWithdraw).mul(amount);
-        if(_rules.voteToWithdraw == true) amountRequestWithdraw = 0;
+        if(_rules.voteToWithdraw == true) amountRequest = 0;
         bool success = TokenContract.withdraw(amount, receiver);
         require(success, "Withdraw failed");
-    }
-
-    /**
-     * @notice Owner request a withdraw with a comment and amount (Request can't be equal to last request and set request restart all votes)
-     * @param _messageRequestWithdraw {string} message comment of request to withdraw
-     * @param _amountRequestWithdraw {uint256} amount of request to withdraw
-     */
-    function setRequestWithdraw(string memory _messageRequestWithdraw, uint256 _amountRequestWithdraw) external withdrawVotable onlyOwner {
-        require(compare(messageRequestWithdraw, _messageRequestWithdraw) == false, "Request can't be equal to last request");
-        messageRequestWithdraw = _messageRequestWithdraw;
-        amountRequestWithdraw = _amountRequestWithdraw;
-        acceptedRequestWithdraw = 0;
-        refusedRequestWithdraw = 0;
-    }
-
-    /**
-     * @notice Get request to withdraw by owner
-     * @return request {string, uint256} (messageRequestWithdraw, amountRequestWithdraw)
-     */
-    function getRequestWithdraw() external withdrawVotable view returns(string memory , uint256) {
-        return (messageRequestWithdraw, amountRequestWithdraw);
-    }
-
-    /**
-     * @notice Shareholder vote to the request of owner to withdraw
-     * @param vote {boolean} accept (true) or reject (false) request of withdraw
-     * @param amount {uint256} amount of vote request, need to be lower than balance of shareholder
-     */
-    function voteToRequestWithdraw(bool vote, uint256 amount) external withdrawVotable contractValid {
-        require(TokenContract.balanceOf(_msgSender()) >= amount, "Balance of sender is lower than the amount");
-        require(compare(hasVoted[_msgSender()], messageRequestWithdraw) == false, "Sender has already voted to this request");
-        hasVoted[_msgSender()] = messageRequestWithdraw;
-        if(vote == true) acceptedRequestWithdraw += amount;
-        if(vote == false) refusedRequestWithdraw += amount;
     }
 
     /**
@@ -457,7 +456,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         TokenLibrary.Rules memory _rules = TokenContract.getRules();
         if(_rules.dayToWithdraw != 0)
             weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(_rules.dayToWithdraw)));
-        require(_rules.voteToWithdraw == false || (acceptedRequestWithdraw > refusedRequestWithdraw && amount <= amountRequestWithdraw), "No vote accepted");
+        require(_rules.voteToWithdraw == false || (acceptedRequest> refusedRequest && amount <= amountRequest), "No vote accepted");
         require(weiWithdrawable >= amount || _rules.dayToWithdraw == 0, "Not enough funds to withdraw");
         require(lastWithdraw + oneDay.mul(_rules.dayToWithdraw).mul(amount) <= _now() || _rules.dayToWithdraw == 0, "Time incorrect");
     }
