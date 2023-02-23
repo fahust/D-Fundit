@@ -6,10 +6,13 @@ import "../library/TokenLibrary.sol";
 
 contract StorageToken {
 
-    uint256 constant oneDay = 86400;
-    uint256 immutable pricePerToken;
+    uint256 internal constant oneDay = 86400;
+    uint256 internal immutable pricePerToken;
     uint256 internal paused;
     uint256 internal lastWithdraw;
+    uint256 internal amountRequestWithdraw;
+    uint256 internal acceptedRequestWithdraw;
+    uint256 internal refusedRequestWithdraw;
 
     address internal OWNER;
 
@@ -18,14 +21,16 @@ contract StorageToken {
     mapping(uint256 => TokenLibrary.Transfer) internal _transfers;
     mapping(address => TokenLibrary.FreezePeriod) internal freezedPeriod;
 
-    mapping(address => uint256) internal _balances;
     mapping(address => uint256) internal frozenTokens;
+
+    mapping(address => string) internal hasVoted;
 
     mapping(address => bool) internal frozen;
 
     uint32 internal _transfersCount;
 
     string internal constant TOKEN_VERSION = "0.0.1";
+    string internal messageRequestWithdraw;
     
     error NotTheOwner(address sender, bytes32 role);
     error TransferFromZeroAddress(address from);
@@ -53,6 +58,13 @@ contract StorageToken {
     
     function _now() public view returns (uint256) {
         return block.timestamp;
+    }
+
+    function compare(string memory str1, string memory str2) public pure returns (bool) {
+        if (bytes(str1).length != bytes(str2).length) {
+            return false;
+        }
+        return keccak256(abi.encodePacked(str1)) == keccak256(abi.encodePacked(str2));
     }
 
     constructor(

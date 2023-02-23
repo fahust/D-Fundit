@@ -442,7 +442,7 @@ information not captured by the reason code.
  * 0x59
  * 0x5a frozen sender
  * 0x5b frozen receiver
- * 0x5c
+ * 0x5c soul bound token
  * 0x5d
  * 0x5e
  * 0x5f	token meta or info
@@ -872,7 +872,7 @@ afin de fournir des informations supplémentaires non capturées par le code de 
  * 0x59
  * 0x5a frozen sender
  * 0x5b frozen receiver
- * 0x5c
+ * 0x5c soul bound token
  * 0x5d
  * 0x5e
  * 0x5f	token meta or info
