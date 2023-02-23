@@ -23,6 +23,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     mapping(uint256 => TokenLibrary.Article) internal _articles;
     uint256 internal paused;
     string internal constant TOKEN_VERSION = "0.0.1";
+    string internal description;
     TokenLibrary.Rules internal rules;
 
     event TransferOwnership(address indexed oldAccount, address indexed newAccount);
@@ -109,7 +110,6 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     function setRules(TokenLibrary.Rules memory _rules) external onlyOwner {
         require(rules.rulesModifiable == true, "Rules is not modifiable");
         rules = _rules;
-
     }
 
     /**
@@ -119,6 +119,23 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     function getRules() external view returns(TokenLibrary.Rules memory) {
         require(_msgSender() == addressProxy || _msgSender() == OWNER, "Caller is not owner or proxy");
         return rules;
+    }
+
+    /**
+     * @dev For a gas optimization i recommend to upload description html on ipfs
+     * @notice Set a description for the project
+     * @param _description {string} description of the project
+     */
+    function setDescription(string memory _description) external onlyOwner {
+        description = _description;
+    }
+
+    /**
+     * @notice Get a description for the project
+     * @return description {string} description of the project
+     */
+    function getDescription() external view returns(string memory) {
+        return description;
     }
 
     /**
