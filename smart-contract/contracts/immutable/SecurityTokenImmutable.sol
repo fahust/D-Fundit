@@ -18,7 +18,9 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     address internal addressProxy;
     address internal OWNER;
     uint32 internal _transfersCount;
+    uint32 internal _articlesCount;
     mapping(uint256 => TokenLibrary.Transfer) internal _transfers;
+    mapping(uint256 => TokenLibrary.Article) internal _articles;
     uint256 internal paused;
     string internal constant TOKEN_VERSION = "0.0.1";
     TokenLibrary.Rules internal rules;
@@ -117,6 +119,35 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     function getRules() external view returns(TokenLibrary.Rules memory) {
         require(_msgSender() == addressProxy || _msgSender() == OWNER, "Caller is not owner or proxy");
         return rules;
+    }
+
+    /**
+     * @notice Add an article to the contract
+     * @param _article {TokenLibrary.Article} struct of article
+     */
+    function addArticle(TokenLibrary.Article memory _article) external onlyOwner {
+        _articles[_articlesCount] = TokenLibrary.Article(
+            _article.title,
+            _article.content,
+            _article.imageUri,
+            _article.note,
+            _now()
+        );
+        _articlesCount++;
+    }
+
+    /**
+     * @notice Get articles from the contract
+     * @param skip {uint32} skip a number of articles to retrieve
+     * @param limit {uint32} limit the number of articles to retrieve
+     * @return articles {TokenLibrary.Article} struct of articles
+     */
+    function getArticles(uint32 skip, uint32 limit) external view returns(TokenLibrary.Article[] memory) {
+        TokenLibrary.Article[] memory result = new TokenLibrary.Article[](_articlesCount - skip - limit);
+        for (uint32 i = 0+skip; i < (limit == 0 ? _articlesCount : limit); i++) {
+            result[i] = _articles[i];
+        }
+        return result;
     }
 
     /**
