@@ -10,12 +10,6 @@ import "../interfaces/ISecurityTokenImmutable.sol";
 interface IProxySecurityToken {
 
     /**
-     * @notice set the contract address of security token immutable
-     * @param _securityTokenImmutableAddress {address} address of security token immutable contract
-     */
-    function setSecurityTokenImmutable(address _securityTokenImmutableAddress) external;
-
-    /**
      * @notice Returns the version of the token contract
      * @return TOKEN_VERSION {string} version of the smart contract
      */

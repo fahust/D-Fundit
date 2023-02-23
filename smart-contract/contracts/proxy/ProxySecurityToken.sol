@@ -15,21 +15,13 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecurityToken {
     using SafeMath for uint;
-
-    ISecurityTokenImmutable public TokenContract;
+    ISecurityTokenImmutable internal immutable TokenContract;
 
     /**
      */
-    constructor(uint256 _pricePerToken) StorageToken(_pricePerToken) {
+    constructor(uint256 _pricePerToken, address _securityTokenImmutableAddress) StorageToken(_pricePerToken) {
         OWNER = _msgSender();
         lastWithdraw = _now();
-    }
-
-    /**
-     * @notice set the contract address of security token immutable
-     * @param _securityTokenImmutableAddress {address} address of security token immutable contract
-     */
-    function setSecurityTokenImmutable(address _securityTokenImmutableAddress) external onlyOwner {
         TokenContract = ISecurityTokenImmutable(_securityTokenImmutableAddress);
     }
 
