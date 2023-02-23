@@ -123,7 +123,7 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
 
     /**
      * @notice Add or set an article to the contract
-     * @param _article {uint256} struct of article
+     * @param index {uint256} index of the article you want update, if indexx = 0 is not an update but an insert
      * @param _article {TokenLibrary.Article} struct of article
      */
     function upsertArticle(uint32 index, TokenLibrary.Article memory _article) external onlyOwner {
@@ -169,11 +169,13 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
 
     /**
      * @notice Get movements of the assets
+     * @param skip {uint32} skip a number of articles to retrieve
+     * @param limit {uint32} limit the number of articles to retrieve
      * @return result {TokenLibrary.Transfer[]} array of register transfers movements
      */
-    function transfers() public view onlyReader() returns (TokenLibrary.Transfer[] memory) {
-        TokenLibrary.Transfer[] memory result = new TokenLibrary.Transfer[](_transfersCount);
-        for (uint32 i = 0; i < _transfersCount; i++) {
+    function transfers(uint32 skip, uint32 limit) public view onlyReader() returns (TokenLibrary.Transfer[] memory) {
+        TokenLibrary.Transfer[] memory result = new TokenLibrary.Transfer[](_transfersCount - skip - limit);
+        for (uint32 i = 0+skip; i < (limit == 0 ? _transfersCount : limit); i++) {
             result[i] = _transfers[i];
         }
         return result;

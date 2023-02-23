@@ -98,7 +98,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get transfers from first founder before mint", async () => {
-      const transfers = await this.SecurityTokenImmutableContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers(0,0);
       assert.equal(transfers.length, 0);
     });
 
@@ -131,7 +131,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get transfers after mint of first founder", async () => {
-      const transfers = await this.SecurityTokenImmutableContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers(0,0);
       assert.equal(transfers.length, 1);
       assert.equal(transfers[0].transferType, "mint");
       assert.equal(transfers[0].from, ADDRESS_ZERO);
@@ -225,7 +225,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
-      const transfers = await this.SecurityTokenImmutableContract.transfers();
+      const transfers = await this.SecurityTokenImmutableContract.transfers(0,0);
       assert.equal(transfers.length, 10);
 
       assert.equal(transfers[0].transferType, "mint");
@@ -378,7 +378,7 @@ contract("SECURITY TOKEN", async accounts => {
     });
 
     it("SUCCESS : Should get transfers after burn of first founder", async () => {
-      const transfers = await this.SecurityTokenImmutableContract.transfers({
+      const transfers = await this.SecurityTokenImmutableContract.transfers(0,0,{
         from: walletNewOwner,
       });
       assert.equal(transfers.length, 13);
