@@ -19,6 +19,7 @@
         <li><a href="#available-commands">Available Commands</a></li>
         <li><a href="#test-contract">Test Contracts</a></li>
         <li><a href="#good-practices">Solidity Good Practices</a></li>
+        <li><a href="#proxy">Proxy Contract</a></li>
       </ul>
     </li>
     <li>
@@ -28,10 +29,15 @@
         <li><a href="#error">Errors</a></li>
         <li><a href="#event">Events</a></li>
         <li><a href="#roles">Roles</a></li>
+        <li><a href="#rules">Rules</a></li>
         <li><a href="#freezing">Freezing</a></li>
         <li><a href="#balance">Balance</a></li>
+        <li><a href="#refound">Refound</a></li>
         <li><a href="#erc1066">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer">Force Transfer</a></li>
+        <li><a href="#vote">Votes</a></li>
+        <li><a href="#withdraw">Capital withdrawal</a></li>
+        <li><a href="#inject-capital">Inject Capital</a></li>
       </ul>
     </li>
   </ol>
