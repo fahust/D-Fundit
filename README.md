@@ -52,6 +52,7 @@
         <li><a href="#available-commands-FR">Commandes disponibles</a></li>
         <li><a href="#test-contract-FR">Test Smart Contracts</a></li>
         <li><a href="#good-practices-FR">Bonnes pratiques de Solidity</a></li>
+        <li><a href="#proxy-FR">Proxy Contract</a></li>
       </ul>
     </li>
     <li>
@@ -61,10 +62,15 @@
         <li><a href="#error-FR">Erreurs</a></li>
         <li><a href="#event-FR">Événements</a></li>
         <li><a href="#roles-FR">Rôles</a></li>
+        <li><a href="#rules-FR">Règles</a></li>
         <li><a href="#freezing-FR">Gèle de token</a></li>
         <li><a href="#balance-FR">Solde</a></li>
+        <li><a href="#refound-FR">Rembourssement</a></li>
         <li><a href="#erc1066-FR">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer-FR">Transfert de force</a></li>
+        <li><a href="#vote-FR">Votes</a></li>
+        <li><a href="#withdraw-FR">Retrait de capital</a></li>
+        <li><a href="#inject-capital-FR">Injection de capital</a></li>
       </ul>
     </li>
   </ol>
@@ -78,11 +84,11 @@ D-Fundit is a **decentralised online crowdfunding platform** that allows entrepr
 
 The funding is **exclusively in cryptocurrency**, which offers many advantages:
 
-  - Firstly, cryptocurrency transactions can be conducted in a **decentralised** manner, meaning that there is no need for intermediaries such as banks or payment processors to facilitate the transaction. This can lead to **lower transaction fees** and **faster** transaction processing.
+- Firstly, cryptocurrency transactions can be conducted in a **decentralised** manner, meaning that there is no need for intermediaries such as banks or payment processors to facilitate the transaction. This can lead to **lower transaction fees** and **faster** transaction processing.
 
-  - In addition, cryptocurrency funding can offer a **higher level of security** and **anonymity** than traditional forms of funding. Cryptocurrency transactions are encrypted and stored in a blockchain, making them very difficult to tamper with or alter. In addition, cryptocurrency transactions can be conducted **without disclosing the contributor's personal information**, thus providing a **higher level of privacy**.
+- In addition, cryptocurrency funding can offer a **higher level of security** and **anonymity** than traditional forms of funding. Cryptocurrency transactions are encrypted and stored in a blockchain, making them very difficult to tamper with or alter. In addition, cryptocurrency transactions can be conducted **without disclosing the contributor's personal information**, thus providing a **higher level of privacy**.
 
-  - Finally, cryptocurrency funding can offer investors access to innovative projects that are not available via traditional forms of funding. Many blockchain and cryptocurrency projects are funded through ICOs (Initial Coin Offerings), which allow investors to back projects that have the potential to become leaders in their field.
+- Finally, cryptocurrency funding can offer investors access to innovative projects that are not available via traditional forms of funding. Many blockchain and cryptocurrency projects are funded through ICOs (Initial Coin Offerings), which allow investors to back projects that have the potential to become leaders in their field.
 
 D-Fundit allows creators to **set a funding goal** and **campaign duration**, and contributors can **support** the project by making a donation. If the project reaches its funding goal before the end of the campaign, the contributors are debited and the creator can use the money to complete the project. If the project does not reach its funding target, the contributors are not debited and the project will not be funded.
 
@@ -119,7 +125,7 @@ There is a second type of smart contract, the **"factory token "** which lists a
 
 ## Blockchain Network
 
-Our smart contracts can be deployed immediately on a *mainnet* such as **ethereum** and **polygon**, but also on *testnet* such as **goeli** and **mumbai**.
+Our smart contracts can be deployed immediately on a _mainnet_ such as **ethereum** and **polygon**, but also on _testnet_ such as **goeli** and **mumbai**.
 
 As our application is 100% decentralised (no back-end at all for complete decentralisation), it is not possible to save drafts of your projects, which is why a deployment on testnet can be a good training before a production deployment on mainnet.
 
@@ -228,6 +234,12 @@ price in euros depending on the current network congestion and the price of ethe
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<a name="proxy"></a>
+
+## Proxy contract
+
+The smart contract **Proxy** is a bridge between the user and the smart contract **Security Token**, it is very useful in case of an update or an error on one of the functionality set up because in the case of the deletion of the Proxy Contract, the contract **Security Token** and its variables are preserved, and thus mainly the tokens **ERC-20** of the contract
+
 <a name="contracts"></a>
 
 # Security Token
@@ -324,6 +336,33 @@ Different roles were created for the use of our smart contract.
   to retrieve the securities movement register
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+<a name="rules"></a>
+
+## Rules
+
+It is possible to restrict the use of the contract to certain rules set up by the creator of the contract.
+The purpose of this rule is to establish a form of trust between the users of the contract and its owner.
+
+```javascript
+struct Rules {
+    bool freezableAddress; //Enables or disables the complete token freeze of a user address
+    bool freezablePartial; //Enables or disables the partial token freeze of a user address
+    bool freezablePartialTime; //Enables or disables partial token freezing of a user address over time
+    bool pausable; //Enables or disables to pause any token transfer over the entire contract
+    bool forcableTransfer; //Enables or disables force transfer of an investor's token by an agent
+    bool rulesModifiable; //Makes it possible or not to modify the rules, be careful once this value is set to false, no rule will ever be modifiable again
+    bool soulBoundSecurityToken; //Makes it possible or not to set up a non-transfer rule for tokens (soul bound token)
+    bool voteToWithdraw; //Makes it mandatory or not to vote on the recovery of funds from the contract by the founder
+    uint256 dayToWithdraw; //Adds a time in seconds to be able to recover funds on the contract
+    uint256 startFundraising; //Adding a start date (timestamp) for fundraising
+    uint256 endFundraising; //Adding a end date (timestamp) for fundraising
+    uint256 maxSupply; //Adding a maximum number of tokens currently minted on the contract
+}
+```
+
+:warning: **Warning: setting the _rulesModifiable_ rule to false is definitive and blocks all other rule changes permanently**
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
 ## Functions
 
@@ -418,6 +457,20 @@ function eligibleBalanceOf(address account) public view returns(uint256)
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+<a name="refound"></a>
+
+## Refound by token burn
+
+When a token is burned, the shareholder who burns his token receives the share of eth that corresponds to his burned tokens as a result of the share.
+This can be considered as a repayment of a project share.
+
+You can also check how much eth will be sent to you in the case of a project share refund, corresponding to the amount of token burned.
+
+```javascript
+function refoundable(uint256 amount) public view contractValid returns(uint256)
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a name="erc1066"></a>
 
@@ -481,7 +534,63 @@ function forcedTransfer(
 ) public onlyAgent returns (bool)
 ```
 
-<p align="right">(<a href="#readme-top">retour au début</a>)</p>
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
+
+<a name="vote"></a>
+
+## Votes
+
+It is possible for the founder to set up a vote, with a comment for the vote statement.
+
+```javascript
+function setRequest(string memory _messageRequest, uint256 _amountRequest) external onlyOwner
+```
+
+In the case of setting up the **voteToWithdraw** rule, calling the `setRequest()` function to set up a vote will be necessary, and an `_amountRequest` amount will need to be requested in addition to the `_messageRequest` comment.
+
+It is possible to retrieve all the values for this vote with `getRequest`.
+
+```javascript
+function getRequest() external view returns(string memory , uint256, uint256, uint256)
+```
+
+Only shareholder will be able to vote, positively or negatively, up to their `balance` (share of the project) by calling the `voteToRequest` function
+
+```javascript
+function voteToRequest(bool vote, uint256 amount) external contractValid
+```
+
+If the number of positive votes exceeds the number of negative votes **after 24 hours (TODO)**, the vote is validated, and it is then possible to create a new one.
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
+
+<a name="withdraw"></a>
+
+## Capital withdrawal
+
+It is possible for the founder to make a capital withdrawal according to the **voteToWithdraw** rule but also according to the **dayToWithdraw** rule and if the amount does not exceed this amount or the eth balance of the contract, then the withdrawal is valid.
+
+```javascript
+function withdraw(uint256 amount, address receiver) external onlyOwner contractValid
+```
+
+This will fundamentally lower the value of investors' shares.
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
+
+<a name="inject-capital"></a>
+
+## Capital injection
+
+It is also possible to inject capital through the founder by sending eth directly into the contract.
+
+```javascript
+function injectCapital() external payable onlyOwner returns(bool)
+```
+
+This will fundamentally increase the value of investors' shares.
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
 
 <br /><br />
 
@@ -497,11 +606,11 @@ D-Fundit est une **plateforme de financement participatif décentralisé** en li
 
 Le financement ce fait **exclusivement en cryptomonnaie**, ce qui offres de nombreux avantages :
 
-  - Tout d'abord, les transactions en cryptomonnaie peuvent être effectuées de manière **décentralisée**, ce qui signifie qu'il n'y a pas besoin d'intermédiaires tels que les banques ou les processeurs de paiement pour faciliter la transaction. Cela peut entraîner des **frais de transaction plus bas** et une plus **grande rapidité de traitement** des transactions.
+- Tout d'abord, les transactions en cryptomonnaie peuvent être effectuées de manière **décentralisée**, ce qui signifie qu'il n'y a pas besoin d'intermédiaires tels que les banques ou les processeurs de paiement pour faciliter la transaction. Cela peut entraîner des **frais de transaction plus bas** et une plus **grande rapidité de traitement** des transactions.
 
-  - En outre, le financement en cryptomonnaie peut offrir un niveau de **sécurité** et d'**anonymat** plus élevé que les formes de financement traditionnelles. Les transactions en cryptomonnaie sont **cryptées** et enregistrées dans une blockchain, ce qui les rend très difficiles à falsifier ou à altérer. De plus, les transactions en cryptomonnaie peuvent être effectuées **sans divulguer les informations personnelles du contributeur**, offrant ainsi un niveau de **confidentialité** supérieur.
+- En outre, le financement en cryptomonnaie peut offrir un niveau de **sécurité** et d'**anonymat** plus élevé que les formes de financement traditionnelles. Les transactions en cryptomonnaie sont **cryptées** et enregistrées dans une blockchain, ce qui les rend très difficiles à falsifier ou à altérer. De plus, les transactions en cryptomonnaie peuvent être effectuées **sans divulguer les informations personnelles du contributeur**, offrant ainsi un niveau de **confidentialité** supérieur.
 
-  - Enfin, le financement en cryptomonnaie peut offrir aux investisseurs un accès à des projets innovants qui ne sont pas disponibles via les formes de financement traditionnelles. De nombreux projets de blockchain et de cryptomonnaie sont financés par des ICO (Initial Coin Offerings), qui permettent aux investisseurs de **soutenir** des projets qui ont le potentiel de devenir des leaders dans leur domaine.
+- Enfin, le financement en cryptomonnaie peut offrir aux investisseurs un accès à des projets innovants qui ne sont pas disponibles via les formes de financement traditionnelles. De nombreux projets de blockchain et de cryptomonnaie sont financés par des ICO (Initial Coin Offerings), qui permettent aux investisseurs de **soutenir** des projets qui ont le potentiel de devenir des leaders dans leur domaine.
 
 D-Fundit permet aux créateurs de **définir un objectif de financement** et une **durée de campagne**, et les contributeurs peuvent **soutenir** le projet en faisant un don. Si le projet atteint son objectif de financement avant la fin de la campagne, les contributeurs sont débités et le créateur peut utiliser l'argent pour réaliser le projet. Si le projet n'atteint pas son objectif de financement, les contributeurs ne sont pas débités et le projet ne sera pas financé.
 
@@ -536,7 +645,7 @@ Il existe un deuxième type de smart contract, le **"factory token"** qui réper
 
 ## Réseau Blockchain
 
-Nos smart contract peuvent être déployer immédiatement sur un *mainnet* tel que **ethereum** et **polygon**, mais aussi sur les *testnet* tel que **goeli** et **mumbai**.
+Nos smart contract peuvent être déployer immédiatement sur un _mainnet_ tel que **ethereum** et **polygon**, mais aussi sur les _testnet_ tel que **goeli** et **mumbai**.
 
 Notre application étant 100 % décentralisé (absence total de back-end pour une décentralisation complète), il n'est pas possible d'enregistrer de brouillons de vos projets, voila pourquoi un déploiement sur testnet peut être un bon entrainement avant un déploiement en production sur mainnet.
 
@@ -647,6 +756,11 @@ Le prix en euros varie en fonction de la congestion actuelle du réseau et du pr
 | [Phishing with tx.origin](https://hackernoon.com/hacking-solidity-contracts-using-txorigin-for-authorization-are-vulnerable-to-phishing)                                                                                                                                           | Supposons qu'un appel au contrat vulnérable passe le contrôle d'autorisation puisque tx.origin renvoie l'expéditeur original de la transaction qui, dans ce cas, est le compte autorisé.                                                                                                                  |
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
+<a name="proxy-FR"></a>
+
+## Proxy contract
+
+Le smart contract **Proxy** est un pont utilisé pour faire le lien entre l'utilisateur et le smart contract **Security Token**, il est très utile dans le cas d'une mise a jour ou d'une erreur sur l'une des fonctionnalité mise en place car dans le cas de la suppression du Proxy Contract, le contrat **Security Token** et ses variables sont conservé, et donc principalement les tokens **ERC-20** du contrat
 
 <a name="contracts-FR"></a>
 
@@ -750,6 +864,33 @@ Différents rôles ont été créés pour l'utilisation de notre contrat intelli
   possibilité de de récupérer le registre des mouvements de titres
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
+<a name="rules-FR"></a>
+
+## Règles
+
+Il est possible de restreindre l'utilisation du contrat a certaines règles mises en place par le créateur du contrat.
+L'utilité de cet règle est d'établir une forme de confiance entre les utilisateurs du contrat et son propriétaire.
+
+```javascript
+struct Rules {
+    bool freezableAddress; //Rend possible ou non le freeze complet de token d'une addresse d'utilisateur
+    bool freezablePartial; //Rend possible ou non le freeze partielle de token d'une addresse d'utilisateur
+    bool freezablePartialTime; //Rend possible ou non le freeze partiel dans le temps de token d'une addresse d'utilisateur
+    bool pausable; //Rend possible ou non la mise en pause de tout transfer de token sur la totalité du contrat
+    bool forcableTransfer; //Rend possible ou non le transfert de force de token d'un investisseur par un agent
+    bool rulesModifiable; //Rend possible ou non la modification des règles, attention une fois cet valeur sur false, aucune règle ne sera plus jamais modifiable
+    bool soulBoundSecurityToken; //Rend possible ou non la mise en place d'une règle de non transfer des tokens (soul bound token)
+    bool voteToWithdraw; //Rend obligatoire ou non la nécessité d'un vote la récupération de fonds sur le contrat par le fondateur
+    uint256 dayToWithdraw; //Ajoute une durée en seconde pour pouvoir récupérer des fonds sur le contract
+    uint256 startFundraising; //Ajout d'une date (timestamp) de démarage pour la levée de fonds
+    uint256 endFundraising; //Ajout d'une date (timestamp) de fin pour la levée de fonds
+    uint256 maxSupply; //Ajout d'un nombre maximum de token actuellement minté sur le contrat
+}
+```
+
+:warning: **Attention la mise en place de la règle rulesModifiable sur false est définitive et bloque tout les autres changement de règle de façon permanente**
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
 ## Fonctions
 
@@ -846,6 +987,20 @@ function eligibleBalanceOf(address account) public view returns(uint256)
 ```
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
+<a name="refound-FR"></a>
+
+## Rembourssement par burn de token
+
+Quand un token est burn, l'investisseur qui brule son token reçoit la part d'eth qui correspond a ses tokens brulé en conséquence de la part.
+Ceci peut être considéré comme un rembourssement de part d'un projet.
+
+Vous pouvez aussi vérifié combien d'eth vous sera envoyé dans le cas d'un rembourssement de part d'un projet, correspondant à la quantité de token brulé.
+
+```javascript
+function refoundable(uint256 amount) public view contractValid returns(uint256)
+```
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
 <a name="erc1066-FR"></a>
 
@@ -910,5 +1065,61 @@ function forcedTransfer(
     uint256 amount
 ) public onlyAgent returns (bool)
 ```
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
+
+<a name="vote-FR"></a>
+
+## Votes
+
+Il est possible pour le fondateur de mêttre en place un vote, avec un commentaire pour l'énnoncé du vote.
+
+```javascript
+function setRequest(string memory _messageRequest, uint256 _amountRequest) external onlyOwner
+```
+
+Dans le cas de la mise en place de la règle **voteToWithdraw**, l'appel de la fonction `setRequest()` pour la mise en place d'un vote sera nécessaire, et un montant `_amountRequest` devra être demandé en plus du commentaire `_messageRequest`.
+
+Il est possible de récuperer toutes les valeur de ce vote avec `getRequest`.
+
+```javascript
+function getRequest() external view returns(string memory , uint256, uint256, uint256)
+```
+
+Seuls les investisseurs pourront voté, positivement ou négativement, a la hauteur de leur `balance` (part du projet) en appelant la fonction `voteToRequest`
+
+```javascript
+function voteToRequest(bool vote, uint256 amount) external contractValid
+```
+
+Si le nombre de vote positif dépasse celui de vote négatif **après 24 heure (TODO)**, le vote est validé, et il est alors possible d'en créer un nouveau.
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
+
+<a name="withdraw-FR"></a>
+
+## Retrait de capital
+
+Il est possible pour le fondateur de faire une retrait de capital selon la règle **voteToWithdraw** mais aussi selon la règle **dayToWithdraw** et si la quantité ne dépasse pas ce montant ou bien la balance d'eth du contrat, alors le retrait est validé.
+
+```javascript
+function withdraw(uint256 amount, address receiver) external onlyOwner contractValid
+```
+
+Ceci baissera fondatalement la valeur des parts des investisseurs.
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
+
+<a name="inject-capital-FR"></a>
+
+## Injection de capital
+
+Il est aussi possible d'injecté du capital par le biais du fondateur en envoyant de l'eth directement sur le contrat.
+
+```javascript
+function injectCapital() external payable onlyOwner returns(bool)
+```
+
+Ceci augmentera fondatalement la valeur des parts des investisseurs.
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
