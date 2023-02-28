@@ -15,22 +15,15 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecurityToken {
     using SafeMath for uint;
-
-    ISecurityTokenImmutable public TokenContract;
+    ISecurityTokenImmutable internal immutable TokenContract;
 
     /**
      */
-    constructor(uint256 _pricePerToken) StorageToken(_pricePerToken) {
+    constructor(uint256 _pricePerToken, address _securityTokenImmutableAddress) StorageToken(_pricePerToken) {
         OWNER = _msgSender();
         lastWithdraw = _now();
-    }
-
-    /**
-     * @notice set the contract address of security token immutable
-     * @param _securityTokenImmutableAddress {address} address of security token immutable contract
-     */
-    function setSecurityTokenImmutable(address _securityTokenImmutableAddress) external onlyOwner {
         TokenContract = ISecurityTokenImmutable(_securityTokenImmutableAddress);
+        require(address(TokenContract) != address(0) && OWNER == TokenContract.owner(), "Token contract is not valid");
     }
 
     /// @dev Modifier to check if fundraising is open and max supply not reached.
@@ -39,12 +32,6 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         require(_now() >= _rules.startFundraising, "Fundraising not started");
         require(_now() <= _rules.endFundraising || _rules.endFundraising == 0, "Fundraising ended");
         require(TokenContract.totalSupply() + amount <= _rules.maxSupply || _rules.maxSupply == 0, "Max supply reached");
-        _;
-    }
-
-    /// @dev Check if contract immutable is valid
-    modifier contractValid() {
-        require(address(TokenContract) != address(0), "Token contract is not valid");
         _;
     }
 
@@ -78,7 +65,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param account {address} wallet address of account you want to get not freezed balance
      * @return balance {uint256} balance of wallet address totaly open
      */
-    function eligibleBalanceOf(address account) public view contractValid returns(uint256) {
+    function eligibleBalanceOf(address account) public view returns(uint256) {
         return TokenContract.balanceOf(account) - frozenTokens[account] - (freezedPeriod[account].amountFreezed);
     }
 
@@ -92,7 +79,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param amount {uint256} amount to mint
      * @return result {boolean} success or failure
      */
-    function mint(address to, uint256 amount) external payable fundraisable(amount) contractValid returns (bool) {
+    function mint(address to, uint256 amount) external payable fundraisable(amount) returns (bool) {
         require(msg.value >= pricePerToken * amount, "Not enough eth");
         TokenContract.mint(to, amount);
         TokenContract.handlePayment{value: msg.value}(_msgSender());
@@ -110,7 +97,6 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      */
     function burn(address account, uint256 amount)
         external
-        contractValid
         returns (bool)
     {
         uint256 freeBalance = eligibleBalanceOf(account);
@@ -141,7 +127,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param amount {uint256} amout of tokens burn
      * @return wei {uint256} amount of wei refoundable
      */
-    function refoundable(uint256 amount) public view contractValid returns(uint256){
+    function refoundable(uint256 amount) public view returns(uint256){
         return (address(TokenContract).balance.mul(100).div(TokenContract.totalSupply().mul(100))).mul(amount);
     }
 
@@ -154,7 +140,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param to {address} wallet to transfer the token
      * @param amount {uint256[]} amount to transfer
      */
-    function transfer(address to, uint256 amount) external contractValid returns (bool) {
+    function transfer(address to, uint256 amount) external returns (bool) {
         require(canTransfer(_msgSender(), _msgSender(), to, amount) == (hex"51"));
         TokenContract.transferFrom(_msgSender(), to, amount);
         return true;
@@ -170,7 +156,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param to {address} wallet to transfer the token
      * @param amount {uint256[]} amount to transfer
      */
-    function transferFrom(address from, address to, uint256 amount) external contractValid returns (bool) {
+    function transferFrom(address from, address to, uint256 amount) external returns (bool) {
         require(canTransfer(_msgSender(), from, to, amount) == (hex"51"));
         TokenContract.transferFrom(from, to, amount);
         return true;
@@ -189,7 +175,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         address from,
         address to,
         uint256 value
-    ) public view contractValid returns (bytes1) {
+    ) public view returns (bytes1) {
         if (TokenContract.balanceOf(from) < value) return(hex"52");
         if(_now() < TokenContract.isPaused()) return(hex"54");
         if(TokenContract.balanceOf(from) - frozenTokens[from] - (freezedPeriod[from].amountFreezed) < value) return(hex"55");
@@ -212,7 +198,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         address from,
         address to,
         uint256 amount
-    ) external onlyAgent contractValid returns (bool) {
+    ) external onlyAgent returns (bool) {
         require(TokenContract.getRules().forcableTransfer == true, "forceTransfer is not authorized on this contract");
         uint256 freeBalance = eligibleBalanceOf(from);
 
@@ -257,7 +243,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      *  @param userAddress {address} of the user
      *  @param freeze {boolean} representing freezing
      */
-    function setAddressFrozen(address userAddress, bool freeze) public onlyAgent contractValid {
+    function setAddressFrozen(address userAddress, bool freeze) public onlyAgent {
         require(TokenContract.getRules().freezableAddress == true, "Freeze address is not allowed");
         frozen[userAddress] = freeze;
         emit AddressFrozen(userAddress, freeze, _msgSender());
@@ -279,7 +265,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      *  @param userAddress {address} of the user
      *  @param amount {uint256} of token to be unfreezed
      */
-    function freezePartialTokens(address userAddress, uint256 amount) public onlyAgent contractValid {
+    function freezePartialTokens(address userAddress, uint256 amount) public onlyAgent {
         require(TokenContract.getRules().freezablePartial == true, "Freeze partial address is not allowed");
         uint256 balance = TokenContract.balanceOf(userAddress);
         require(balance >= frozenTokens[userAddress] + amount, "Amount exceeds available balance");
@@ -303,7 +289,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      *  @param userAddress {address} of the user
      *  @param amount {uint256} of token to be unfreezed
      */
-    function unfreezePartialTokens(address userAddress, uint256 amount) public onlyAgent contractValid {
+    function unfreezePartialTokens(address userAddress, uint256 amount) public onlyAgent {
         require(TokenContract.getRules().freezablePartial == true, "Freeze partial address is not allowed");
         require(frozenTokens[userAddress] >= amount, "Amount should be less than or equal to frozen tokens");
         frozenTokens[userAddress] = frozenTokens[userAddress] - (amount);
@@ -333,7 +319,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
         uint256 endTime,
         uint256 amountFreezed,
         address userAddress
-    ) external onlyAgent contractValid {
+    ) external onlyAgent {
         require(TokenContract.getRules().freezablePartialTime == true, "Freeze partial period address is not allowed");
         require(amountFreezed <= TokenContract.balanceOf(userAddress), "Amount is upper than balance of user");
         freezedPeriod[userAddress] = TokenLibrary.FreezePeriod(
@@ -424,7 +410,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param vote {boolean} accept (true) or reject (false) request
      * @param amount {uint256} amount of vote request, need to be lower than balance of shareholder
      */
-    function voteToRequest(bool vote, uint256 amount) external contractValid {
+    function voteToRequest(bool vote, uint256 amount) external {
         require(TokenContract.balanceOf(_msgSender()) >= amount, "Balance of sender is lower than the amount");
         require(compare(hasVoted[_msgSender()], messageRequest) == false, "Sender has already voted to this request");
         hasVoted[_msgSender()] = messageRequest;
@@ -437,7 +423,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param amount {uint256} the number of tokens transferred
      * @param receiver {address} the recipient of the token transfer
      */
-    function withdraw(uint256 amount, address receiver) external onlyOwner contractValid {
+    function withdraw(uint256 amount, address receiver) external onlyOwner {
         withdrawable(amount);
         TokenLibrary.Rules memory _rules = TokenContract.getRules();
         if(_rules.dayToWithdraw != 0)
@@ -452,7 +438,7 @@ contract ProxySecurityToken is AgentRole, ReaderRole, StorageToken, IProxySecuri
      * @param amount {uint256} the number of tokens withdraw
      * @return weiWithdrawable {uint256} the number of wei transferrable
      */
-    function withdrawable(uint256 amount) public view contractValid returns(uint256 weiWithdrawable) {
+    function withdrawable(uint256 amount) public view returns(uint256 weiWithdrawable) {
         TokenLibrary.Rules memory _rules = TokenContract.getRules();
         if(_rules.dayToWithdraw != 0)
             weiWithdrawable = ((_now() - lastWithdraw).div(oneDay.mul(_rules.dayToWithdraw)));

@@ -48,7 +48,10 @@ contract("SECURITY TOKEN", async accounts => {
       rules,
     ); // we deploy contract
 
-    this.ProxySecurityTokenContract = await ProxySecurityToken.new(pricePerToken); // we deploy contract
+    this.ProxySecurityTokenContract = await ProxySecurityToken.new(
+      pricePerToken,
+      this.SecurityTokenImmutableContract.address,
+    ); // we deploy contract
   });
 
   describe("ERC-20 MODULE", async () => {
@@ -79,21 +82,6 @@ contract("SECURITY TOKEN", async accounts => {
     it("SUCCESS : Should setAddressProxy of SecurityTokenImmutableContract", async () => {
       await this.SecurityTokenImmutableContract.setAddressProxy(
         this.ProxySecurityTokenContract.address,
-      );
-    });
-
-    it("ERROR : Should not mint because proxy security token is not linked", async () => {
-      await truffleAssert.reverts(
-        this.ProxySecurityTokenContract.mint(walletFirstFounder, amount, {
-          from: walletFirstFounder,
-          value: pricePerToken * amount,
-        }),
-      );
-    });
-
-    it("SUCCESS : Should setSecurityTokenImmutable of ProxySecurityTokenContract", async () => {
-      await this.ProxySecurityTokenContract.setSecurityTokenImmutable(
-        this.SecurityTokenImmutableContract.address,
       );
     });
 
