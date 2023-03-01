@@ -122,18 +122,19 @@ contract SecurityTokenImmutable is ERC20, AgentRole, ReaderRole, ISecurityTokenI
     }
 
     /**
-     * @notice Add an article to the contract
+     * @notice Add or set an article to the contract
+     * @param _article {uint256} struct of article
      * @param _article {TokenLibrary.Article} struct of article
      */
-    function addArticle(TokenLibrary.Article memory _article) external onlyOwner {
-        _articles[_articlesCount] = TokenLibrary.Article(
+    function upsertArticle(uint32 index, TokenLibrary.Article memory _article) external onlyOwner {
+        _articles[(index == 0 ? _articlesCount : index)] = TokenLibrary.Article(
             _article.title,
             _article.content,
             _article.imageUri,
             _article.note,
             _now()
         );
-        _articlesCount++;
+        if(index == 0) _articlesCount++;
     }
 
     /**
