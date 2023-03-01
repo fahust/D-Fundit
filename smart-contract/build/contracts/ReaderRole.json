@@ -1747,18 +1747,18 @@
         112
       ],
       "ReaderRole": [
-        4347
+        4414
       ],
       "Roles": [
-        4436
+        4503
       ]
     },
-    "id": 4348,
+    "id": 4415,
     "license": "GPL-3.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 4253,
+        "id": 4320,
         "literals": [
           "solidity",
           "^",
@@ -1771,10 +1771,10 @@
       {
         "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
         "file": "@openzeppelin/contracts/access/Ownable.sol",
-        "id": 4254,
+        "id": 4321,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 4348,
+        "scope": 4415,
         "sourceUnit": 113,
         "src": "62:52:14",
         "symbolAliases": [],
@@ -1783,11 +1783,11 @@
       {
         "absolutePath": "project:/contracts/roles/Roles.sol",
         "file": "./Roles.sol",
-        "id": 4255,
+        "id": 4322,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 4348,
-        "sourceUnit": 4437,
+        "scope": 4415,
+        "sourceUnit": 4504,
         "src": "116:21:14",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1797,13 +1797,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 4256,
+              "id": 4323,
               "name": "Ownable",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 112,
               "src": "162:7:14"
             },
-            "id": 4257,
+            "id": 4324,
             "nodeType": "InheritanceSpecifier",
             "src": "162:7:14"
           }
@@ -1812,9 +1812,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 4347,
+        "id": 4414,
         "linearizedBaseContracts": [
-          4347,
+          4414,
           112,
           824
         ],
@@ -1823,53 +1823,53 @@
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 4261,
+            "id": 4328,
             "libraryName": {
-              "id": 4258,
+              "id": 4325,
               "name": "Roles",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 4436,
+              "referencedDeclaration": 4503,
               "src": "182:5:14"
             },
             "nodeType": "UsingForDirective",
             "src": "176:27:14",
             "typeName": {
-              "id": 4260,
+              "id": 4327,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 4259,
+                "id": 4326,
                 "name": "Roles.Role",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 4355,
+                "referencedDeclaration": 4422,
                 "src": "192:10:14"
               },
-              "referencedDeclaration": 4355,
+              "referencedDeclaration": 4422,
               "src": "192:10:14",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Role_$4355_storage_ptr",
+                "typeIdentifier": "t_struct$_Role_$4422_storage_ptr",
                 "typeString": "struct Roles.Role"
               }
             }
           },
           {
             "anonymous": false,
-            "id": 4265,
+            "id": 4332,
             "name": "ReaderAdded",
             "nameLocation": "215:11:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 4264,
+              "id": 4331,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4263,
+                  "id": 4330,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_reader",
                   "nameLocation": "243:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4265,
+                  "scope": 4332,
                   "src": "227:23:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1878,7 +1878,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4262,
+                    "id": 4329,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "227:7:14",
@@ -1897,23 +1897,23 @@
           },
           {
             "anonymous": false,
-            "id": 4269,
+            "id": 4336,
             "name": "ReaderRemoved",
             "nameLocation": "263:13:14",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 4268,
+              "id": 4335,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4267,
+                  "id": 4334,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_reader",
                   "nameLocation": "293:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4269,
+                  "scope": 4336,
                   "src": "277:23:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1922,7 +1922,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4266,
+                    "id": 4333,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "277:7:14",
@@ -1940,22 +1940,22 @@
             "src": "257:45:14"
           },
           {
-            "id": 4273,
+            "id": 4340,
             "name": "NotReader",
             "nameLocation": "318:9:14",
             "nodeType": "ErrorDefinition",
             "parameters": {
-              "id": 4272,
+              "id": 4339,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4271,
+                  "id": 4338,
                   "mutability": "mutable",
                   "name": "sender",
                   "nameLocation": "336:6:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4273,
+                  "scope": 4340,
                   "src": "328:14:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1964,7 +1964,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4270,
+                    "id": 4337,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "328:7:14",
@@ -1983,33 +1983,33 @@
           },
           {
             "constant": false,
-            "id": 4276,
+            "id": 4343,
             "mutability": "mutable",
             "name": "_readers",
             "nameLocation": "369:8:14",
             "nodeType": "VariableDeclaration",
-            "scope": 4347,
+            "scope": 4414,
             "src": "350:27:14",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Role_$4355_storage",
+              "typeIdentifier": "t_struct$_Role_$4422_storage",
               "typeString": "struct Roles.Role"
             },
             "typeName": {
-              "id": 4275,
+              "id": 4342,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 4274,
+                "id": 4341,
                 "name": "Roles.Role",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 4355,
+                "referencedDeclaration": 4422,
                 "src": "350:10:14"
               },
-              "referencedDeclaration": 4355,
+              "referencedDeclaration": 4422,
               "src": "350:10:14",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Role_$4355_storage_ptr",
+                "typeIdentifier": "t_struct$_Role_$4422_storage_ptr",
                 "typeString": "struct Roles.Role"
               }
             },
@@ -2017,7 +2017,7 @@
           },
           {
             "body": {
-              "id": 4296,
+              "id": 4363,
               "nodeType": "Block",
               "src": "406:136:14",
               "statements": [
@@ -2027,13 +2027,13 @@
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     },
-                    "id": 4288,
+                    "id": 4355,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 4282,
+                      "id": 4349,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2048,7 +2048,7 @@
                             "arguments": [],
                             "expression": {
                               "argumentTypes": [],
-                              "id": 4279,
+                              "id": 4346,
                               "name": "_msgSender",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -2059,7 +2059,7 @@
                                 "typeString": "function () view returns (address)"
                               }
                             },
-                            "id": 4280,
+                            "id": 4347,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2082,18 +2082,18 @@
                               "typeString": "address"
                             }
                           ],
-                          "id": 4278,
+                          "id": 4345,
                           "name": "isReader",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4310,
+                          "referencedDeclaration": 4377,
                           "src": "420:8:14",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_bool_$",
                             "typeString": "function (address) view returns (bool)"
                           }
                         },
-                        "id": 4281,
+                        "id": 4348,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2120,7 +2120,7 @@
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       },
-                      "id": 4287,
+                      "id": 4354,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2129,7 +2129,7 @@
                         "arguments": [],
                         "expression": {
                           "argumentTypes": [],
-                          "id": 4283,
+                          "id": 4350,
                           "name": "owner",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -2140,7 +2140,7 @@
                             "typeString": "function () view returns (address)"
                           }
                         },
-                        "id": 4284,
+                        "id": 4351,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2161,7 +2161,7 @@
                         "arguments": [],
                         "expression": {
                           "argumentTypes": [],
-                          "id": 4285,
+                          "id": 4352,
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -2172,7 +2172,7 @@
                             "typeString": "function () view returns (address)"
                           }
                         },
-                        "id": 4286,
+                        "id": 4353,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2199,7 +2199,7 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 4294,
+                  "id": 4361,
                   "nodeType": "IfStatement",
                   "src": "416:108:14",
                   "trueBody": {
@@ -2209,7 +2209,7 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 4290,
+                            "id": 4357,
                             "name": "_msgSender",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -2220,7 +2220,7 @@
                               "typeString": "function () view returns (address)"
                             }
                           },
-                          "id": 4291,
+                          "id": 4358,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2243,18 +2243,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 4289,
+                        "id": 4356,
                         "name": "NotReader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4273,
+                        "referencedDeclaration": 4340,
                         "src": "490:9:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_error_pure$_t_address_$returns$__$",
                           "typeString": "function (address) pure"
                         }
                       },
-                      "id": 4292,
+                      "id": 4359,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2271,24 +2271,24 @@
                         "typeString": "tuple()"
                       }
                     },
-                    "id": 4293,
+                    "id": 4360,
                     "nodeType": "RevertStatement",
                     "src": "483:41:14"
                   }
                 },
                 {
-                  "id": 4295,
+                  "id": 4362,
                   "nodeType": "PlaceholderStatement",
                   "src": "534:1:14"
                 }
               ]
             },
-            "id": 4297,
+            "id": 4364,
             "name": "onlyReader",
             "nameLocation": "393:10:14",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 4277,
+              "id": 4344,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "403:2:14"
@@ -2299,7 +2299,7 @@
           },
           {
             "body": {
-              "id": 4309,
+              "id": 4376,
               "nodeType": "Block",
               "src": "610:45:14",
               "statements": [
@@ -2307,11 +2307,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 4306,
+                        "id": 4373,
                         "name": "_reader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4299,
+                        "referencedDeclaration": 4366,
                         "src": "640:7:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2327,32 +2327,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 4304,
+                        "id": 4371,
                         "name": "_readers",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4276,
+                        "referencedDeclaration": 4343,
                         "src": "627:8:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Role_$4355_storage",
+                          "typeIdentifier": "t_struct$_Role_$4422_storage",
                           "typeString": "struct Roles.Role storage ref"
                         }
                       },
-                      "id": 4305,
+                      "id": 4372,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "has",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4435,
+                      "referencedDeclaration": 4502,
                       "src": "627:12:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_Role_$4355_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_Role_$4355_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_Role_$4422_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_Role_$4422_storage_ptr_$",
                         "typeString": "function (struct Roles.Role storage pointer,address) view returns (bool)"
                       }
                     },
-                    "id": 4307,
+                    "id": 4374,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2367,15 +2367,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 4303,
-                  "id": 4308,
+                  "functionReturnParameters": 4370,
+                  "id": 4375,
                   "nodeType": "Return",
                   "src": "620:28:14"
                 }
               ]
             },
             "functionSelector": "69a7ddf7",
-            "id": 4310,
+            "id": 4377,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2383,17 +2383,17 @@
             "nameLocation": "557:8:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4300,
+              "id": 4367,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4299,
+                  "id": 4366,
                   "mutability": "mutable",
                   "name": "_reader",
                   "nameLocation": "574:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4310,
+                  "scope": 4377,
                   "src": "566:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2402,7 +2402,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4298,
+                    "id": 4365,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "566:7:14",
@@ -2418,17 +2418,17 @@
               "src": "565:17:14"
             },
             "returnParameters": {
-              "id": 4303,
+              "id": 4370,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4302,
+                  "id": 4369,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4310,
+                  "scope": 4377,
                   "src": "604:4:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2437,7 +2437,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 4301,
+                    "id": 4368,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "604:4:14",
@@ -2451,7 +2451,7 @@
               ],
               "src": "603:6:14"
             },
-            "scope": 4347,
+            "scope": 4414,
             "src": "548:107:14",
             "stateMutability": "view",
             "virtual": false,
@@ -2459,7 +2459,7 @@
           },
           {
             "body": {
-              "id": 4327,
+              "id": 4394,
               "nodeType": "Block",
               "src": "714:73:14",
               "statements": [
@@ -2467,11 +2467,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 4320,
+                        "id": 4387,
                         "name": "_reader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4312,
+                        "referencedDeclaration": 4379,
                         "src": "737:7:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2487,32 +2487,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 4317,
+                        "id": 4384,
                         "name": "_readers",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4276,
+                        "referencedDeclaration": 4343,
                         "src": "724:8:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Role_$4355_storage",
+                          "typeIdentifier": "t_struct$_Role_$4422_storage",
                           "typeString": "struct Roles.Role storage ref"
                         }
                       },
-                      "id": 4319,
+                      "id": 4386,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "add",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4382,
+                      "referencedDeclaration": 4449,
                       "src": "724:12:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Role_$4355_storage_ptr_$_t_address_$returns$__$bound_to$_t_struct$_Role_$4355_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Role_$4422_storage_ptr_$_t_address_$returns$__$bound_to$_t_struct$_Role_$4422_storage_ptr_$",
                         "typeString": "function (struct Roles.Role storage pointer,address)"
                       }
                     },
-                    "id": 4321,
+                    "id": 4388,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2527,7 +2527,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4322,
+                  "id": 4389,
                   "nodeType": "ExpressionStatement",
                   "src": "724:21:14"
                 },
@@ -2535,11 +2535,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 4324,
+                        "id": 4391,
                         "name": "_reader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4312,
+                        "referencedDeclaration": 4379,
                         "src": "772:7:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2554,18 +2554,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 4323,
+                      "id": 4390,
                       "name": "ReaderAdded",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4265,
+                      "referencedDeclaration": 4332,
                       "src": "760:11:14",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 4325,
+                    "id": 4392,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2580,22 +2580,22 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4326,
+                  "id": 4393,
                   "nodeType": "EmitStatement",
                   "src": "755:25:14"
                 }
               ]
             },
             "functionSelector": "afd8b1d1",
-            "id": 4328,
+            "id": 4395,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 4315,
+                "id": 4382,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 4314,
+                  "id": 4381,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 31,
@@ -2609,17 +2609,17 @@
             "nameLocation": "670:9:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4313,
+              "id": 4380,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4312,
+                  "id": 4379,
                   "mutability": "mutable",
                   "name": "_reader",
                   "nameLocation": "688:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4328,
+                  "scope": 4395,
                   "src": "680:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2628,7 +2628,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4311,
+                    "id": 4378,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "680:7:14",
@@ -2644,12 +2644,12 @@
               "src": "679:17:14"
             },
             "returnParameters": {
-              "id": 4316,
+              "id": 4383,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "714:0:14"
             },
-            "scope": 4347,
+            "scope": 4414,
             "src": "661:126:14",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2657,7 +2657,7 @@
           },
           {
             "body": {
-              "id": 4345,
+              "id": 4412,
               "nodeType": "Block",
               "src": "849:78:14",
               "statements": [
@@ -2665,11 +2665,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 4338,
+                        "id": 4405,
                         "name": "_reader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4330,
+                        "referencedDeclaration": 4397,
                         "src": "875:7:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2685,32 +2685,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 4335,
+                        "id": 4402,
                         "name": "_readers",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4276,
+                        "referencedDeclaration": 4343,
                         "src": "859:8:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Role_$4355_storage",
+                          "typeIdentifier": "t_struct$_Role_$4422_storage",
                           "typeString": "struct Roles.Role storage ref"
                         }
                       },
-                      "id": 4337,
+                      "id": 4404,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "remove",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4408,
+                      "referencedDeclaration": 4475,
                       "src": "859:15:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Role_$4355_storage_ptr_$_t_address_$returns$__$bound_to$_t_struct$_Role_$4355_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Role_$4422_storage_ptr_$_t_address_$returns$__$bound_to$_t_struct$_Role_$4422_storage_ptr_$",
                         "typeString": "function (struct Roles.Role storage pointer,address)"
                       }
                     },
-                    "id": 4339,
+                    "id": 4406,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2725,7 +2725,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4340,
+                  "id": 4407,
                   "nodeType": "ExpressionStatement",
                   "src": "859:24:14"
                 },
@@ -2733,11 +2733,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 4342,
+                        "id": 4409,
                         "name": "_reader",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4330,
+                        "referencedDeclaration": 4397,
                         "src": "912:7:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2752,18 +2752,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 4341,
+                      "id": 4408,
                       "name": "ReaderRemoved",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4269,
+                      "referencedDeclaration": 4336,
                       "src": "898:13:14",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                         "typeString": "function (address)"
                       }
                     },
-                    "id": 4343,
+                    "id": 4410,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2778,22 +2778,22 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4344,
+                  "id": 4411,
                   "nodeType": "EmitStatement",
                   "src": "893:27:14"
                 }
               ]
             },
             "functionSelector": "38d65d11",
-            "id": 4346,
+            "id": 4413,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 4333,
+                "id": 4400,
                 "kind": "modifierInvocation",
                 "modifierName": {
-                  "id": 4332,
+                  "id": 4399,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 31,
@@ -2807,17 +2807,17 @@
             "nameLocation": "802:12:14",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 4331,
+              "id": 4398,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4330,
+                  "id": 4397,
                   "mutability": "mutable",
                   "name": "_reader",
                   "nameLocation": "823:7:14",
                   "nodeType": "VariableDeclaration",
-                  "scope": 4346,
+                  "scope": 4413,
                   "src": "815:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2826,7 +2826,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4329,
+                    "id": 4396,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "815:7:14",
@@ -2842,22 +2842,22 @@
               "src": "814:17:14"
             },
             "returnParameters": {
-              "id": 4334,
+              "id": 4401,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "849:0:14"
             },
-            "scope": 4347,
+            "scope": 4414,
             "src": "793:134:14",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 4348,
+        "scope": 4415,
         "src": "139:790:14",
         "usedErrors": [
-          4273
+          4340
         ]
       }
     ],
@@ -2869,7 +2869,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.10",
-  "updatedAt": "2023-02-22T22:44:44.450Z",
+  "updatedAt": "2023-02-23T21:16:08.051Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

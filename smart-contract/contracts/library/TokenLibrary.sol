@@ -18,6 +18,14 @@ library TokenLibrary {
         uint256 amountFreezed;
     }
 
+    struct Article {
+        string title;
+        string content;
+        string imageUri;
+        string note;
+        uint256 timestamp;
+    }
+
     struct Rules {
         bool freezableAddress;
         bool freezablePartial;
