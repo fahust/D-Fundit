@@ -59,7 +59,7 @@ interface ISecurityTokenImmutable {
      * @notice Get movements of the assets
      * @return result {TokenLibrary.Transfer[]} array of register transfers movements
      */
-    function transfers() external view returns (TokenLibrary.Transfer[] memory);
+    function transfers(uint32 skip, uint32 limit) external view returns (TokenLibrary.Transfer[] memory);
 
     /**
      * @notice Transfer ownership of the smart contract
