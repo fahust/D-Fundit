@@ -35,6 +35,7 @@
         <li><a href="#refound">Refound</a></li>
         <li><a href="#erc1066">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer">Force Transfer</a></li>
+        <li><a href="#articles">Articles</a></li>
         <li><a href="#vote">Votes</a></li>
         <li><a href="#withdraw">Capital withdrawal</a></li>
         <li><a href="#inject-capital">Inject Capital</a></li>
@@ -74,6 +75,7 @@
         <li><a href="#refound-FR">Rembourssement</a></li>
         <li><a href="#erc1066-FR">Interface EIP-1066</a></li>
         <li><a href="#forcetransfer-FR">Transfert de force</a></li>
+        <li><a href="#articles-FR">Articles</a></li>
         <li><a href="#vote-FR">Votes</a></li>
         <li><a href="#withdraw-FR">Retrait de capital</a></li>
         <li><a href="#inject-capital-FR">Injection de capital</a></li>
@@ -541,6 +543,35 @@ function forcedTransfer(
 ```
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
+<a name="articles"></a>
+
+## Articles
+
+The founder can write articles and update them on the following structure:
+
+```javascript
+struct Article {
+  string title;
+  string content;
+  string imageUri;
+  string note;
+  uint256 timestamp;
+}
+```
+
+To do this he can use the following function:
+
+```javascript
+function upsertArticle(uint32 index, TokenLibrary.Article memory _article) external onlyOwner
+```
+
+The articles can then be retrieved and read using this function:
+
+```javascript
+function getArticles(uint32 skip, uint32 limit) external view returns(TokenLibrary.Article[] memory)
+```
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
 
 <a name="vote"></a>
 
@@ -1070,6 +1101,36 @@ function forcedTransfer(
     address to,
     uint256 amount
 ) public onlyAgent returns (bool)
+```
+
+<p align="right">(<a href="#readme-top">retour au début</a>)</p>
+
+<a name="articles-FR"></a>
+
+## Articles
+
+Le fondateur peut écrire des articles et les mêttre a jour sur la structure suivante :
+
+```javascript
+struct Article {
+  string title;
+  string content;
+  string imageUri;
+  string note;
+  uint256 timestamp;
+}
+```
+
+Pour cela il peut utiliser la fonction suivante :
+
+```javascript
+function upsertArticle(uint32 index, TokenLibrary.Article memory _article) external onlyOwner
+```
+
+Par la suite les articles peuvent être récupérer et lu grace à cet fonction : 
+
+```javascript
+function getArticles(uint32 skip, uint32 limit) external view returns(TokenLibrary.Article[] memory)
 ```
 
 <p align="right">(<a href="#readme-top">retour au début</a>)</p>
